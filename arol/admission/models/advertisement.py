@@ -4,7 +4,6 @@ from datetime import datetime
 
 
 def upload_file(instance, filename):
-    print(filename)
     file_path = "admission/files/{advertisement_id}.{extension}".format(
         advertisement_id=instance.advertisement_id,
         extension=filename.rsplit(".", 1)[-1],
@@ -23,6 +22,6 @@ class Advertisement(models.Model):
         return str(self.advertisement_id)
 
     class Meta:
-        verbose_name = "Advertisement"
-        verbose_name_plural = "Advertisements"
+        verbose_name = _("Advertisement")
+        verbose_name_plural = _("Advertisements")
         ordering = ["advertisement_id"]

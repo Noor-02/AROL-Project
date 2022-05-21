@@ -42,6 +42,6 @@ class Profile(models.Model):
         super(Profile, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Personal Profile"
-        verbose_name_plural = "Personal Profile"
+        verbose_name = _("Personal Profile")
+        verbose_name_plural = _("Personal Profile")
         ordering = ["applicant_id"]

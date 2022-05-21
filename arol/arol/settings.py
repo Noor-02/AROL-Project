@@ -70,6 +70,7 @@ TEMPLATES = [
         },
     },
 ]
+AUTH_USER_MODEL = "users.Account"
 
 WSGI_APPLICATION = "arol.wsgi.application"
 

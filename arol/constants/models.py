@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.translation import gettext as _
 
 class Gender(models.Model):
     gender = models.CharField(primary_key=True, max_length=255)
@@ -8,8 +8,8 @@ class Gender(models.Model):
         return self.gender
 
     class Meta:
-        verbose_name = "Gender"
-        verbose_name_plural = "Gender"
+        verbose_name = _("Gender")
+        verbose_name_plural = _("Gender")
         ordering = ["gender"]
 
 
@@ -20,8 +20,8 @@ class Caste_Category(models.Model):
         return self.caste_category
 
     class Meta:
-        verbose_name = "Caste Category"
-        verbose_name_plural = "Caste Category"
+        verbose_name = _("Caste Category")
+        verbose_name_plural = _("Caste Category")
         ordering = ["caste_category"]
 
 # class Department(models.Model):
