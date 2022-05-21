@@ -1,0 +1,17 @@
+[
+  {
+    "model": "constants.Gender",
+    "pk": "Male",
+    "fields": {}
+  },
+  {
+    "model": "constants.Gender",
+    "pk": "Female",
+    "fields": {}
+  },
+  {
+    "model": "constants.Gender",
+    "pk": "Other",
+    "fields": {}
+  }
+]

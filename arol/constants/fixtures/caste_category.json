@@ -1,0 +1,22 @@
+[
+  {
+    "model": "constants.Caste_Category",
+    "pk": "Gen",
+    "fields": {}
+  },
+  {
+    "model": "constants.Caste_Category",
+    "pk": "SC",
+    "fields": {}
+  },
+  {
+    "model": "constants.Caste_Category",
+    "pk": "ST",
+    "fields": {}
+  },
+  {
+    "model": "constants.Caste_Category",
+    "pk": "OBC",
+    "fields": {}
+  }
+]

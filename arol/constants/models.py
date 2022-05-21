@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Gender(models.Model):
     gender = models.CharField(primary_key=True, max_length=255)
 
@@ -23,3 +23,6 @@ class Caste_Category(models.Model):
         verbose_name = "Caste Category"
         verbose_name_plural = "Caste Category"
         ordering = ["caste_category"]
+
+# class Department(models.Model):
+#     pass
