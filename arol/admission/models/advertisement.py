@@ -5,7 +5,7 @@ from management.models import Department
 
 
 def upload_file(instance, filename):
-    file_path = "admission/files/{advertisement_id}.{extension}".format(
+    file_path = "admission/advertisement/{advertisement_id}.{extension}".format(
         advertisement_id=instance.advertisement_id,
         extension=filename.rsplit(".", 1)[-1],
     )
@@ -17,7 +17,7 @@ class Advertisement(models.Model):
     academic_year = models.IntegerField(_("Academic Year"), default=datetime.now().year)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     programme = models.CharField(max_length=255)
-    file = models.FileField(upload_to=upload_file)
+    file = models.FileField(_("Advertisement File"), upload_to=upload_file)
 
     def __str__(self):
         return str(self.advertisement_id)
