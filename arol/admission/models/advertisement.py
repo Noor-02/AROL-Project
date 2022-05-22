@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
 from datetime import datetime
+from management.models import Department
 
 
 def upload_file(instance, filename):
@@ -12,9 +13,9 @@ def upload_file(instance, filename):
 
 
 class Advertisement(models.Model):
-    advertisement_id = models.BigIntegerField(_("Advertisement ID"), primary_key=True)
+    advertisement_id = models.BigIntegerField(_("Advertisement ID"), unique=True)
     academic_year = models.IntegerField(_("Academic Year"), default=datetime.now().year)
-    department = models.CharField(max_length=255)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     programme = models.CharField(max_length=255)
     file = models.FileField(upload_to=upload_file)
 

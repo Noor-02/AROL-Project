@@ -7,7 +7,8 @@ class Profile_Admin(admin.ModelAdmin):
     ordering = ("applicant_id",)
     search_fields = ("applicant_id", "full_name")
     list_display = ("applicant_id", "full_name")
-    filter_horizontal = ()
+    list_filter = ("pwd", "gender", "caste_category", "type_of_applicant")
+    readonly_fields = ("applicant_id",)
 
     fieldsets = (
         (
@@ -15,9 +16,10 @@ class Profile_Admin(admin.ModelAdmin):
             {
                 "fields": (
                     ("applicant_id"),
-                    ("type", "marital_status"),
+                    ("type_of_applicant", "nationality"),
                     "full_name",
                     "father_or_spouse_name",
+                    "marital_status",
                     "date_of_birth",
                     ("gender", "caste_category"),
                     ("contact_number", "parent_contact_number"),
@@ -42,5 +44,27 @@ class Profile_Admin(admin.ModelAdmin):
     )
 
 
+class Advertisement_Admin(admin.ModelAdmin):
+    model = Advertisement
+    ordering = ("advertisement_id",)
+    search_fields = ("advertisement_id",)
+    list_display = ("advertisement_id", "academic_year", "department", "programme")
+    list_filter = ("academic_year", "department", "programme")
+    filter_horizontal = ()
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    ("advertisement_id"),
+                    "academic_year",
+                    ("department", "programme"),
+                    "file",
+                )
+            },
+        ),
+    )
+
+
 admin.site.register(Profile, Profile_Admin)
-admin.site.register(Advertisement)
+admin.site.register(Advertisement, Advertisement_Admin)
