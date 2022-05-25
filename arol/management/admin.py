@@ -41,6 +41,3 @@ class Department_Admin(admin.ModelAdmin):
 
 admin.site.register(Caste_Category)
 admin.site.register(Department, Department_Admin)
-admin.AdminSite.site_title = _("AROL IITI")
-admin.AdminSite.site_header = _("AROL IIT Indore")
-admin.AdminSite.index_title = _("AROL Administration")
