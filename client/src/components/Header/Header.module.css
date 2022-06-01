@@ -1,0 +1,18 @@
+.Navbar {
+    background-color: #e6f8ff;
+}
+
+.LeftContainer {
+    display: flex;
+}
+
+.InstiName {
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.HeadingName {
+    font-weight: 700;
+    color: #335196;
+    font-size: 1.8rem;
+}
