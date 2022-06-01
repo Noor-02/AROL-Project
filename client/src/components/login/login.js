@@ -6,6 +6,10 @@ import { withRouter } from "react-router";
 
 class Login extends Component {
   state = {};
+
+  loginInitiated = () => {
+    this.props.history.push("/post-login");
+  }
   render() {
     return <div className={classes.LoginContainer}>
       <div>
@@ -18,7 +22,7 @@ class Login extends Component {
           <Form.Label className={classes.FormLabels}>Password</Form.Label>
           <Form.Control type="text" required />
         </Form.Group>
-        <Button className={classes.LoginButton} size="lg" variant="outline-info">LOGIN</Button>
+        <Button onClick={this.loginInitiated} className={classes.LoginButton} size="lg" variant="outline-info">LOGIN</Button>
       </div>
     </div>;
   }

@@ -14,9 +14,9 @@ class PostLogin extends Component {
       <Navbar bg="dark" expand="sm" className={classes.Navbar}>
         <Container fluid>
           <Nav className="justify-content-end flex-grow-1 pe-3">
-            <Nav.Link className={classes.NavLink} href="/">Personal Details</Nav.Link>
-            <Nav.Link className={classes.NavLink} href="/">Applications</Nav.Link>
-            <Nav.Link className={classes.NavLink} href="/">Change Password</Nav.Link>
+            <Nav.Link className={classes.NavLink} href="/personalDetails">Personal Details</Nav.Link>
+            <Nav.Link className={classes.NavLink} href="/applications">Applications</Nav.Link>
+            <Nav.Link className={classes.NavLink} href="/changePassword">Change Password</Nav.Link>
             <Nav.Link className={classes.NavLink} href="/">Log-Out</Nav.Link>
           </Nav>
         </Container>

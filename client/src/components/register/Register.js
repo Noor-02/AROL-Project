@@ -6,6 +6,10 @@ import { withRouter } from "react-router";
 
 class Register extends Component {
   state = {};
+
+  loginInitiated = () => {
+    this.props.history.push("/post-login");
+  }
   render() {
     return <div className={classes.RegisterConatiner}>
       <div>
@@ -22,7 +26,7 @@ class Register extends Component {
           <Form.Label className={classes.FormLabels}>Confirm Password</Form.Label>
           <Form.Control type="text" required />
         </Form.Group>
-        <Button className={classes.RegisterButton} size="lg" variant="outline-info">REGISTER</Button>{' '}
+        <Button onClick={this.loginInitiated} className={classes.RegisterButton} size="lg" variant="outline-info">REGISTER</Button>{' '}
       </div>
     </div>;
   }
