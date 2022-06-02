@@ -2,9 +2,13 @@ from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.utils.translation import gettext as _
 
-from .models import Department, Programme
-
-admin.site.unregister(LogEntry)
+from .models import (
+    Caste_Category,
+    Work_Type,
+    Qualifying_Exam,
+    Marital_Status,
+    Gender,
+)
 
 
 @admin.register(LogEntry)
@@ -34,21 +38,16 @@ class LogEntryAdmin(admin.ModelAdmin):
         return request.user.is_admin
 
 
-class Department_Admin(admin.ModelAdmin):
-    model = Department
-    ordering = ("department_code",)
-    search_fields = ("department_id", "department_name")
-    list_display = ("department_code", "department_name", "department_id")
+# class Department_Admin(admin.ModelAdmin):
+#     model = Department
+#     ordering = ("department_id",)
+#     search_fields = ("department_id", "department_name")
+#     list_display = ("department_id", "department_name", "department_code")
 
 
-class Programme_Admin(admin.ModelAdmin):
-    model = Programme
-    ordering = ("programme_code",)
-    search_fields = ("programme_id", "programme_name")
-    readonly_fields = ("full_programme_code",)
-    list_display = ("full_programme_code", "programme_name", "programme_id")
-    list_filter = ("programme_name", "programme_id")
-
-
-admin.site.register(Department, Department_Admin)
-admin.site.register(Programme, Programme_Admin)
+admin.site.register(Caste_Category)
+admin.site.register(Gender)
+admin.site.register(Marital_Status)
+admin.site.register(Qualifying_Exam)
+admin.site.register(Work_Type)
+# admin.site.register(Department, Department_Admin)

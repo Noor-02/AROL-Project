@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from management.models import Caste_Category
+from choice.models import Caste_Category, Marital_Status, Gender
 from users.models import Account
 
 
@@ -12,8 +12,6 @@ class Profile(models.Model):
 
     # Choices
     TYPES = [(True, _("Indian Applicant")), (False, _("Foreign Applicant"))]
-    MARITAL_STATUS = [(True, _("Married")), (False, _("Unmarried"))]
-    GENDER = [("Male", _("Male")), ("Female", _("Female")), ("Other", _("Other"))]
     PWD = [(True, _("Yes")), (False, _("No"))]
 
     applicant_id = models.CharField(_("Applicant ID"), unique=True, max_length=255)
@@ -27,8 +25,8 @@ class Profile(models.Model):
     father_or_spouse_name = models.CharField(_("Father's/Spouse Name"), max_length=255)
     date_of_birth = models.DateField(_("Date of Birth"))
 
-    marital_status = models.BooleanField(_("Marital Status"), choices=MARITAL_STATUS)
-    gender = models.CharField(_("Gender"), choices=GENDER, max_length=255)
+    marital_status = models.ForeignKey(Marital_Status, on_delete=models.PROTECT)
+    gender = models.ForeignKey(Gender, on_delete=models.PROTECT)
     caste_category = models.ForeignKey(Caste_Category, on_delete=models.PROTECT)
 
     contact_number = models.BigIntegerField(_("Contact Number"))

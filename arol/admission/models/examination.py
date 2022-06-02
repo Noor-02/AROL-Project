@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
+from choice.models import Qualifying_Exam
+
 from .application import Application
 
 
@@ -14,19 +16,8 @@ def upload_document(instance, filename):
 
 class Qualifying_Examination(models.Model):
 
-    EXAM = [
-        ("GATE", "GATE"),
-        ("CAT", "CAT"),
-        ("GMAT", "GMAT"),
-        ("JAM", "JAM"),
-        ("GRE", "GRE"),
-        ("DMAT", "DMAT"),
-    ]
-
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
-    examination = models.CharField(
-        _("Name of Examination"), max_length=255, choices=EXAM
-    )
+    examination = models.ForeignKey(Qualifying_Exam, on_delete=models.PROTECT)
     registration_number = models.CharField(_("Registration Number"), max_length=255)
     document = models.FileField(_("Document"), upload_to=upload_document)
 

@@ -3,9 +3,14 @@ from django.utils.translation import gettext as _
 
 
 class Department(models.Model):
-    department_id = models.CharField(_("Department ID"), unique=True, max_length=255)
+    department_code = models.CharField(
+        _("Department Code"),
+        max_length=2,
+        unique=True,
+        help_text=_("2-digit Numeric Code allotted to the Department"),
+    )
     department_name = models.CharField(_("Department Name"), max_length=255)
-    department_code = models.CharField(_("Department Code"), max_length=2)
+    department_id = models.CharField(_("Department ID"), unique=True, max_length=255)
     year_of_establishment = models.SmallIntegerField(_("Year of Establishment"))
     year_of_termination = models.SmallIntegerField(
         _("Year of Termination"), null=True, blank=True
@@ -17,4 +22,4 @@ class Department(models.Model):
     class Meta:
         verbose_name = _("Department")
         verbose_name_plural = _("Departments")
-        ordering = ["department_id"]
+        ordering = ["department_code"]

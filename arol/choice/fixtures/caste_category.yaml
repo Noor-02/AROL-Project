@@ -1,0 +1,16 @@
+- model: choice.caste_category
+  pk: null
+  fields:
+    caste_category: General
+- model: choice.caste_category
+  pk: null
+  fields:
+    caste_category: SC
+- model: choice.caste_category
+  pk: null
+  fields:
+    caste_category: ST
+- model: choice.caste_category
+  pk: null
+  fields:
+    caste_category: OBC-NC

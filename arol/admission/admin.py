@@ -14,18 +14,22 @@ from .models import (
 
 class Advertisement_Admin(admin.ModelAdmin):
     model = Advertisement
-    ordering = ("advertisement_id",)
+    ordering = ("-advertisement_id",)
     search_fields = ("advertisement_id",)
-    list_display = ("advertisement_id", "academic_year", "department", "programme")
-    list_filter = ("academic_year", "department", "programme")
+    list_display = ("advertisement_id", "programme")
+    list_filter = ("academic_year", "programme", "session")
+    readonly_fields = ("advertisement_id",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
                     "advertisement_id",
+                    "advertisement_number",
+                    "programme",
                     "academic_year",
-                    ("department", "programme"),
+                    "session",
+                    ("begins_from", "deadline"),
                     "file",
                 )
             },

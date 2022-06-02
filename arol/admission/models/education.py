@@ -23,8 +23,8 @@ def upload_certificate(instance, filename):
 
 class Education_Detail(models.Model):
 
-    STATUS = [("Completed", _("Completed"))]
-    DIVISION = [("First", _("First"))]
+    STATUS = [("Completed", _("Completed")), ("Pursuing", _("Pursuing"))]
+    DIVISION = [("First", _("First")), ("Second", _("Second")), ("Third", _("Third")), ("Not Applicable", _("Not Applicable"))]
     MARKS_TYPE = [
         ("Percent of Marks", _("Percent of Marks")),
         ("CPI/CGPA", _("CPI/CGPA")),

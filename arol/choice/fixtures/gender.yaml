@@ -1,0 +1,12 @@
+- model: choice.gender
+  pk: null
+  fields:
+    gender: Male
+- model: choice.gender
+  pk: null
+  fields:
+    gender: Female
+- model: choice.gender
+  pk: null
+  fields:
+    gender: Other
