@@ -1,0 +1,32 @@
+.RegisterConatiner {
+    padding-top: 2%;
+    border-radius: 2%;
+    background-color: #e6f8ff;
+    width: 40%;
+    margin-left: 35%;
+    margin-top: 3%;
+}
+
+.RegisterText {
+    margin-left: 40%;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.FormDiv {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-top: 2%;
+    padding-bottom: 3%;
+}
+
+.FormLabels {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-top: 0.2rem;
+}
+
+.RegisterButton {
+    width: 30%;
+    margin-left: 35%;
+}

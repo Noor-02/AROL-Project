@@ -1,0 +1,23 @@
+.ButtonContainer {
+    margin-top: 5rem;
+    margin-left: 40rem;
+}
+
+.LoginButton {
+    background-color: #e6f8ff;
+    color: black;
+    font-weight: 600;
+    margin-right: 4rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+.RegisterButton {
+    background-color: #e6f8ff;
+    color: black;
+    font-weight: 600;
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+.HomeContainer {}
