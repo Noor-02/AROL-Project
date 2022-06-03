@@ -25,10 +25,10 @@ class Advertisement_Admin(admin.ModelAdmin):
             {
                 "fields": (
                     "advertisement_id",
-                    "advertisement_number",
-                    "programme",
                     "academic_year",
+                    "programme",
                     "session",
+                    "advertisement_number",
                     ("begins_from", "deadline"),
                     "file",
                 )
@@ -40,7 +40,7 @@ class Advertisement_Admin(admin.ModelAdmin):
 class Application_Admin(admin.ModelAdmin):
     model = Application
     ordering = ("application_id",)
-    search_fields = ("application_id", "applicant_id__applicant_id", "payment_id")
+    search_fields = ("application_id", "applicant_id__applicant_id")
     list_display = ("application_id", "applicant_id", "advertisement_id")
     list_filter = ("advertisement_id",)
     readonly_fields = ("application_id",)
@@ -60,16 +60,16 @@ class Application_Admin(admin.ModelAdmin):
 
 class Education_Admin(admin.ModelAdmin):
     model = Education_Detail
-    ordering = ("application_id",)
-    search_fields = ("application_id__application_id", "qualification")
-    list_display = ("application_id", "qualification")
+    ordering = ("applicant_id",)
+    search_fields = ("applicant_id__applicant_id", "qualification")
+    list_display = ("applicant_id", "qualification")
     list_filter = ("qualification",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "application_id",
+                    "applicant_id",
                     "qualification",
                     ("examination", "university"),
                     "duration",
@@ -78,6 +78,7 @@ class Education_Admin(admin.ModelAdmin):
                     ("percent", "out_of"),
                     "division",
                     "specialization",
+                    ("marksheet", "certificate"),
                 )
             },
         ),
@@ -86,15 +87,15 @@ class Education_Admin(admin.ModelAdmin):
 
 class Employment_Admin(admin.ModelAdmin):
     model = Employment
-    ordering = ("application_id",)
-    search_fields = ("application_id__application_id",)
-    list_display = ("application_id",)
+    ordering = ("applicant_id",)
+    search_fields = ("applicant_id__applicant_id",)
+    list_display = ("applicant_id",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "application_id",
+                    "applicant_id",
                     ("organization", "post_held"),
                     "work_type",
                     ("from_date", "to_date"),
@@ -109,16 +110,16 @@ class Employment_Admin(admin.ModelAdmin):
 
 class Examination_Admin(admin.ModelAdmin):
     model = Qualifying_Examination
-    ordering = ("application_id",)
-    search_fields = ("application_id__application_id", "registration_number")
-    list_display = ("application_id", "examination")
+    ordering = ("applicant_id",)
+    search_fields = ("applicant_id__applicant_id", "registration_number")
+    list_display = ("applicant_id", "examination")
     list_filter = ("examination",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "application_id",
+                    "applicant_id",
                     "examination",
                     "registration_number",
                     "document",
@@ -134,7 +135,13 @@ class Profile_Admin(admin.ModelAdmin):
     search_fields = ("applicant_id", "full_name")
     list_display = ("applicant_id", "full_name")
     list_filter = ("pwd", "gender", "caste_category", "type_of_applicant")
-    readonly_fields = ("applicant_id",)
+    readonly_fields = ("applicant_id","image_preview")
+
+    def image_preview(self, obj):
+        return obj.image_preview
+
+    image_preview.short_description = "Image Preview"
+    image_preview.allow_tags = True
 
     fieldsets = (
         (
@@ -144,6 +151,7 @@ class Profile_Admin(admin.ModelAdmin):
                     ("applicant_id", "account"),
                     ("type_of_applicant", "nationality"),
                     "full_name",
+                    ("photograph", "image_preview"),
                     "father_or_spouse_name",
                     "marital_status",
                     "date_of_birth",
@@ -172,16 +180,16 @@ class Profile_Admin(admin.ModelAdmin):
 
 class Project_Admin(admin.ModelAdmin):
     model = Project_Detail
-    ordering = ("application_id",)
-    search_fields = ("application_id__application_id", "title")
-    list_display = ("application_id", "title")
+    ordering = ("applicant_id",)
+    search_fields = ("applicant_id__applicant_id", "title")
+    list_display = ("applicant_id", "title")
     list_filter = ("degree",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "application_id",
+                    "applicant_id",
                     ("degree", "university"),
                     "year_of_submission",
                     "supervisor",
@@ -194,17 +202,18 @@ class Project_Admin(admin.ModelAdmin):
 
 class Recommendation_Admin(admin.ModelAdmin):
     model = Recommendation
-    ordering = ("referral_id",)
-    search_fields = ("referral_id", "application_id__application_id", "referree_email")
-    list_display = ("referral_id", "application_id")
+    ordering = ("application_id",)
+    search_fields = ("application_id__application_id", "referree_email")
+    list_display = ("application_id",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    ("referral_id", "application_id"),
+                    "application_id",
                     "referree_email",
                     "letter_of_recommendation",
+                    "referral_id",
                 )
             },
         ),

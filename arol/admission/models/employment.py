@@ -2,12 +2,12 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from choice.models import Work_Type
-from .application import Application
+from .profile import Profile
 
 
 class Employment(models.Model):
 
-    application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
+    applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     organization = models.CharField(_("Name of Organization"), max_length=255)
     post_held = models.CharField(_("Post Held"), max_length=255)
     work_type = models.ForeignKey(Work_Type, on_delete=models.PROTECT)
@@ -18,9 +18,9 @@ class Employment(models.Model):
     emoluments = models.CharField(_("Gross Emoluments"), max_length=255)
 
     def __str__(self):
-        return self.application_id + " " + self.organization
+        return self.applicant_id + " " + self.organization
 
     class Meta:
         verbose_name = _("Employment Detail")
         verbose_name_plural = _("Employment Details")
-        ordering = ["application_id"]
+        ordering = ["applicant_id"]

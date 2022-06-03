@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from .application import Application
+from .profile import Profile
 
 
 def upload_marksheet(instance, filename):
-    file_path = "admission/educational_information/{application_id}/marksheet_{qualification}.{extension}".format(
-        application_id=instance.application_id,
+    file_path = "admission/{applicant_id}/marksheet_{qualification}.{extension}".format(
+        applicant_id=instance.applicant_id,
         qualification=instance.qualification,
         extension=filename.rsplit(".", 1)[-1],
     )
@@ -13,10 +13,12 @@ def upload_marksheet(instance, filename):
 
 
 def upload_certificate(instance, filename):
-    file_path = "admission/educational_information/{application_id}/certificate_{qualiifcation}.{extension}".format(
-        application_id=instance.application_id,
-        qualification=instance.qualification,
-        extension=filename.rsplit(".", 1)[-1],
+    file_path = (
+        "admission/{applicant_id}/certificate_{qualification}.{extension}".format(
+            applicant_id=instance.applicant_id,
+            qualification=instance.qualification,
+            extension=filename.rsplit(".", 1)[-1],
+        )
     )
     return file_path
 
@@ -24,13 +26,18 @@ def upload_certificate(instance, filename):
 class Education_Detail(models.Model):
 
     STATUS = [("Completed", _("Completed")), ("Pursuing", _("Pursuing"))]
-    DIVISION = [("First", _("First")), ("Second", _("Second")), ("Third", _("Third")), ("Not Applicable", _("Not Applicable"))]
+    DIVISION = [
+        ("First", _("First")),
+        ("Second", _("Second")),
+        ("Third", _("Third")),
+        ("Not Applicable", _("Not Applicable")),
+    ]
     MARKS_TYPE = [
         ("Percent of Marks", _("Percent of Marks")),
         ("CPI/CGPA", _("CPI/CGPA")),
     ]
 
-    application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
+    applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     qualification = models.CharField(_("Examination"), max_length=255)
     examination = models.CharField(_("Name of Examination Passed"), max_length=255)
     university = models.CharField(_("Board/ Institute/ University"), max_length=255)
@@ -51,9 +58,14 @@ class Education_Detail(models.Model):
     certificate = models.FileField(_("Certificate"), upload_to=upload_certificate)
 
     def __str__(self):
-        return self.application_id + " " + self.qualification
+        return self.applicant_id + "-" + self.qualification
+
+    def delete(self, *args, **kwargs):
+        self.marksheet.delete()
+        self.certificate.delete()
+        super(Education_Detail, self).delete(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Educationional Information")
         verbose_name_plural = _("Educational Information")
-        ordering = ["application_id"]
+        ordering = ["applicant_id"]

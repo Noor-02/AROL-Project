@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from .application import Application
+from .profile import Profile
 
 
 class Project_Detail(models.Model):
 
     DEGREE = [("Bachelors", _("Bachelors")), ("Masters", _("Masters"))]
 
-    application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
+    applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     degree = models.CharField(_("Degree"), max_length=255, choices=DEGREE)
     university = models.CharField(_("Name of University/Institute"), max_length=255)
     year_of_submission = models.IntegerField(_("Year of Submission"))
@@ -20,4 +20,4 @@ class Project_Detail(models.Model):
     class Meta:
         verbose_name = _("Project Detail")
         verbose_name_plural = _("Project Details")
-        ordering = ["application_id"]
+        ordering = ["applicant_id"]

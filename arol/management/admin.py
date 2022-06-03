@@ -46,8 +46,17 @@ class Programme_Admin(admin.ModelAdmin):
     ordering = ("programme_code",)
     search_fields = ("programme_id", "programme_name")
     readonly_fields = ("full_programme_code",)
-    list_display = ("full_programme_code", "programme_name", "programme_id")
-    list_filter = ("programme_name", "programme_id")
+    list_display = (
+        "full_programme_code",
+        "programme_name",
+        "programme_id",
+        "get_department_id",
+    )
+    list_filter = ("department", "programme_id")
+
+    @admin.display(description="Department")
+    def get_department_id(self, obj):
+        return obj.department.department_id
 
 
 admin.site.register(Department, Department_Admin)

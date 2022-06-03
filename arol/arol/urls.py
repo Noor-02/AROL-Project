@@ -35,6 +35,7 @@ urlpatterns = [
         name="admin_password_reset",
     ),
     path("api-auth/", include("rest_framework.urls")),
+    path("admission/", include("admission.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

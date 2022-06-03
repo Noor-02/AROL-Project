@@ -4,17 +4,19 @@ from .application import Application
 
 
 def upload_recommendation(instance, filename):
-    file_path = "admission/educational_information/{application_id}/recommendation_{referral_id}.{extension}".format(
-        application_id=instance.application_id,
-        referral_id=instance.referral_id,
-        extension=filename.rsplit(".", 1)[-1],
+    file_path = (
+        "admission/{applicant_id}/{application_id}/recommendation.{extension}".format(
+            applicant_id=instance.application_id.applicant_id,
+            application_id=instance.application_id,
+            extension=filename.rsplit(".", 1)[-1],
+        )
     )
     return file_path
 
 
 class Recommendation(models.Model):
 
-    referral_id = models.CharField(_("Referral ID"), max_length=255, unique=True)
+    referral_id = models.UUIDField(_("Referral ID"))
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
     referree_email = models.EmailField(_("Referree Email"))
     letter_of_recommendation = models.FileField(
