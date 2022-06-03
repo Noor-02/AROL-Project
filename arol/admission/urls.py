@@ -11,6 +11,7 @@ from .views import (
     Profile_Viewset,
     Project_Viewset,
     Recommendation_Viewset,
+    generate_pdf,
     export_xlsx,
 )
 
@@ -23,4 +24,8 @@ router.register(r"profile", Profile_Viewset, "profile")
 router.register(r"project", Project_Viewset, "project")
 router.register(r"recommendation", Recommendation_Viewset, "recommendation")
 
-urlpatterns = [path("", include(router.urls)), path("export_xlsx", export_xlsx)]
+urlpatterns = [
+    path("", include(router.urls)),
+    path("export_xlsx/", export_xlsx),
+    path("export_pdf/<application_id>", generate_pdf),
+]

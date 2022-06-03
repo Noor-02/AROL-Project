@@ -1,7 +1,14 @@
+from re import A
+from django.http import HttpResponse
+from django.utils.timezone import now
+from io import BytesIO
+from openpyxl import Workbook
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
-from django.utils.timezone import now
+
 from .models import (
     Application,
     Education_Detail,
@@ -99,10 +106,6 @@ class Recommendation_Viewset(viewsets.ModelViewSet):
         return Recommendation.objects.all()
 
 
-from openpyxl import Workbook
-from django.http import HttpResponse
-
-
 def export_xlsx(request):
     queryset = Profile.objects.all()
     response = HttpResponse(
@@ -183,4 +186,23 @@ def export_xlsx(request):
 
     workbook.save(response)
 
+    return response
+
+
+def generate_pdf(request, application_id):
+    response = HttpResponse(content_type="application/pdf")
+    response[
+        "Content-Disposition"
+    ] = "attachment; filename={application_id}.pdf".format(
+        application_id=application_id
+    )
+    buffer = BytesIO()
+    pdf = canvas.Canvas(buffer, A4)
+
+    # Write here
+    pdf.showPage()
+    pdf.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
     return response
