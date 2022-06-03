@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 from django.utils.html import mark_safe
 from django.utils.translation import gettext as _
 from django.utils.timezone import now
@@ -49,7 +50,7 @@ class Profile(models.Model):
     photograph = models.FileField(
         _("Passport Sized Photograph"), upload_to=upload_photograph
     )
-    #Check for image extensions
+    # Check for image extensions
     father_or_spouse_name = models.CharField(_("Father's/Spouse Name"), max_length=255)
     date_of_birth = models.DateField(_("Date of Birth"))
 
@@ -61,7 +62,9 @@ class Profile(models.Model):
     parent_contact_number = models.BigIntegerField(_("Parent Contact Number"))
 
     pwd = models.BooleanField(_("Persons with Disabilities (PwD)"))
-    disability = models.CharField(_("Type of Disability"), null=True, max_length=255)
+    disability = models.CharField(
+        _("Type of Disability"), null=True, blank=True, max_length=255
+    )
 
     # For Correspondence
     c_address = models.TextField(_("Address"))
@@ -83,6 +86,12 @@ class Profile(models.Model):
             self.disability = None
         self.applicant_id = now().strftime("%y") + format(self.applicant_number, "04d")
         super(Profile, self).save(*args, **kwargs)
+
+    def clean(self):
+        if self.pwd and self.disability == None:
+            raise ValidationError(
+                {"disability": "Please mention Type of Disability if you are a PwD"}
+            )
 
     @property
     def image_preview(self):
