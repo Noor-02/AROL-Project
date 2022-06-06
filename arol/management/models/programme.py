@@ -14,9 +14,10 @@ class Programme(models.Model):
         max_length=4,
         editable=False,
         help_text=_("4-digit Numeric Code uniquely identifying a programme"),
+        unique=True,
     )
     programme_name = models.CharField(_("Programme Name"), max_length=255)
-    programme_id = models.CharField(_("Programme ID"), unique=True, max_length=255)
+    programme_id = models.CharField(_("Programme ID"), max_length=255)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):

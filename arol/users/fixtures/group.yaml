@@ -1,0 +1,6 @@
+- model: "auth.group"
+  pk: null
+  fields:
+    name: Admin
+    permissions:
+    
