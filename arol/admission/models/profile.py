@@ -90,7 +90,7 @@ class Profile(models.Model):
     def clean(self):
         if self.pwd and self.disability == None:
             raise ValidationError(
-                {"disability": "Please mention Type of Disability if you are a PwD"}
+                {"disability": _("Please mention Type of Disability if you are a PwD")}
             )
 
     @property

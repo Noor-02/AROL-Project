@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from admission.models import (
+    Advertisement,
     Application,
     Education_Detail,
     Employment,
@@ -9,6 +10,12 @@ from admission.models import (
     Qualifying_Examination,
     Recommendation,
 )
+
+
+class Advertisement_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertisement
+        fields = "__all__"
 
 
 class Application_Serializer(serializers.ModelSerializer):

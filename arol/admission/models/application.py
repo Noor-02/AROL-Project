@@ -7,8 +7,9 @@ from .profile import Profile
 class Application(models.Model):
 
     application_id = models.CharField(
-        _("Application ID"), unique=True, max_length=13, editable=False
+        _("Application ID"), unique=True, max_length=17, editable=False
     )
+    date_applied = models.DateField(_("Applied on"), auto_now_add=True, editable=False)
     applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     advertisement_id = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
     payment_id = models.CharField(

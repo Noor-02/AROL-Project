@@ -19,13 +19,18 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.utils.translation import gettext as _
-
+from rest_framework_simplejwt import views as jwt_views
 
 admin.AdminSite.site_title = _("AROL IITI")
 admin.AdminSite.site_header = _("AROL IIT Indore")
 admin.AdminSite.index_title = _("AROL Administration")
 
 
+api_patterns = [
+    path("admission/", include("admission.urls")),
+    path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+]
 urlpatterns = [
     path("admin/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
@@ -35,7 +40,7 @@ urlpatterns = [
         name="admin_password_reset",
     ),
     path("api-auth/", include("rest_framework.urls")),
-    path("admission/", include("admission.urls")),
+    path("api/", include(api_patterns)),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

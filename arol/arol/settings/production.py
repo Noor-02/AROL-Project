@@ -1,5 +1,8 @@
-from . import *
+from datetime import timedelta
+
 import environ
+
+from . import *
 
 env = environ.Env()
 environ.Env.read_env()
@@ -18,7 +21,17 @@ DATABASES = {
         "NAME": env("DATABASE_NAME"),
     },
 }
-
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "EXCEPTION_HANDLER": "arol.exception_handler.exception_handler",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 50,
+}
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -51,6 +64,12 @@ LOGGING = {
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=env("ACCESS_TOKEN_LIFETIME")),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=env("REFRESH_TOKEN_LIFETIME")),
+    "SIGNING_KEY": env("SIGNING_KEY"),
 }
 
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")

@@ -18,7 +18,6 @@ class Advertisement_Admin(admin.ModelAdmin):
     search_fields = ("advertisement_id",)
     list_display = ("advertisement_id", "programme")
     list_filter = ("academic_year", "programme", "session")
-    readonly_fields = ("advertisement_id",)
     fieldsets = (
         (
             None,
@@ -35,6 +34,19 @@ class Advertisement_Admin(admin.ModelAdmin):
             },
         ),
     )
+
+    def get_readonly_fields(self, request, obj=None):
+        # if obj:
+        #     return [
+        #         "advertisement_id",
+        #         "advertisement_number",
+        #         "session",
+        #         "academic_year",
+        #         "programme",
+        #         "file",
+        #     ]
+        # else:
+        return ["advertisement_id"]
 
 
 class Application_Admin(admin.ModelAdmin):
@@ -135,7 +147,7 @@ class Profile_Admin(admin.ModelAdmin):
     search_fields = ("applicant_id", "full_name")
     list_display = ("applicant_id", "full_name")
     list_filter = ("pwd", "gender", "caste_category", "type_of_applicant")
-    readonly_fields = ("applicant_id","image_preview")
+    readonly_fields = ("applicant_id", "image_preview")
 
     def image_preview(self, obj):
         return obj.image_preview
