@@ -1,5 +1,6 @@
 from django.contrib import admin
-
+from .file_exports.generate_zip import generate_zip
+from django.utils.html import mark_safe
 from .models import (
     Advertisement,
     Application,
@@ -12,6 +13,7 @@ from .models import (
 )
 
 
+@admin.register(Advertisement)
 class Advertisement_Admin(admin.ModelAdmin):
     model = Advertisement
     ordering = ("-advertisement_id",)
@@ -36,26 +38,39 @@ class Advertisement_Admin(admin.ModelAdmin):
     )
 
     def get_readonly_fields(self, request, obj=None):
-        # if obj:
-        #     return [
-        #         "advertisement_id",
-        #         "advertisement_number",
-        #         "session",
-        #         "academic_year",
-        #         "programme",
-        #         "file",
-        #     ]
-        # else:
-        return ["advertisement_id"]
+        if obj:
+            return [
+                "advertisement_id",
+                "advertisement_number",
+                "session",
+                "academic_year",
+                "programme",
+                "file",
+            ]
+        else:
+            return ["advertisement_id"]
 
 
+@admin.register(Application)
 class Application_Admin(admin.ModelAdmin):
     model = Application
     ordering = ("application_id",)
     search_fields = ("application_id", "applicant_id__applicant_id")
-    list_display = ("application_id", "applicant_id", "advertisement_id")
-    list_filter = ("advertisement_id",)
+    list_display = (
+        "application_id",
+        "advertisement_id",
+        "applicant_id",
+        "is_approved",
+        "export_pdf",
+    )
+    list_editable = ("is_approved",)
+    date_hierarchy = "date_applied"
     readonly_fields = ("application_id",)
+    actions = [
+        "approve_application",
+        "disapprove_application",
+        "export_zip",
+    ]
     fieldsets = (
         (
             None,
@@ -64,12 +79,28 @@ class Application_Admin(admin.ModelAdmin):
                     "application_id",
                     ("applicant_id", "advertisement_id"),
                     "payment_id",
+                    "is_approved",
                 )
             },
         ),
     )
 
+    def export_pdf(self, obj):
+        return mark_safe(
+            '<a href="/api/admission/export_pdf/{application_id}" style="cursor:pointer;">Download PDF</a>'.format(
+                application_id=obj.application_id
+            )
+        )
 
+    export_pdf.short_description = "Download PDF"
+    export_pdf.allow_tags = True
+
+    @admin.action(description="Download selected Applications")
+    def export_zip(modeladmin, request, queryset):
+        return generate_zip(request, queryset)
+
+
+@admin.register(Education_Detail)
 class Education_Admin(admin.ModelAdmin):
     model = Education_Detail
     ordering = ("applicant_id",)
@@ -97,6 +128,7 @@ class Education_Admin(admin.ModelAdmin):
     )
 
 
+@admin.register(Employment)
 class Employment_Admin(admin.ModelAdmin):
     model = Employment
     ordering = ("applicant_id",)
@@ -120,6 +152,7 @@ class Employment_Admin(admin.ModelAdmin):
     )
 
 
+@admin.register(Qualifying_Examination)
 class Examination_Admin(admin.ModelAdmin):
     model = Qualifying_Examination
     ordering = ("applicant_id",)
@@ -141,6 +174,7 @@ class Examination_Admin(admin.ModelAdmin):
     )
 
 
+@admin.register(Profile)
 class Profile_Admin(admin.ModelAdmin):
     model = Profile
     ordering = ("applicant_id",)
@@ -190,6 +224,7 @@ class Profile_Admin(admin.ModelAdmin):
     )
 
 
+@admin.register(Project_Detail)
 class Project_Admin(admin.ModelAdmin):
     model = Project_Detail
     ordering = ("applicant_id",)
@@ -212,6 +247,7 @@ class Project_Admin(admin.ModelAdmin):
     )
 
 
+@admin.register(Recommendation)
 class Recommendation_Admin(admin.ModelAdmin):
     model = Recommendation
     ordering = ("application_id",)
@@ -230,13 +266,3 @@ class Recommendation_Admin(admin.ModelAdmin):
             },
         ),
     )
-
-
-admin.site.register(Advertisement, Advertisement_Admin)
-admin.site.register(Application, Application_Admin)
-admin.site.register(Education_Detail, Education_Admin)
-admin.site.register(Employment, Employment_Admin)
-admin.site.register(Qualifying_Examination, Examination_Admin)
-admin.site.register(Profile, Profile_Admin)
-admin.site.register(Project_Detail, Project_Admin)
-admin.site.register(Recommendation, Recommendation_Admin)

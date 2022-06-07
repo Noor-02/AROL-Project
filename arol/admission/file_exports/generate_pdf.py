@@ -101,7 +101,7 @@ def generate_pdf(request):
 
     pdf = SimpleDocTemplate(
         buffer,
-        title="Admission Application",
+        title="Application Form",
         topMargin=40,
         leftMargin=40,
         rightMargin=40,

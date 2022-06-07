@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
 
-
+@admin.register(Account)
 class AccountAdmin(UserAdmin):
     form = AccountChangeForm
     add_form = AccountCreationForm
@@ -36,4 +36,5 @@ class AccountAdmin(UserAdmin):
         ),
     )
 
-admin.site.register(Account, AccountAdmin)
+# class ImportAdmin(admin.ModelAdmin):
+#     change_list_template = 'admin/users/account/change_list.html'

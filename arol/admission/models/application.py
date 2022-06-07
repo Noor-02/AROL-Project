@@ -21,9 +21,16 @@ class Application(models.Model):
         return self.application_id
 
     def save(self, *args, **kwargs):
-        self.application_id = self.advertisement_id + "-" + self.applicant_id
+        self.application_id = str(self.advertisement_id) + "-" + str(self.applicant_id)
+        super(Application, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Application")
         verbose_name_plural = _("Applications")
         ordering = ["application_id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["applicant_id", "advertisement_id"],
+                name="Unique Application ID",
+            )
+        ]

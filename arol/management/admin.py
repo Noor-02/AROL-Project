@@ -4,8 +4,6 @@ from django.utils.translation import gettext as _
 
 from .models import Department, Programme
 
-admin.site.unregister(LogEntry)
-
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
@@ -34,6 +32,7 @@ class LogEntryAdmin(admin.ModelAdmin):
         return request.user.is_admin
 
 
+@admin.register(Department)
 class Department_Admin(admin.ModelAdmin):
     model = Department
     ordering = ("department_code",)
@@ -41,6 +40,7 @@ class Department_Admin(admin.ModelAdmin):
     list_display = ("department_code", "department_name", "department_id")
 
 
+@admin.register(Programme)
 class Programme_Admin(admin.ModelAdmin):
     model = Programme
     ordering = ("programme_code",)
@@ -57,7 +57,3 @@ class Programme_Admin(admin.ModelAdmin):
     @admin.display(description="Department")
     def get_department_id(self, obj):
         return obj.department.department_id
-
-
-admin.site.register(Department, Department_Admin)
-admin.site.register(Programme, Programme_Admin)

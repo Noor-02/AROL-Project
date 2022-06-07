@@ -15,7 +15,7 @@ from .views import (
 )
 from .file_exports.generate_pdf import export_pdf_wrapper
 from .file_exports.generate_xlsx import generate_xlsx
-from .file_exports.generate_zip import generate_zip
+from .file_exports.generate_zip import generate_zip_by_year
 
 router = DefaultRouter()
 router.register(r"advertisement", Advertisement_Viewset, "advertisement")
@@ -31,5 +31,5 @@ urlpatterns = [
     path("", include(router.urls)),
     path("export_xlsx/",generate_xlsx),
     path("export_pdf/<application_id>", export_pdf_wrapper),
-    path("export_zip/<year>", generate_zip),
+    path("export_zip/<year>", generate_zip_by_year),
 ]
