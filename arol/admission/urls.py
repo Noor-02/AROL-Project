@@ -4,7 +4,6 @@ from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    Advertisement_Viewset,
     Application_Viewset,
     Education_Viewset,
     Employment_Viewset,
@@ -18,7 +17,6 @@ from .file_exports.generate_xlsx import generate_xlsx
 from .file_exports.generate_zip import generate_zip_by_year
 
 router = DefaultRouter()
-router.register(r"advertisement", Advertisement_Viewset, "advertisement")
 router.register(r"application", Application_Viewset, "application")
 router.register(r"education", Education_Viewset, "education")
 router.register(r"employment", Employment_Viewset, "employment")

@@ -22,7 +22,13 @@ class Qualifying_Examination(models.Model):
     document = models.FileField(_("Document"), upload_to=upload_document)
 
     def __str__(self):
-        return self.applicant_id + "-" + self.examination
+        return "{applicant_id}-{examination}".format(
+            applicant_id=self.applicant_id, examination=self.examination
+        )
+
+    def delete(self, *args, **kwargs):
+        self.document.delete()
+        super(Qualifying_Examination, self).delete(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Qualifying Examination")

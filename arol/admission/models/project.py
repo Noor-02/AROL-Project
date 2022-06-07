@@ -15,7 +15,9 @@ class Project_Detail(models.Model):
     title = models.CharField(_("Title"), max_length=255)
 
     def __str__(self):
-        return self.title
+        return "{applicant_id}-{title}".format(
+            applicant_id=self.applicant_id, title=self.title
+        )
 
     class Meta:
         verbose_name = _("Project Detail")

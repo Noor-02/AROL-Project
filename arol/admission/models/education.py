@@ -48,17 +48,25 @@ class Education_Detail(models.Model):
     marks_type = models.CharField(
         _("Percent of Marks or CPI/CGPA"), max_length=255, choices=MARKS_TYPE
     )
-    percent = models.IntegerField(_("Percent or CPI/CGPA"))
+    percent = models.DecimalField(
+        _("Percent or CPI/CGPA"), max_digits=5, decimal_places=2
+    )
     out_of = models.IntegerField(_("Out of CPI/CGPA"))
     division = models.CharField(_("Class/Division"), max_length=255, choices=DIVISION)
     specialization = models.CharField(
         _("Specialization (if any)"), max_length=255, null=True, blank=True
     )
-    marksheet = models.FileField(_("Marksheet"), upload_to=upload_marksheet)
-    certificate = models.FileField(_("Certificate"), upload_to=upload_certificate)
+    marksheet = models.FileField(
+        _("Marksheet"), upload_to=upload_marksheet, null=True, blank=True
+    )
+    certificate = models.FileField(
+        _("Certificate"), upload_to=upload_certificate, null=True, blank=True
+    )
 
     def __str__(self):
-        return self.applicant_id + "-" + self.qualification
+        return "{applicant_id}-{qualification}".format(
+            applicant_id=self.applicant_id, qualification=self.qualification
+        )
 
     def delete(self, *args, **kwargs):
         self.marksheet.delete()

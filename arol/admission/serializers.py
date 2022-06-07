@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from admission.models import (
-    Advertisement,
     Application,
     Education_Detail,
     Employment,
@@ -10,12 +9,6 @@ from admission.models import (
     Qualifying_Examination,
     Recommendation,
 )
-
-
-class Advertisement_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model = Advertisement
-        fields = "__all__"
 
 
 class Application_Serializer(serializers.ModelSerializer):
@@ -28,6 +21,12 @@ class Education_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Education_Detail
         fields = "__all__"
+
+
+class Education_File_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education_Detail
+        fields = ["marksheet", "certificate"]
 
 
 class Employment_Serializer(serializers.ModelSerializer):
@@ -58,3 +57,9 @@ class Recommendation_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Recommendation
         fields = "__all__"
+
+
+class Recommendation_File_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recommendation
+        fields = ["letter_of_recommendation"]

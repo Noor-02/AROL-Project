@@ -93,6 +93,10 @@ class Profile(models.Model):
                 {"disability": _("Please mention Type of Disability if you are a PwD")}
             )
 
+    def delete(self, *args, **kwargs):
+        self.photograph.delete()
+        super(Profile, self).delete(*args, **kwargs)
+
     @property
     def image_preview(self):
         if self.photograph:

@@ -31,7 +31,8 @@ class Advertisement_Admin(admin.ModelAdmin):
                     "session",
                     "advertisement_number",
                     ("begins_from", "deadline"),
-                    "file",
+                    "document",
+                    "letter_of_recommendation",
                 )
             },
         ),
@@ -105,7 +106,7 @@ class Education_Admin(admin.ModelAdmin):
     model = Education_Detail
     ordering = ("applicant_id",)
     search_fields = ("applicant_id__applicant_id", "qualification")
-    list_display = ("applicant_id", "qualification")
+    list_display = ("applicant_id", "qualification", "percent", "out_of")
     list_filter = ("qualification",)
     fieldsets = (
         (
@@ -261,7 +262,6 @@ class Recommendation_Admin(admin.ModelAdmin):
                     "application_id",
                     "referree_email",
                     "letter_of_recommendation",
-                    "referral_id",
                 )
             },
         ),

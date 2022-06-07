@@ -163,13 +163,13 @@ subheading = Paragraph(
 flowables.append(subheading)
 flowables.append(FrameBreak())
 
-create_frame(1, pdf.leftMargin, 125, 510, 40)
+create_frame(1, pdf.leftMargin, 245, 510, 40)
 fill_field("Address", "7, Lok Kalyan Marg")
-create_frame(1, pdf.leftMargin, 85, 170, 40)
+create_frame(1, pdf.leftMargin, 205, 170, 40)
 fill_field("City", "New Delhi")
-create_frame(1, pdf.leftMargin + 170, 85, 170, 40)
+create_frame(1, pdf.leftMargin + 170, 205, 170, 40)
 fill_field("State", "Delhi")
-create_frame(1, pdf.leftMargin + 340, 85, 170, 40)
+create_frame(1, pdf.leftMargin + 340, 205, 170, 40)
 fill_field("Pin/Zip", "110011")
 
 create_frame(1, pdf.leftMargin, 155, 510, 40, 0)

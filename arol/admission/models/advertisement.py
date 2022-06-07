@@ -7,8 +7,16 @@ from django.utils.timezone import now
 from management.models import Programme
 
 
-def upload_file(instance, filename):
+def upload_advertisement(instance, filename):
     file_path = "admission/advertisement/{advertisement_id}.{extension}".format(
+        advertisement_id=instance.advertisement_id,
+        extension=filename.rsplit(".", 1)[-1],
+    )
+    return file_path
+
+
+def upload_recommendation(instance, filename):
+    file_path = "admission/recommendation/{advertisement_id}.{extension}".format(
         advertisement_id=instance.advertisement_id,
         extension=filename.rsplit(".", 1)[-1],
     )
@@ -41,13 +49,17 @@ class Advertisement(models.Model):
     deadline = models.DateField(_("Admission Deadline"))
     academic_year = models.IntegerField(_("Academic Year"), default=now().year)
     programme = models.ForeignKey(Programme, on_delete=models.PROTECT)
-    file = models.FileField(
+    document = models.FileField(
         _("Advertisement File"),
-        upload_to=upload_file,
+        upload_to=upload_advertisement,
+    )
+    letter_of_recommendation = models.FileField(
+        _("Letter of Recommendation Template"),
+        upload_to=upload_recommendation,
     )
 
     def __str__(self):
-        return str(self.advertisement_id)
+        return "{advertisement_id}".format(advertisement_id=self.advertisement_id)
 
     def save(self, *args, **kwargs):
         if not self.is_cleaned:
@@ -79,15 +91,21 @@ class Advertisement(models.Model):
             if obj.programme != self.programme:
                 flag = True
                 error_messages["programme"] = "This field can't be updated"
-            if obj.file != self.file:
+            if obj.document != self.document:
                 flag = True
-                error_messages["file"] = "This field can't be updated"
+                error_messages["document"] = "This field can't be updated"
+            if obj.letter_of_recommendation != self.letter_of_recommendation:
+                flag = True
+                error_messages[
+                    "letter_of_recommendation"
+                ] = "This field can't be updated"
             if flag:
                 raise ValidationError(error_messages)
         self.is_cleaned = True
 
     def delete(self, *args, **kwargs):
-        self.file.delete()
+        self.document.delete()
+        self.letter_of_recommendation.delete()
         super(Advertisement, self).delete(*args, **kwargs)
 
     class Meta:

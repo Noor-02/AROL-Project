@@ -21,6 +21,8 @@ from django.urls import include, path
 from django.utils.translation import gettext as _
 from rest_framework_simplejwt import views as jwt_views
 
+from users.views import LogoutView
+
 admin.AdminSite.site_title = _("AROL IITI")
 admin.AdminSite.site_header = _("AROL IIT Indore")
 admin.AdminSite.index_title = _("AROL Administration")
@@ -28,8 +30,9 @@ admin.AdminSite.index_title = _("AROL Administration")
 
 api_patterns = [
     path("admission/", include("admission.urls")),
-    path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+    path("login/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("login/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ]
 urlpatterns = [
     path("admin/", include("django.contrib.auth.urls")),

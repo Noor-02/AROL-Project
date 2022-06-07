@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
 from .models import (
-    Advertisement,
     Application,
     Education_Detail,
     Employment,
@@ -13,25 +13,16 @@ from .models import (
     Recommendation,
 )
 from .serializers import (
-    Advertisement_Serializer,
     Application_Serializer,
     Education_Serializer,
+    Education_File_Serializer,
     Employment_Serializer,
     Examination_Serializer,
     Profile_Serializer,
     Project_Serializer,
     Recommendation_Serializer,
+    Recommendation_File_Serializer,
 )
-
-
-class Advertisement_Viewset(viewsets.ModelViewSet):
-    serializer_class = Advertisement_Serializer
-    pagination_class = PageNumberPagination
-    filter_backends = (SearchFilter, OrderingFilter)
-    # search_fields = ["s_no", "name", "occupation"]
-
-    def get_queryset(self):
-        return Advertisement.objects.all()
 
 
 class Application_Viewset(viewsets.ModelViewSet):
@@ -56,6 +47,19 @@ class Education_Viewset(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ["s_no", "name", "occupation"]
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method == "PUT":
+            serializer_class = Education_File_Serializer
+        return serializer_class
+
+    def update(self, request, pk=None):
+        instance = self.get_object()
+        if instance.marksheet:
+            request.data.pop("marksheet")
+        if instance.certificate:
+            request.data.pop("certificate")
+        return super(Education_Viewset, self).update(request, pk)
 
     def get_queryset(self):
         return Education_Detail.objects.all()
@@ -106,6 +110,18 @@ class Recommendation_Viewset(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ["s_no", "name", "occupation"]
+
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method == "PUT":
+            serializer_class = Recommendation_File_Serializer
+        return serializer_class
+
+    def update(self, request, pk=None):
+        instance = self.get_object()
+        if instance.letter_of_recommendation:
+            return Response({"response": "File has already been uploaded."})
+        return super(Recommendation_Viewset, self).update(request, pk)
 
     def get_queryset(self):
         return Recommendation.objects.all()

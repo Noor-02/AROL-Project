@@ -18,7 +18,9 @@ class Employment(models.Model):
     emoluments = models.CharField(_("Gross Emoluments"), max_length=255)
 
     def __str__(self):
-        return self.applicant_id + " " + self.organization
+        return "{applicant_id}-{organization}".format(
+            applicant_id=self.applicant_id, organization=self.organization
+        )
 
     class Meta:
         verbose_name = _("Employment Detail")
