@@ -1,12 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext as _
+from import_export.admin import ImportMixin
+
 
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
+from .resources import Account_Resource
+
 
 @admin.register(Account)
-class AccountAdmin(UserAdmin):
+class AccountAdmin(ImportMixin, UserAdmin):
     form = AccountChangeForm
     add_form = AccountCreationForm
     model = Account
@@ -35,6 +39,4 @@ class AccountAdmin(UserAdmin):
             },
         ),
     )
-
-# class ImportAdmin(admin.ModelAdmin):
-#     change_list_template = 'admin/users/account/change_list.html'
+    resource_class = Account_Resource

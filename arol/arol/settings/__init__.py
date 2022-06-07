@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "import_export",
     "choice.apps.ChoiceConfig",
     "management.apps.ManagementConfig",
     "admission.apps.AdmissionConfig",
@@ -79,14 +80,6 @@ WSGI_APPLICATION = "arol.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "HOST": "127.0.0.1",
-    #     "PORT": "3306",
-    #     "USER": "root",
-    #     "PASSWORD": "your_password",
-    #     "NAME": "database_name",
-    # },
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
@@ -141,6 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -158,3 +152,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "asd"
 EMAIL_HOST_PASSWORD = "adf"
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+IMPORT_EXPORT_SKIP_ADMIN_LOG = True
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = "add"
