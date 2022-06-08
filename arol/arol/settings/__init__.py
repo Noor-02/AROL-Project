@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "import_export",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "django_crontab",
+    "corsheaders",
     "choice.apps.ChoiceConfig",
     "management.apps.ManagementConfig",
     "admission.apps.AdmissionConfig",
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -77,6 +80,13 @@ TEMPLATES = [
 AUTH_USER_MODEL = "users.Account"
 
 WSGI_APPLICATION = "arol.wsgi.application"
+
+
+# Django CORS Headers
+# https://pypi.org/project/django-cors-headers/
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -107,6 +117,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_RESET_TIMEOUT_DAYS = 1
+
+
+# Django REST Framework
+# https://www.django-rest-framework.org/
+
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
@@ -120,10 +136,25 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 50,
 }
 
-SIMPLE_JWT = {"USER_ID_FIELD": "email"}
-ROTATE_REFRESH_TOKENS = True
-BLACKLIST_AFTER_ROTATION = True
-ISSUER = "AROL IITI"
+
+# Django REST Framework Simple JWT
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+
+SIMPLE_JWT = {
+    "USER_ID_FIELD": "email",
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ISSUER": "AROL IITI",
+    "SIGNING_KEY": SECRET_KEY,
+}
+
+
+# Django Crontab
+# https://pypi.org/project/django-crontab/
+
+CRONJOBS = [
+    ("0 0 * * *", "django.core.management.call_command", ["flushexpiredtokens"]),
+]
 
 
 # Internationalization
@@ -141,10 +172,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+FRONTEND_URL = "http://127.0.0.1:8000"
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # MEDIA_URL = "/media/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -154,12 +187,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/admin/login/"
 LOGIN_REDIRECT_URL = "/admin/"
 
+
+# Django Sending email
+# https://docs.djangoproject.com/en/4.0/topics/email/
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "asd"
 EMAIL_HOST_PASSWORD = "adf"
+
+
+# Django import / export
+# https://django-import-export.readthedocs.io/en/2.8.0/
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 IMPORT_EXPORT_SKIP_ADMIN_LOG = True

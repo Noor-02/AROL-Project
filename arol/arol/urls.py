@@ -20,8 +20,17 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.utils.translation import gettext as _
 from rest_framework_simplejwt import views as jwt_views
-
-from users.views import LogoutView
+from users.views import (
+    Change_Password_View,
+    Generate_Activation_View,
+    Logout_View,
+    Login_View,
+    Registration_View,
+    Verify_Email_View,
+    Reset_Password_View,
+    Password_Token_View,
+    Set_Password_View,
+)
 
 admin.AdminSite.site_title = _("AROL IITI")
 admin.AdminSite.site_header = _("AROL IIT Indore")
@@ -30,9 +39,36 @@ admin.AdminSite.index_title = _("AROL Administration")
 
 api_patterns = [
     path("admission/", include("admission.urls")),
-    path("login/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("login/", Login_View.as_view(), name="token_obtain_pair"),
     path("login/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
-    path("logout/", LogoutView.as_view(), name="logout"),
+    path("register/", Registration_View.as_view(), name="register"),
+    path(
+        "verify_email/<signed_email>/<token>/",
+        Verify_Email_View.as_view(),
+        name="verify_email",
+    ),
+    path(
+        "generate_activation_link/<signed_email>/",
+        Generate_Activation_View.as_view(),
+        name="generate_activation_link",
+    ),
+    path("change_password/", Change_Password_View.as_view(), name="change_password"),
+    path(
+        "forgot_password/",
+        Reset_Password_View.as_view(),
+        name="forgot_password",
+    ),
+    path(
+        "reset_password/<uidb64>/<token>/",
+        Password_Token_View.as_view(),
+        name="reset_password",
+    ),
+    path(
+        "reset_password_complete/",
+        Set_Password_View.as_view(),
+        name="reset_password_complete",
+    ),
+    path("logout/", Logout_View.as_view(), name="logout"),
 ]
 urlpatterns = [
     path("admin/", include("django.contrib.auth.urls")),

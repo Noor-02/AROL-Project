@@ -32,6 +32,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 50,
 }
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -67,10 +68,16 @@ LOGGING = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=env("ACCESS_TOKEN_LIFETIME")),
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=env("REFRESH_TOKEN_LIFETIME")),
+    "USER_ID_FIELD": "email",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=int(env("ACCESS_TOKEN_LIFETIME"))),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=int(env("REFRESH_TOKEN_LIFETIME"))),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
     "SIGNING_KEY": env("SIGNING_KEY"),
+    "ISSUER": "AROL IITI",
 }
 
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+FRONTEND_URL = env("FRONTEND_URL")

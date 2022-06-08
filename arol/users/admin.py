@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext as _
-from import_export.admin import ImportMixin
+from import_export.admin import ImportExportMixin
 
 
 from .forms import AccountChangeForm, AccountCreationForm
@@ -10,7 +10,7 @@ from .resources import Account_Resource
 
 
 @admin.register(Account)
-class AccountAdmin(ImportMixin, UserAdmin):
+class AccountAdmin(ImportExportMixin, UserAdmin):
     form = AccountChangeForm
     add_form = AccountCreationForm
     model = Account
