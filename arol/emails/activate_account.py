@@ -3,6 +3,8 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
 from django.utils.encoding import smart_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
 
 
 class Activate_Account:
@@ -29,4 +31,11 @@ class Activate_Account:
         )
 
     def send(self):
-        self.user.email_user(self.subject, self.message)
+        self.content = EmailMultiAlternatives(
+            self.subject, self.message, None, [self.user.email]
+        )
+        self.html_template = get_template("emails/activate_account.html").render(
+            {"uidb64": self.uidb64, "token": self.token}
+        )
+        self.content.attach_alternative(self.html_template, "text/html")
+        self.content.send()

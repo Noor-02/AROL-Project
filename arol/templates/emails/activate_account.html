@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activate Account</title>
+  </head>
+  <body>
+    <div>
+      <h2>Activate Your IITI AROL Account</h2>
+    </div>
+    <div>
+      <p>Hello user,</p>
+      <p>
+        To activate your IITI AROL Account, please click on the following
+        link,<br />
+        and change your password: <br />
+        <a
+          href="{% url 'reset_password' uidb64=uidb64 token=token %}"
+        >
+          Activate Account
+        </a>
+      </p>
+    </div>
+    <div>
+      <footer>
+        <p>
+          Regards<br />
+          IIT Indore
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
