@@ -46,7 +46,7 @@ class Registration_Serializer(serializers.ModelSerializer):
         account.is_active = False
         account.save()
         account.groups.set([1])
-        account.send_activation_mail()
+        account.send_verification_mail()
 
         return account
 
@@ -105,7 +105,6 @@ class Change_Password_Serializer(serializers.Serializer):
 
 class Reset_Password_Serializer(serializers.Serializer):
     email = serializers.EmailField()
-
     class Meta:
         fields = ["email"]
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .file_exports.generate_zip import generate_zip
+from .file_exports import generate_zip
 from django.utils.html import mark_safe
 from .models import (
     Advertisement,

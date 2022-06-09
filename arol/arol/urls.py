@@ -22,7 +22,7 @@ from django.utils.translation import gettext as _
 from rest_framework_simplejwt import views as jwt_views
 from users.views import (
     Change_Password_View,
-    Generate_Activation_View,
+    Generate_Verification_View,
     Logout_View,
     Login_View,
     Registration_View,
@@ -48,9 +48,9 @@ api_patterns = [
         name="verify_email",
     ),
     path(
-        "generate_activation_link/<signed_email>/",
-        Generate_Activation_View.as_view(),
-        name="generate_activation_link",
+        "generate_verification_link/<signed_email>/",
+        Generate_Verification_View.as_view(),
+        name="generate_verification_link",
     ),
     path("change_password/", Change_Password_View.as_view(), name="change_password"),
     path(

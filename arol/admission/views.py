@@ -1,6 +1,10 @@
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import (
+    DjangoModelPermissionsOrAnonReadOnly,
+    IsAuthenticated,
+)
 from rest_framework.response import Response
 
 from .models import (
@@ -12,16 +16,17 @@ from .models import (
     Qualifying_Examination,
     Recommendation,
 )
+from .permissions import IsOwner, IsOwner_Applicant, IsOwner_Application
 from .serializers import (
     Application_Serializer,
-    Education_Serializer,
     Education_File_Serializer,
+    Education_Serializer,
     Employment_Serializer,
     Examination_Serializer,
     Profile_Serializer,
     Project_Serializer,
-    Recommendation_Serializer,
     Recommendation_File_Serializer,
+    Recommendation_Serializer,
 )
 
 
@@ -46,7 +51,13 @@ class Education_Viewset(viewsets.ModelViewSet):
     serializer_class = Education_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
+    permission_classes = (
+        IsOwner_Applicant,
+        IsAuthenticated,
+        DjangoModelPermissionsOrAnonReadOnly,
+    )
     # search_fields = ["s_no", "name", "occupation"]
+
     def get_serializer_class(self):
         serializer_class = self.serializer_class
         if self.request.method == "PUT":
@@ -62,7 +73,8 @@ class Education_Viewset(viewsets.ModelViewSet):
         return super(Education_Viewset, self).update(request, pk)
 
     def get_queryset(self):
-        return Education_Detail.objects.all()
+        user = self.request.user
+        return Education_Detail.objects.filter(applicant_id__account=user)
 
 
 class Employment_Viewset(viewsets.ModelViewSet):
@@ -89,10 +101,16 @@ class Profile_Viewset(viewsets.ModelViewSet):
     serializer_class = Profile_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
+    permission_classes = (
+        IsOwner,
+        IsAuthenticated,
+        DjangoModelPermissionsOrAnonReadOnly,
+    )
     # search_fields = ["s_no", "name", "occupation"]
 
     def get_queryset(self):
-        return Profile.objects.all()
+        user = self.request.user
+        return Profile.objects.filter(account=user)
 
 
 class Project_Viewset(viewsets.ModelViewSet):

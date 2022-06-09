@@ -12,9 +12,9 @@ from .views import (
     Project_Viewset,
     Recommendation_Viewset,
 )
-from .file_exports.generate_pdf import export_pdf_wrapper
-from .file_exports.generate_xlsx import generate_xlsx
-from .file_exports.generate_zip import generate_zip_by_year
+from .file_exports import export_pdf_wrapper
+from .file_exports import generate_xlsx
+from .file_exports import generate_zip_by_year
 
 router = DefaultRouter()
 router.register(r"application", Application_Viewset, "application")
@@ -27,7 +27,7 @@ router.register(r"recommendation", Recommendation_Viewset, "recommendation")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("export_xlsx/",generate_xlsx),
-    path("export_pdf/<application_id>", export_pdf_wrapper),
-    path("export_zip/<year>", generate_zip_by_year),
+    path("export_xlsx/", generate_xlsx, name="export_xlsx"),
+    path("export_pdf/<application_id>", export_pdf_wrapper, name="export_pdf"),
+    path("export_zip/<year>", generate_zip_by_year, name="export_zip"),
 ]

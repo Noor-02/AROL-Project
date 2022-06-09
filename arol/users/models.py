@@ -1,17 +1,15 @@
-from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
 )
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
-from django.core.signing import Signer
+
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import smart_bytes
-from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext as _
+
+from emails import Activate_Account, Reset_Password, Verify_Email
 
 
 class AccountManager(BaseUserManager):
@@ -78,43 +76,20 @@ class Account(AbstractBaseUser, PermissionsMixin):
         """
         return self.full_name.strip()
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
+    def email_user(self, subject, message, **kwargs):
         """
         Send an email to this user.
         """
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+        send_mail(subject, message, None, [self.email], **kwargs)
+
+    def send_verification_mail(self):
+        mail = Verify_Email(self)
+        mail.send()
 
     def send_activation_mail(self):
-        subject = "Activate your Email"
-        signed_email = Signer().sign(self.email)
-        token = PasswordResetTokenGenerator().make_token(self)
-        message = """
-        Dear User,
-
-        To activate your account visit:
-        http://127.0.0.1:8000/api/verify_email/{signed_email}/{token}/
-        
-        If the link has expired, click the link below to generate a new link
-        http://127.0.0.1:8000/api/generate_link/{signed_email}/
-        """.format(
-            signed_email=signed_email, token=token
-        )
-        from_email = settings.EMAIL_HOST_USER
-        self.email_user(subject, message, from_email)
+        mail = Activate_Account(self)
+        mail.send()
 
     def send_reset_password_mail(self):
-        subject = "Reset your Password"
-        uidb64 = urlsafe_base64_encode(smart_bytes(self.email))
-        token = PasswordResetTokenGenerator().make_token(self)
-        message = """
-        Dear User,
-
-        To reset your password visit:
-        http://127.0.0.1:8000/api/reset_password/{uidb64}/{token}/
-        
-        If you have not initiated this request, you can safely ignore this mail.
-        """.format(
-            uidb64=uidb64, token=token
-        )
-        from_email = settings.EMAIL_HOST_USER
-        self.email_user(subject, message, from_email)
+        mail = Reset_Password(self)
+        mail.send()

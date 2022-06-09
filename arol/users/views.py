@@ -40,13 +40,13 @@ class Verify_Email_View(APIView):
                 )
             if user.is_active:
                 return Response(
-                    {"response": "Account has already been activated."},
+                    {"response": "Account has already been verified."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             user.is_active = True
             user.save()
             return Response(
-                {"response": "Your account has been activated."},
+                {"response": "Your account has been verified."},
                 status=status.HTTP_200_OK,
             )
 
@@ -57,7 +57,7 @@ class Verify_Email_View(APIView):
             )
 
 
-class Generate_Activation_View(APIView):
+class Generate_Verification_View(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, signed_email):
@@ -66,11 +66,11 @@ class Generate_Activation_View(APIView):
             user = Account.objects.get(email=email)
             if user.is_active:
                 return Response(
-                    {"response": "Account has already been activated."},
+                    {"response": "Account has already been verified."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             else:
-                user.send_activation_mail()
+                user.send_verification_mail()
                 return Response(
                     {"response": "Check your Email for further instructions."},
                     status=status.HTTP_200_OK,
@@ -219,3 +219,5 @@ class Logout_View(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(status=status.HTTP_205_RESET_CONTENT)
+
+from django.contrib.sites.shortcuts import get_current_site

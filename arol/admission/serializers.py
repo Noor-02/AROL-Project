@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from rest_framework import serializers
 
 from admission.models import (
@@ -16,11 +17,21 @@ class Application_Serializer(serializers.ModelSerializer):
         model = Application
         fields = "__all__"
 
+    def validate(self, attrs):
+        if attrs["applicant_id"].account != self.context["request"].user:
+            raise ValidationError({"error": "Applicant_ID is not valid"})
+        return super().validate(attrs)
+
 
 class Education_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Education_Detail
         fields = "__all__"
+
+    def validate(self, attrs):
+        if attrs["applicant_id"].account != self.context["request"].user:
+            raise ValidationError({"error": "Applicant_ID is not valid"})
+        return super().validate(attrs)
 
 
 class Education_File_Serializer(serializers.ModelSerializer):
@@ -42,6 +53,10 @@ class Examination_Serializer(serializers.ModelSerializer):
 
 
 class Profile_Serializer(serializers.ModelSerializer):
+    account = serializers.PrimaryKeyRelatedField(
+        read_only=True, default=serializers.CurrentUserDefault()
+    )
+
     class Meta:
         model = Profile
         fields = "__all__"
