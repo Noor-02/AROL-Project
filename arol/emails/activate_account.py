@@ -11,6 +11,7 @@ class Activate_Account:
     def __init__(self, user):
         self.user = user
         self.subject = "Activate your IITI AROL Account"
+        self.full_name = user.full_name
         self.uidb64 = urlsafe_base64_encode(smart_bytes(user.email))
         self.token = PasswordResetTokenGenerator().make_token(user)
         self.domain = settings.FRONTEND_URL
@@ -25,7 +26,6 @@ class Activate_Account:
         
         Regards
         IIT Indore""".format(
-            full_name=self.user.full_name,
             domain=self.domain,
             relative_link=self.relative_link,
         )
@@ -35,7 +35,7 @@ class Activate_Account:
             self.subject, self.message, None, [self.user.email]
         )
         self.html_template = get_template("emails/activate_account.html").render(
-            {"uidb64": self.uidb64, "token": self.token}
+            {"name": self.full_name, "abs_url": self.domain + self.relative_link}
         )
         self.content.attach_alternative(self.html_template, "text/html")
         self.content.send()
