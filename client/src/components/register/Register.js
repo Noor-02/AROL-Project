@@ -25,6 +25,10 @@ class Register extends Component {
           <Form.Control type="text" required />
           <Form.Label className={classes.FormLabels}>Confirm Password</Form.Label>
           <Form.Control type="text" required />
+          <Form.Label className={classes.FormLabels}>Phone Number</Form.Label>
+          <Form.Control type="text" required />
+          <Form.Label className={classes.FormLabels}>Email Id</Form.Label>
+          <Form.Control type="text" required />
         </Form.Group>
         <Button onClick={this.loginInitiated} className={classes.RegisterButton} size="lg" variant="outline-info">REGISTER</Button>{' '}
       </div>
