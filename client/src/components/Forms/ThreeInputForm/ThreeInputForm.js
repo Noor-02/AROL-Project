@@ -6,27 +6,30 @@ import { IsListEmpty } from '../../../utilities/CommonMethods'
 
 class ThreeInputForm extends Component {
     state = {
-        labelsList: []
+        labelsList: [],
     }
 
     componentDidMount = () => {
         let labelsList = !IsListEmpty(this.props.label) ? this.props.label : [];
+        // let typeArray = !IsListEmpty(this.props.typeArray) ? this.props.typeArray : [];
         this.setState({
-            labelsList: labelsList
+            labelsList: labelsList,
+            // typeArray: typeArray
         })
     }
 
     render() {
+        // console.log(this.state.typeArray)
         return (
             <div className={classes.flexContainer}>
                 {!IsListEmpty(this.state.labelsList) ? <> <Form.Group className={`mb-3 ${classes.flexItem}`}>
                     <Form.Label className={classes.FormLabels}>
-                        {this.props.label[0].label}
+                        {this.state.labelsList[0].label}
                     </Form.Label>
                     <Form.Control
-                        value={this.props.label[0].val}
+                        value={this.state.labelsList[0].val}
                         onChange={(e) =>
-                            this.props.onChange(e.target.value, this.props.label[0].label)
+                            this.props.onChange(e.target.value, this.state.labelsList[0].label)
                         }
                         type="text"
                         required
@@ -34,12 +37,12 @@ class ThreeInputForm extends Component {
                 </Form.Group>
                     <Form.Group className={`mb-3 ${classes.flexItem}`}>
                         <Form.Label className={classes.FormLabels}>
-                            {this.props.label[1].label}
+                            {this.state.labelsList[1].label}
                         </Form.Label>
                         <Form.Control
-                            value={this.props.label[1].val}
+                            value={this.state.labelsList[1].val}
                             onChange={(e) =>
-                                this.props.onChange(e.target.value, this.props.label[1].label)
+                                this.props.onChange(e.target.value, this.state.labelsList[1].label)
                             }
                             type="text"
                             required
@@ -47,12 +50,12 @@ class ThreeInputForm extends Component {
                     </Form.Group>
                     <Form.Group className={`mb-3 ${classes.flexItem}`}>
                         <Form.Label className={classes.FormLabels}>
-                            {this.props.label[2].label}
+                            {this.state.labelsList[2].label}
                         </Form.Label>
                         <Form.Control
-                            value={this.props.label[2].val}
+                            value={this.state.labelsList[2].val}
                             onChange={(e) =>
-                                this.props.onChange(e.target.value, this.props.label[2].label)
+                                this.props.onChange(e.target.value, this.state.labelsList[2].label)
                             }
                             type="text"
                             required

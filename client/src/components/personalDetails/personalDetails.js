@@ -73,6 +73,7 @@ class PersonalDetails extends Component {
   };
   render() {
     let labelsList1 = [this.state.labels[0], this.state.labels[1], this.state.labels[2]];
+    let typeArray1 = ["text", "text", "number"];
     let labelsList2 = [];
     return (
       <div>
@@ -88,6 +89,7 @@ class PersonalDetails extends Component {
           />
           <Dropdown
             optionList={this.state.dropdownlabels}
+            typeArray={typeArray1}
             onSelect={this.onSelect}
           />
         </div>

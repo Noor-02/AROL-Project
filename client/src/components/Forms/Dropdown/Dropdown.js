@@ -10,13 +10,13 @@ class Dropdown extends Component {
 
   componentDidMount = () => {
     let optionList = this.props.optionList;
-    console.log(optionList);
+    // console.log(optionList);
     this.setState({
       optionList: optionList,
     });
   };
   render() {
-    console.log(this.state.optionList);
+    // console.log(this.state.optionList);
     return (
       <div>
         <Form.Select>
