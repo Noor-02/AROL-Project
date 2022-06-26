@@ -38,10 +38,6 @@ class EmploymentDetails extends Component {
               <div>
                 <br />
                 list not empty
-                {/* <TwoInputForm
-                    label={[this.state.labels[0], this.state.labels[1]]}
-                    onChange={this.onChange}
-                  /> */}
               </div>
             );
           })

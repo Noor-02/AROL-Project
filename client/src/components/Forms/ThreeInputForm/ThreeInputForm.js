@@ -7,14 +7,15 @@ import { IsListEmpty } from '../../../utilities/CommonMethods'
 class ThreeInputForm extends Component {
     state = {
         labelsList: [],
+        typeArray: []
     }
 
     componentDidMount = () => {
         let labelsList = !IsListEmpty(this.props.label) ? this.props.label : [];
-        // let typeArray = !IsListEmpty(this.props.typeArray) ? this.props.typeArray : [];
+        let typeArray = !IsListEmpty(this.props.typeArray) ? this.props.typeArray : [];
         this.setState({
             labelsList: labelsList,
-            // typeArray: typeArray
+            typeArray: typeArray
         })
     }
 
@@ -31,7 +32,7 @@ class ThreeInputForm extends Component {
                         onChange={(e) =>
                             this.props.onChange(e.target.value, this.state.labelsList[0].label)
                         }
-                        type="text"
+                        type={this.state.typeArray[0]}
                         required
                     />
                 </Form.Group>
@@ -44,7 +45,7 @@ class ThreeInputForm extends Component {
                             onChange={(e) =>
                                 this.props.onChange(e.target.value, this.state.labelsList[1].label)
                             }
-                            type="text"
+                            type={this.state.typeArray[1]}
                             required
                         />
                     </Form.Group>
@@ -57,7 +58,7 @@ class ThreeInputForm extends Component {
                             onChange={(e) =>
                                 this.props.onChange(e.target.value, this.state.labelsList[2].label)
                             }
-                            type="text"
+                            type={this.state.typeArray[2]}
                             required
                         />
                     </Form.Group> </> : null}

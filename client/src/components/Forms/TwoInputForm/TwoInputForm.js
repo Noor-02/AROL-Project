@@ -6,13 +6,16 @@ import { IsListEmpty } from '../../../utilities/CommonMethods'
 
 class TwoInputForm extends Component {
   state = {
-    labelsList: []
+    labelsList: [],
+    typeArray: []
   }
 
   componentDidMount = () => {
     let labelsList = !IsListEmpty(this.props.label) ? this.props.label : [];
+    let typeArray = !IsListEmpty(this.props.typeArray) ? this.props.typeArray : [];
     this.setState({
-      labelsList: labelsList
+      labelsList: labelsList,
+      typeArray: typeArray
     })
   }
 
@@ -28,7 +31,7 @@ class TwoInputForm extends Component {
             onChange={(e) =>
               this.props.onChange(e.target.value, this.state.labelsList[0].label)
             }
-            type="text"
+            type={this.state.typeArray[0]}
             required
           />
         </Form.Group>
@@ -41,7 +44,7 @@ class TwoInputForm extends Component {
               onChange={(e) =>
                 this.props.onChange(e.target.value, this.state.labelsList[1].label)
               }
-              type="text"
+              type={this.state.typeArray[1]}
               required
             />
           </Form.Group> </> : null}
