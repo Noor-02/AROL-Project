@@ -1,5 +1,15 @@
 .FormLabels {
     font-weight: 500;
+    /* width: 50%; */
     font-size: 1rem;
     margin-top: 0.2rem;
+}
+
+.flexItem {
+    flex-grow: 1;
+    margin: 1rem;
+}
+
+.flexContainer {
+    display: flex;
 }
