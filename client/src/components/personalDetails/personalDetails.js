@@ -16,7 +16,31 @@ class PersonalDetails extends Component {
     labels: [
       { label: "Full Name", val: "" },
       { label: "Father's/Spouse Name", val: "" },
-      { label: "labelThree", val: "" },
+      { label: "Indian Applicant", val: false },
+      { label: "PWD", val: false },
+      { label: "Nationality", val: "" },
+      { label: "Photograph", val: "" },
+      { label: "Date Of Birth", val: "" },
+      { label: "Marital Status", val: false },
+      { label: "Gender", val: "" },
+      { label: "Caste Category", val: "" },
+      { label: "Contact Number", val: 0 },
+      { label: "Parent Contact Number", val: 0 },
+      { label: "Disability", val: false },
+      {
+        label: "Correspondance Address", val:
+          [{ label: "Address", val: "" },
+          { label: "City", val: "" },
+          { label: "State", val: "" },
+          { label: "Pin Code", val: 0 }]
+      },
+      {
+        label: "Permanent Address", val:
+          [{ label: "Address", val: "" },
+          { label: "City", val: "" },
+          { label: "State", val: "" },
+          { label: "Pin Code", val: 0 }]
+      },
     ],
   };
 
@@ -48,18 +72,16 @@ class PersonalDetails extends Component {
     });
   };
   render() {
+    let labelsList1 = [this.state.labels[0], this.state.labels[1], this.state.labels[2]];
+    let labelsList2 = [];
     return (
       <div>
         This is personal details page
         <div>
-          {/* <ThreeInputForm
-            label={[
-              this.state.labels[0],
-              this.state.labels[1],
-              this.state.labels[2],
-            ]}
+          <ThreeInputForm
+            label={labelsList1}
             onChange={this.onChange}
-          /> */}
+          />
           <TwoInputForm
             label={[this.state.labels[0], this.state.labels[1]]}
             onChange={this.onChange}

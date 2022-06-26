@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import classes from "./PostLogin.module.css";
 import LoginNav from "../LogInNav/LoginNav";
-import PersonalDetails from "../personalDetails/personalDetails";
-import EducationalDetails from "../educationalDetails/educationalDetails";
-import EmploymentDetails from "../employmentDetails/employmentDetails";
+import PersonalDetails from "../PersonalDetails/PersonalDetails";
+import EducationalDetails from "../EducationalDetails/EducationalDetails";
+import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
 import { ReactDOM } from "react";
 import { Switch, withRouter, Route } from "react-router";
 
@@ -43,42 +43,42 @@ class PostLogin extends Component {
   componentDidMount() {
     this.props.location.pathname === this.props.match.url + "/home"
       ? this.setState({
-          activeNavItem: 0,
-          activeItemType: "home",
-        })
+        activeNavItem: 0,
+        activeItemType: "home",
+      })
       : this.props.location.pathname ===
         this.props.match.url + "/change-password"
-      ? this.setState({
+        ? this.setState({
           activeNavItem: 2,
           activeItemType: "change-password",
         })
-      : this.props.location.pathname === this.props.match.url + "/applications"
-      ? this.setState({
-          activeNavItem: 3,
-          activeItemType: "applications",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/personal-details"
-      ? this.setState({
-          activeNavItem: 4,
-          activeItemType: "personal-details",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/educational-details"
-      ? this.setState({
-          activeNavItem: 5,
-          activeItemType: "educational-details",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/employment-details"
-      ? this.setState({
-          activeNavItem: 1,
-          activeItemType: "employment-details",
-        })
-      : this.setState({
-          activeNavItem: 0,
-          activeItemType: "home",
-        });
+        : this.props.location.pathname === this.props.match.url + "/applications"
+          ? this.setState({
+            activeNavItem: 3,
+            activeItemType: "applications",
+          })
+          : this.props.location.pathname ===
+            this.props.match.url + "/personal-details"
+            ? this.setState({
+              activeNavItem: 4,
+              activeItemType: "personal-details",
+            })
+            : this.props.location.pathname ===
+              this.props.match.url + "/educational-details"
+              ? this.setState({
+                activeNavItem: 5,
+                activeItemType: "educational-details",
+              })
+              : this.props.location.pathname ===
+                this.props.match.url + "/employment-details"
+                ? this.setState({
+                  activeNavItem: 1,
+                  activeItemType: "employment-details",
+                })
+                : this.setState({
+                  activeNavItem: 0,
+                  activeItemType: "home",
+                });
   }
   render() {
     let renderdata;
