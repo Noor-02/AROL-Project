@@ -4,14 +4,17 @@
 
 .NavLink {
     color: white !important;
+    background-color: #212529;
     font-size: 1rem;
     padding-left: 2rem !important;
-    margin-right: 2rem;
+    padding-right: 2rem !important;
+    border: #212529 solid 1px;
     border-left: 1px white solid;
+
 }
 
 .NavLink:hover {
-    color: rgb(209, 240, 240) !important;
+    color: #e6f8ff !important;
 }
 
 .Details {

@@ -16,9 +16,10 @@ class PersonalDetails extends Component {
     labels: [
       { label: "Full Name", val: "" },
       { label: "Father's/Spouse Name", val: "" },
+      { label: "Nationality", val: "" },
+      { label: "Admission for The Year", val: "" },
       { label: "Indian Applicant", val: false },
       { label: "PWD", val: false },
-      { label: "Nationality", val: "" },
       { label: "Photograph", val: "" },
       { label: "Date Of Birth", val: "" },
       { label: "Marital Status", val: false },
@@ -72,16 +73,13 @@ class PersonalDetails extends Component {
     });
   };
   render() {
-    // let labelsList1 = ;
-    // let typeArray1 = ;
-    // let labelsList2 = [];
     return (
       <div>
         This is personal details page
         <div>
           <ThreeInputForm
             label={[this.state.labels[0], this.state.labels[1], this.state.labels[2]]}
-            typeArray={["text", "text", "number"]}
+            typeArray={["text", "text", "text"]}
             onChange={this.onChange}
           />
           <TwoInputForm
