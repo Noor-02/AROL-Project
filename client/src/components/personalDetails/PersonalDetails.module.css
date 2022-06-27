@@ -1,0 +1,62 @@
+.ContainerDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.TopContainer {
+    display: flex;
+    width: 100%;
+}
+
+.TopLeftDiv {
+    margin-top: 2rem;
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.Row {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+}
+
+.TopRightDiv {
+    display: flex;
+    width: 50%;
+}
+
+.FormLabels {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-top: 0.2rem;
+}
+
+.AdmissionInput {
+    width: 50%;
+}
+
+.TypeOfApplicantInput {
+    width: 40%;
+}
+
+.FatherSpouseNameInout {
+    width: 94%;
+}
+
+.CasteInput {
+    width: 45%;
+}
+
+.MaritalStatusInput {
+    width: 45%;
+}
+
+.NationalityInput {
+    width: 45%;
+}
+
+.PwdInput {
+    width: 45%;
+}

@@ -1,96 +1,161 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import classes from './PersonalDetails.module.css'
 import { ReactDOM } from "react";
-import ThreeInputForm from "../Forms/ThreeInputForm/ThreeInputForm";
-import Dropdown from "../Forms/Dropdown/Dropdown";
-import TwoInputForm from "../Forms/TwoInputForm/TwoInputForm";
+import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 
 class PersonalDetails extends Component {
   state = {
-    dropdownlabels: [
-      { label: "val1", selected: false },
-      { label: "val2", selected: false },
-      { label: "val3", selected: false },
-      { label: "val4", selected: false },
-    ],
-    labels: [
-      { label: "Full Name", val: "" },
-      { label: "Father's/Spouse Name", val: "" },
-      { label: "Nationality", val: "" },
-      { label: "Admission for The Year", val: "" },
-      { label: "Indian Applicant", val: false },
-      { label: "PWD", val: false },
-      { label: "Photograph", val: "" },
-      { label: "Date Of Birth", val: "" },
-      { label: "Marital Status", val: false },
-      { label: "Gender", val: "" },
-      { label: "Caste Category", val: "" },
-      { label: "Contact Number", val: 0 },
-      { label: "Parent Contact Number", val: 0 },
-      { label: "Disability", val: false },
-      {
-        label: "Correspondance Address", val:
-          [{ label: "Address", val: "" },
-          { label: "City", val: "" },
-          { label: "State", val: "" },
-          { label: "Pin Code", val: 0 }]
-      },
-      {
-        label: "Permanent Address", val:
-          [{ label: "Address", val: "" },
-          { label: "City", val: "" },
-          { label: "State", val: "" },
-          { label: "Pin Code", val: 0 }]
-      },
-    ],
-  };
-
-  onSelect = (label) => {
-    let initialLabels = this.state.dropdownlabels;
-    initialLabels.map((item) => {
-      if (item.label === label) {
-        item.selected = true;
-      } else {
-        item.selected = false;
-      }
-    });
-
-    this.setState({
-      dropdownlabels: initialLabels,
-    });
+    admissionYear: "",
+    typeOfApplicant: "",
+    fullName: "",
+    fatherSpouseName: "",
+    dob: "",
+    gender: "",
+    caste: "",
+    maritalStatus: "",
+    contactNumber: "",
+    parentConatct: "",
+    nationality: "",
+    pwd: "",
+    typeOfDisability: "",
+    correspondanceAddress: [{ address: "", state: "", city: "", pinCode: "" }],
+    permanentAddress: [{ address: "", state: "", city: "", pinCode: "" }],
+    optionList: ["Indian Applicant", "Foreign Applicant"],
+    casteList: ["GEN", "SC", "ST", "OBC", "Other"],
+    maritalList: ["Married", "Not Married"],
+    disabilityList: ["Yes", "No"]
   };
 
   onChange = (val, label) => {
-    let initialLabels = this.state.labels;
-    initialLabels.map((item) => {
-      if (item.label === label) {
-        item.val = val;
-      }
+    this.setState((prevState) => {
+      let stateVal = prevState;
+      stateVal[label] = val;
+      return {
+        ...stateVal,
+      };
     });
+  }
 
-    this.setState({
-      labels: initialLabels,
-    });
-  };
   render() {
     return (
-      <div>
-        This is personal details page
+      <div className={classes.ContainerDiv}>
+        <div className={classes.TopContainer}>
+          <div className={classes.TopLeftDiv}>
+            <div className={classes.Row}>
+              <Form.Group className={classes.AdmissionInput}>
+                <Form.Label className={classes.FormLabels}>
+                  Admission For The Year
+                </Form.Label>
+                <Form.Control
+                  value={this.state.admissionYear}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, "admissionYear")
+                  }
+                  type="text"
+                  required
+                />
+              </Form.Group>
+              <Form.Group className={classes.TypeOfApplicantInput}>
+                <Form.Label className={classes.FormLabels}>
+                  Type Of Applicant
+                </Form.Label>
+                <Form.Select onChange={(e) => this.onChange(e.target.value, "typeOfApplicant")}>
+                  {this.state.optionList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Form.Group>
+            </div>
+            <div className={classes.Row}>
+              <Form.Group className={classes.FatherSpouseNameInout}>
+                <Form.Label className={classes.FormLabels}>
+                  Father's/Spouse Name
+                </Form.Label>
+                <Form.Control
+                  value={this.state.fatherSpouseName}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, "fatherSpouseName")
+                  }
+                  type="text"
+                  required
+                />
+              </Form.Group>
+            </div>
+            <div className={classes.Row}>
+              <Form.Group className={classes.CasteInput}>
+                <Form.Label className={classes.FormLabels}>
+                  Caste Category
+                </Form.Label>
+                <Form.Select onChange={(e) => this.onChange(e.target.value, "caste")}>
+                  {this.state.casteList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className={classes.MaritalStatusInput}>
+                <Form.Label className={classes.FormLabels}>
+                  Marital Status
+                </Form.Label>
+                <Form.Select onChange={(e) => this.onChange(e.target.value, "maritalStatus")}>
+                  {this.state.maritalList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Form.Group>
+            </div>
+            <div className={classes.Row}>
+              <Form.Group className={classes.NationalityInput}>
+                <Form.Label className={classes.FormLabels}>
+                  Nationality
+                </Form.Label>
+                <Form.Control
+                  value={this.state.nationality}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, "nationality")
+                  }
+                  type="text"
+                  required
+                />
+              </Form.Group>
+              <Form.Group className={classes.PwdInput}>
+                <Form.Label className={classes.FormLabels}>
+                  Person With Disablity (PwD)
+                </Form.Label>
+                <Form.Select onChange={(e) => this.onChange(e.target.value, "pwd")}>
+                  {this.state.disabilityList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Form.Group>
+            </div>
+          </div>
+          <div className={classes.TopRightDiv}>
+
+          </div>
+        </div>
         <div>
-          <ThreeInputForm
-            label={[this.state.labels[0], this.state.labels[1], this.state.labels[2]]}
-            typeArray={["text", "text", "text"]}
-            onChange={this.onChange}
-          />
-          <TwoInputForm
-            label={[this.state.labels[3], this.state.labels[5]]}
-            typeArray={["text", "number"]}
-            onChange={this.onChange}
-          />
-          <Dropdown
-            optionList={this.state.dropdownlabels}
-            onSelect={this.onSelect}
-          />
+
         </div>
       </div>
     );
