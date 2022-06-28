@@ -3,12 +3,12 @@
     flex-direction: column;
 }
 
-.TopContainer {
+.HorizontalSections {
     display: flex;
     width: 100%;
 }
 
-.TopLeftDiv {
+.Sections {
     margin-top: 2rem;
     display: flex;
     width: 50%;
@@ -22,15 +22,23 @@
     margin-bottom: 1rem;
 }
 
-.TopRightDiv {
-    display: flex;
-    width: 50%;
+.SpecialRow {
+    margin-bottom: 1rem;
+    margin-left: 1.6rem;
 }
 
 .FormLabels {
     font-weight: 500;
     font-size: 1rem;
     margin-top: 0.2rem;
+}
+
+.InputWidthSet {
+    width: 45%
+}
+
+.NameInputWidth {
+    width: 94%;
 }
 
 .AdmissionInput {
@@ -41,22 +49,25 @@
     width: 40%;
 }
 
-.FatherSpouseNameInout {
-    width: 94%;
+.DisabilityTypeInput {
+    width: 47%;
 }
 
-.CasteInput {
-    width: 45%;
+.Heading1 {
+    margin-left: 1.5rem;
+    margin-bottom: 3rem;
 }
 
-.MaritalStatusInput {
-    width: 45%;
+.Heading {
+    margin-left: 1.5rem;
 }
 
-.NationalityInput {
-    width: 45%;
+.Checker {
+    margin-left: 1.5rem;
 }
 
-.PwdInput {
-    width: 45%;
+.SaveButton {
+    margin-bottom: 1rem;
+    width: 15%;
+    margin-left: 43%;
 }
