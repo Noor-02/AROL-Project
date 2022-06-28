@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import classes from './PersonalDetails.module.css'
 import { ReactDOM } from "react";
+import { nationalitiesList } from './NationalitiesList'
 import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 
@@ -26,10 +27,54 @@ class PersonalDetails extends Component {
     casteList: ["GEN", "SC", "ST", "OBC", "Other"],
     maritalList: ["Married", "Not Married"],
     disabilityList: ["Yes", "No"],
-    genderList: ["Male", "Female", "Other"]
+    genderList: ["Male", "Female", "Other"],
+    phoneValidity: true,
+    parentConatctValidity: true,
+    parentNameValidity: true,
+    nameValidity: true
   };
 
+  phoneValidity = (val, label) => {
+    let isValid = true;
+    const validPhoneFormat = /^[\+][1-9]\d{1,14}$/;
+    isValid = validPhoneFormat.test(val) && isValid;
+
+    if (label === "contactNumber") {
+      this.setState({
+        phoneValidity: isValid
+      })
+    }
+    else if (label === "parentConatct") {
+      this.setState({
+        parentConatctValidity: isValid
+      })
+    }
+  }
+
+  nameValidity = (val, label) => {
+    let isValid = true;
+    const validNameFormat = /^[a-z ,.'-]+$/i;
+    isValid = validNameFormat.test(val) && isValid;
+    if (label === "fullName") {
+      this.setState({
+        nameValidity: isValid
+      })
+    }
+    else if (label === "fatherSpouseName") {
+      this.setState({
+        parentNameValidity: isValid
+      })
+    }
+  }
+
   onChange = (val, label) => {
+
+    if (label === "contactNumber" || label === "parentConatct") {
+      this.phoneValidity(val, label);
+    }
+    else if (label === "fullName" || label === "fatherSpouseName") {
+      this.nameValidity(val, label)
+    }
     this.setState((prevState) => {
       let stateVal = prevState;
       stateVal[label] = val;
@@ -59,6 +104,10 @@ class PersonalDetails extends Component {
     this.setState({
       addressSame: temp
     })
+  }
+
+  onSave = () => {
+    alert("Save clicked");
   }
 
   render() {
@@ -101,6 +150,7 @@ class PersonalDetails extends Component {
                 <Form.Label className={classes.FormLabels}>
                   Father's/Spouse Name
                 </Form.Label>
+                <span className={classes.ErrorMessage}>{!this.state.parentNameValidity ? "* Please enter a valid name." : null}</span>
                 <Form.Control
                   value={this.state.fatherSpouseName}
                   onChange={(e) =>
@@ -148,14 +198,18 @@ class PersonalDetails extends Component {
                 <Form.Label className={classes.FormLabels}>
                   Nationality
                 </Form.Label>
-                <Form.Control
-                  value={this.state.nationality}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "nationality")
-                  }
-                  type="text"
-                  required
-                />
+                <Form.Select
+                  value={this.state.typeOfApplicant === "Indian Applicant" ? "Indian" : this.state.nationality}
+                  onChange={(e) => this.onChange(e.target.value, "nationality")}>
+                  {nationalitiesList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
               </Form.Group>
               <Form.Group className={classes.InputWidthSet}>
                 <Form.Label className={classes.FormLabels}>
@@ -180,6 +234,7 @@ class PersonalDetails extends Component {
                 <Form.Label className={classes.FormLabels}>
                   Full Name
                 </Form.Label>
+                <span className={classes.ErrorMessage}>{!this.state.nameValidity ? "* Please enter a valid name." : null}</span>
                 <Form.Control
                   value={this.state.fullName}
                   onChange={(e) =>
@@ -225,6 +280,7 @@ class PersonalDetails extends Component {
                 <Form.Label className={classes.FormLabels}>
                   Contact Number
                 </Form.Label>
+                <span className={classes.ErrorMessage}>{!this.state.phoneValidity ? "* Please enter a valid number." : null}</span>
                 <Form.Control
                   value={this.state.contactNumber}
                   onChange={(e) =>
@@ -238,6 +294,7 @@ class PersonalDetails extends Component {
                 <Form.Label className={classes.FormLabels}>
                   Parent Contact Number
                 </Form.Label>
+                <span className={classes.ErrorMessage}>{!this.state.parentConatctValidity ? "* Please enter a valid number." : null}</span>
                 <Form.Control
                   value={this.state.parentConatct}
                   onChange={(e) =>
@@ -397,7 +454,7 @@ class PersonalDetails extends Component {
             </div>
           </div>
         </div>
-        <Button className={classes.SaveButton}>SAVE</Button>
+        <Button onClick={this.onSave} className={classes.SaveButton}>SAVE</Button>
       </div>
     );
   }
