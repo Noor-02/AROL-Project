@@ -28,10 +28,11 @@ class PersonalDetails extends Component {
     maritalList: ["Married", "Not Married"],
     disabilityList: ["Yes", "No"],
     genderList: ["Male", "Female", "Other"],
-    phoneValidity: true,
-    parentConatctValidity: true,
-    parentNameValidity: true,
-    nameValidity: true
+    phoneValidity: false,
+    parentConatctValidity: false,
+    parentNameValidity: false,
+    nameValidity: false,
+    formValid: false,
   };
 
   phoneValidity = (val, label) => {
@@ -41,12 +42,14 @@ class PersonalDetails extends Component {
 
     if (label === "contactNumber") {
       this.setState({
-        phoneValidity: isValid
+        phoneValidity: isValid,
+        formValid: isValid
       })
     }
     else if (label === "parentConatct") {
       this.setState({
-        parentConatctValidity: isValid
+        parentConatctValidity: isValid,
+        formValid: isValid
       })
     }
   }
@@ -57,12 +60,14 @@ class PersonalDetails extends Component {
     isValid = validNameFormat.test(val) && isValid;
     if (label === "fullName") {
       this.setState({
-        nameValidity: isValid
+        nameValidity: isValid,
+        formValid: isValid
       })
     }
     else if (label === "fatherSpouseName") {
       this.setState({
-        parentNameValidity: isValid
+        parentNameValidity: isValid,
+        formValid: isValid
       })
     }
   }
@@ -107,7 +112,13 @@ class PersonalDetails extends Component {
   }
 
   onSave = () => {
-    alert("Save clicked");
+    if (this.state.formValid) {
+      alert("Save clicked");
+    }
+    else {
+      alert("Please fill all required details correctly");
+    }
+
   }
 
   render() {
