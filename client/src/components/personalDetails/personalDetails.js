@@ -124,6 +124,9 @@ class PersonalDetails extends Component {
   render() {
     return (
       <div className={classes.ContainerDiv}>
+        {/* <div className={classes.FistHorizontalSection}> */}
+        <h2 className={classes.MainHeading}>PERSONAL DETAILS</h2>
+        {/* </div> */}
         <div className={classes.HorizontalSections}>
           <div className={classes.Sections}>
             <div className={classes.Row}>

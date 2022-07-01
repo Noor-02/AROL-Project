@@ -4,6 +4,8 @@ import LoginNav from "../LogInNav/LoginNav";
 import PersonalDetails from "../PersonalDetails/PersonalDetails";
 import EducationalDetails from "../EducationalDetails/EducationalDetails";
 import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
+import ApplyPage from "../ApplyPage/ApplyPage";
+import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";
 import { Switch, withRouter, Route } from "react-router";
 
@@ -16,6 +18,7 @@ class PostLogin extends Component {
       { label: "Applications", type: "applications" },
       { label: "Personal Details", type: "personal-details" },
       { label: "Educational Details", type: "educational-details" },
+      { label: "Apply", type: "apply" }
     ],
     name: "Full Name",
     username: "appicant1",
@@ -24,7 +27,7 @@ class PostLogin extends Component {
   };
 
   onNavigationItemClick = (type) => {
-    if (type == 6) {
+    if (type === 7) {
       this.props.history.push("/");
     } else {
       let activeType = "";
@@ -74,11 +77,16 @@ class PostLogin extends Component {
                 ? this.setState({
                   activeNavItem: 1,
                   activeItemType: "employment-details",
-                })
-                : this.setState({
-                  activeNavItem: 0,
-                  activeItemType: "home",
-                });
+                }) : this.props.location.pathname ===
+                  this.props.match.url + "/apply"
+                  ? this.setState({
+                    activeNavItem: 6,
+                    activeItemType: "apply",
+                  })
+                  : this.setState({
+                    activeNavItem: 0,
+                    activeItemType: "home",
+                  });
   }
   render() {
     let renderdata;
@@ -93,13 +101,16 @@ class PostLogin extends Component {
         renderdata = <div> this is change password </div>;
         break;
       case 3:
-        renderdata = <div> this is applications</div>;
+        renderdata = <Applications applicationsList={this.state.NavItem} />;
         break;
       case 4:
         renderdata = <PersonalDetails />;
         break;
       case 5:
         renderdata = <EducationalDetails />;
+        break;
+      case 6:
+        renderdata = <ApplyPage />;
         break;
       default:
         renderdata = <div> this is post login </div>;

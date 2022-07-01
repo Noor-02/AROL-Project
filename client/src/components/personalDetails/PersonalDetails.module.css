@@ -1,6 +1,29 @@
 .ContainerDiv {
     display: flex;
     flex-direction: column;
+    width: 95%;
+    margin: auto;
+    border: 1px rgb(177, 174, 174) solid;
+    border-radius: 10px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    box-shadow: -2px -2px 6px 6px #d5d4d4;
+}
+
+/* .FistHorizontalSection {
+    background-color: #0d6efd;
+    height: 10%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-left: 1.8rem;
+} */
+
+.MainHeading {
+    /* color: white; */
+    font-size: 2rem;
+    margin: auto;
 }
 
 .HorizontalSections {
@@ -69,7 +92,7 @@
 .SaveButton {
     margin-bottom: 1rem;
     width: 15%;
-    margin-left: 43%;
+    margin: auto;
 }
 
 .ErrorMessage {

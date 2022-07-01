@@ -15,13 +15,14 @@ class LoginNav extends Component {
             <Navbar bg="dark" expand="sm" className={classes.Navbar}>
                 <Container fluid>
                     <Nav className="justify-content-end flex-grow-1 pe-3">
+                        <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(6)}>Apply</button>
                         <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(1)}>Employment Details</button>
                         <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(5)}>Educational Details</button>
                         <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(4)}>Personal Details</button>
                         <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(3)}>Applications</button>
                         <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(2)}>Change Password</button>
                         <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(0)}>Post-Login Home</button>
-                        <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(6)}>Log-Out</button>
+                        <button className={classes.NavLink} onClick={() => this.props.onNavigationItemClick(7)}>Log-Out</button>
                     </Nav>
                 </Container>
             </Navbar>
