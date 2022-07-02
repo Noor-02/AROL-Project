@@ -101,7 +101,7 @@ class PostLogin extends Component {
         renderdata = <div> this is change password </div>;
         break;
       case 3:
-        renderdata = <Applications applicationsList={this.state.NavItem} />;
+        renderdata = <Applications />;
         break;
       case 4:
         renderdata = <PersonalDetails />;
