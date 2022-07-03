@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { ReactDOM } from "react";
+import classes from './EducationalDetails.module.css'
 import { withRouter } from "react-router";
-import { Table, Form } from "react-bootstrap";
+import { Table, Form, Button } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 
 class EducationalDetails extends Component {
@@ -44,8 +45,9 @@ class EducationalDetails extends Component {
     })
   }
   render() {
-    return <div>
-      <div>
+    return (
+      <div className={classes.ContainerDiv}>
+        <h2 className={classes.MainHeading}>EDUCATIONAL DETAILS</h2>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -115,10 +117,12 @@ class EducationalDetails extends Component {
             }
           </tbody>
         </Table>
-
-        <br />
+        <div className={classes.ButtonsDiv}>
+          <Button className={classes.AddButton} onClick={this.addEmployement}>Add Qualification</Button>
+          <Button className={classes.AddButton} onClick={this.saveDetails}>SAVE</Button>
+        </div>
       </div>
-    </div>;
+    )
   }
 }
 

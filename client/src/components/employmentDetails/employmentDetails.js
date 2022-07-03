@@ -71,7 +71,8 @@ class EmploymentDetails extends Component {
   };
   render() {
     return (
-      <div className={classes.Display}>
+      <div className={classes.DisplayDiv}>
+        <h2 className={classes.MainHeading}>EMPLOYMENT DETAILS</h2>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -92,124 +93,127 @@ class EmploymentDetails extends Component {
               <>
                 {!IsListEmpty(this.state.employmentList)
                   ? this.state.employmentList.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            <Form.Control
-                              onChange={(e) =>
-                                this.onChange(
-                                  e.target.value,
-                                  index,
-                                  "organization"
-                                )
-                              }
-                              value={item.organization}
-                              type="text"
-                              required
-                            ></Form.Control>
-                          </td>
-                          <td>
-                            <Form.Control
-                              value={item.post}
-                              onChange={(e) =>
-                                this.onChange(e.target.value, index, "post")
-                              }
-                              type="text"
-                              required
-                            />
-                          </td>
-                          <td>
-                            <Form.Select
-                              onChange={(e) =>
-                                this.onChange(
-                                  e.target.value,
-                                  index,
-                                  "regularity"
-                                )
-                              }
-                              value={item.regularity}
-                            >
-                              {this.state.optionList.map((obj, i) => {
-                                return <option key={i}>{obj}</option>;
-                              })}
-                            </Form.Select>
-                          </td>
-                          <td>
-                            <Form.Control
-                              onChange={(e) =>
-                                this.onChange(e.target.value, index, "from")
-                              }
-                              value={item.from}
-                              type="date"
-                              required
-                            ></Form.Control>
-                          </td>
-                          <td>
-                            <Form.Control
-                              onChange={(e) =>
-                                this.onChange(e.target.value, index, "to")
-                              }
-                              value={item.to}
-                              type="date"
-                              required
-                            ></Form.Control>
-                          </td>
-                          <td>
-                            <Form.Control
-                              onChange={(e) =>
-                                this.onChange(e.target.value, index, "duration")
-                              }
-                              value={item.duration}
-                              step="0.1"
-                              type="number"
-                              required
-                            ></Form.Control>
-                          </td>
-                          <td>
-                            <Form.Control
-                              onChange={(e) =>
-                                this.onChange(
-                                  e.target.value,
-                                  index,
-                                  "responsibility"
-                                )
-                              }
-                              value={item.responsibility}
-                              type="text"
-                              required
-                            ></Form.Control>
-                          </td>
-                          <td>
-                            <Form.Control
-                              onChange={(e) =>
-                                this.onChange(
-                                  e.target.value,
-                                  index,
-                                  "emoluments"
-                                )
-                              }
-                              value={item.emoluments}
-                              type="number"
-                              required
-                            ></Form.Control>
-                          </td>
-                          <td>
-                            <Form.Check
-                              checked={item.current}
-                              type="checkbox"
-                              onChange={() => this.checkBoxClicked(index)}
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <Form.Control
+                            onChange={(e) =>
+                              this.onChange(
+                                e.target.value,
+                                index,
+                                "organization"
+                              )
+                            }
+                            value={item.organization}
+                            type="text"
+                            required
+                          ></Form.Control>
+                        </td>
+                        <td>
+                          <Form.Control
+                            value={item.post}
+                            onChange={(e) =>
+                              this.onChange(e.target.value, index, "post")
+                            }
+                            type="text"
+                            required
+                          />
+                        </td>
+                        <td>
+                          <Form.Select
+                            onChange={(e) =>
+                              this.onChange(
+                                e.target.value,
+                                index,
+                                "regularity"
+                              )
+                            }
+                            value={item.regularity}
+                          >
+                            {this.state.optionList.map((obj, i) => {
+                              return <option key={i}>{obj}</option>;
+                            })}
+                          </Form.Select>
+                        </td>
+                        <td>
+                          <Form.Control
+                            onChange={(e) =>
+                              this.onChange(e.target.value, index, "from")
+                            }
+                            value={item.from}
+                            type="date"
+                            required
+                          ></Form.Control>
+                        </td>
+                        <td>
+                          <Form.Control
+                            onChange={(e) =>
+                              this.onChange(e.target.value, index, "to")
+                            }
+                            value={item.to}
+                            type="date"
+                            required
+                          ></Form.Control>
+                        </td>
+                        <td>
+                          <Form.Control
+                            onChange={(e) =>
+                              this.onChange(e.target.value, index, "duration")
+                            }
+                            value={item.duration}
+                            step="0.1"
+                            type="number"
+                            required
+                          ></Form.Control>
+                        </td>
+                        <td>
+                          <Form.Control
+                            onChange={(e) =>
+                              this.onChange(
+                                e.target.value,
+                                index,
+                                "responsibility"
+                              )
+                            }
+                            value={item.responsibility}
+                            type="text"
+                            required
+                          ></Form.Control>
+                        </td>
+                        <td>
+                          <Form.Control
+                            onChange={(e) =>
+                              this.onChange(
+                                e.target.value,
+                                index,
+                                "emoluments"
+                              )
+                            }
+                            value={item.emoluments}
+                            type="number"
+                            required
+                          ></Form.Control>
+                        </td>
+                        <td>
+                          <Form.Check
+                            checked={item.current}
+                            type="checkbox"
+                            onChange={() => this.checkBoxClicked(index)}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
                   : null}
               </>
             }
           </tbody>
         </Table>
-        <Button onClick={this.addEmployement}>Add Employment</Button>
+        <div className={classes.ButtonsDiv}>
+          <Button className={classes.AddButton} onClick={this.addEmployement}>Add Employment</Button>
+          <Button className={classes.AddButton} onClick={this.saveDetails}>SAVE</Button>
+        </div>
       </div>
     );
   }
