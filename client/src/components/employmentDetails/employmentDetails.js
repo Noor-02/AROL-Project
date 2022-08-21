@@ -52,6 +52,7 @@ class EmploymentDetails extends Component {
       employmentList: temp,
     });
   };
+
   checkBoxClicked = (index) => {
     let temp = this.state.employmentList;
     if (temp[index]["current"] === false) {
@@ -65,10 +66,24 @@ class EmploymentDetails extends Component {
     } else {
       temp[index]["current"] = false;
     }
+
     this.setState({
       employmentList: temp,
     });
   };
+
+  deleteClicked = (i) => {
+    let tempEmploymentList = this.state.employmentList;
+    tempEmploymentList = tempEmploymentList.filter((item, index) => {
+      if (index !== i) {
+        return item;
+      }
+    })
+
+    this.setState({
+      employmentList: tempEmploymentList,
+    });
+  }
   render() {
     return (
       <div className={classes.DisplayDiv}>
@@ -85,7 +100,8 @@ class EmploymentDetails extends Component {
               <th>Period of Employment (in yrs)</th>
               <th>Nature of Responsibilities</th>
               <th>Gross Emoluments</th>
-              <th>Current</th>
+              <th>Currently Employed</th>
+              <th>#</th>
             </tr>
           </thead>
           <tbody>
@@ -201,6 +217,12 @@ class EmploymentDetails extends Component {
                             type="checkbox"
                             onChange={() => this.checkBoxClicked(index)}
                           />
+                        </td>
+                        <td>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16" onClick={(e) => this.deleteClicked(index)}>
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                          </svg>
                         </td>
                       </tr>
                     );

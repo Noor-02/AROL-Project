@@ -10,6 +10,13 @@
     margin-top: 1.5rem;
 }
 
+.DocTableDiv {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
 .MainHeading {
     font-size: 2rem;
     margin: auto;
