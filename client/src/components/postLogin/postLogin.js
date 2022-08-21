@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import classes from "./PostLogin.module.css";
 import LoginNav from "../LogInNav/LoginNav";
-import PersonalDetails from "../PersonalDetails/PersonalDetails";
-import EducationalDetails from "../EducationalDetails/EducationalDetails";
-import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
+import PersonalDetails from "../personalDetails/personalDetails";
+import EducationalDetails from "../educationalDetails/educationalDetails";
+import EmploymentDetails from "../employmentDetails/employmentDetails";
 import ApplyPage from "../ApplyPage/ApplyPage";
 import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";

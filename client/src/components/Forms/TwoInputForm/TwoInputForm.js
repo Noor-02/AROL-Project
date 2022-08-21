@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ReactDOM } from "react";
 import { Button, Form } from "react-bootstrap";
 import classes from "./TwoInputForm.module.css";
-import { IsListEmpty } from '../../../utilities/CommonMethods'
+import { IsListEmpty } from '../../../utilities/commonMethods'
 
 class TwoInputForm extends Component {
   state = {

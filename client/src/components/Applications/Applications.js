@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ReactDOM } from "react";
 import classes from './Applications.module.css'
 import { Card, Button } from "react-bootstrap";
-import { IsListEmpty } from '../../utilities/CommonMethods'
+import { IsListEmpty } from '../../utilities/commonMethods'
 
 class ApplyPage extends Component {
 

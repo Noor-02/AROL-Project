@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ReactDOM } from "react";
 import { Button, Form } from "react-bootstrap";
 import classes from "./ThreeInputForm.module.css";
-import { IsListEmpty } from '../../../utilities/CommonMethods'
+import { IsListEmpty } from '../../../utilities/commonMethods'
 
 class ThreeInputForm extends Component {
     state = {

@@ -4,7 +4,7 @@ import classes from './EducationalDetails.module.css'
 import EducationalDocTable from './EducationalDocuments'
 import { withRouter } from "react-router";
 import { Table, Form, Button } from "react-bootstrap";
-import { IsListEmpty } from "../../utilities/CommonMethods";
+import { IsListEmpty } from "../../utilities/commonMethods";
 
 class EducationalDetails extends Component {
   state = {

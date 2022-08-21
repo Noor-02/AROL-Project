@@ -3,7 +3,7 @@ import { ReactDOM } from "react";
 import { withRouter } from "react-router";
 import { Button, Form, Table } from "react-bootstrap";
 import classes from "./EmploymentDetails.module.css";
-import { IsListEmpty } from "../../utilities/CommonMethods";
+import { IsListEmpty } from "../../utilities/commonMethods";
 import ThreeInputForm from "../Forms/ThreeInputForm/ThreeInputForm";
 import TwoInputForm from "../Forms/TwoInputForm/TwoInputForm";
 

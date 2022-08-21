@@ -3,7 +3,7 @@ import classes from './EducationalDetails.module.css'
 import { ReactDOM } from "react";
 import { Table, Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
-import { IsListEmpty } from "../../utilities/CommonMethods";
+import { IsListEmpty } from "../../utilities/commonMethods";
 
 class EducationalDocuments extends Component {
 
