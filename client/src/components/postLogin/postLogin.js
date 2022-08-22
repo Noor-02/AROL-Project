@@ -1,27 +1,131 @@
 import React, { Component } from "react";
-import { Navbar, Container, Offcanvas, Nav, Form, Button, FormControl } from 'react-bootstrap';
-import classes from "./PostLogin.module.css"
+import classes from "./PostLogin.module.css";
+import LoginNav from "../LogInNav/LoginNav";
+import PersonalDetails from "../personalDetails/personalDetails";
+import EducationalDetails from "../educationalDetails/educationalDetails";
+import EmploymentDetails from "../employmentDetails/employmentDetails";
+import ApplyPage from "../ApplyPage/ApplyPage";
+import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";
-import { withRouter } from "react-router";
+import { Switch, withRouter, Route } from "react-router";
 
 class PostLogin extends Component {
   state = {
+    NavItem: [
+      { label: "Post Login Home", type: "home" },
+      { label: "Employment Details", type: "employment-details" },
+      { label: "Change Password", type: "change-password" },
+      { label: "Applications", type: "applications" },
+      { label: "Personal Details", type: "personal-details" },
+      { label: "Educational Details", type: "educational-details" },
+      { label: "Apply", type: "apply" }
+    ],
     name: "Full Name",
     username: "appicant1",
+    activeItemType: "home",
+    activeNavItem: 0,
   };
+
+  onNavigationItemClick = (type) => {
+    if (type === 7) {
+      this.props.history.push("/");
+    } else {
+      let activeType = "";
+      if (type !== this.state.activeNavItem) {
+        activeType = this.state.NavItem[type].type;
+        this.setState({
+          activeNavItem: type,
+          activeItemType: activeType,
+        });
+      }
+
+      this.props.history.push("/post-login/" + activeType);
+    }
+  };
+
+  componentDidMount() {
+    this.props.location.pathname === this.props.match.url + "/home"
+      ? this.setState({
+        activeNavItem: 0,
+        activeItemType: "home",
+      })
+      : this.props.location.pathname ===
+        this.props.match.url + "/change-password"
+        ? this.setState({
+          activeNavItem: 2,
+          activeItemType: "change-password",
+        })
+        : this.props.location.pathname === this.props.match.url + "/applications"
+          ? this.setState({
+            activeNavItem: 3,
+            activeItemType: "applications",
+          })
+          : this.props.location.pathname ===
+            this.props.match.url + "/personal-details"
+            ? this.setState({
+              activeNavItem: 4,
+              activeItemType: "personal-details",
+            })
+            : this.props.location.pathname ===
+              this.props.match.url + "/educational-details"
+              ? this.setState({
+                activeNavItem: 5,
+                activeItemType: "educational-details",
+              })
+              : this.props.location.pathname ===
+                this.props.match.url + "/employment-details"
+                ? this.setState({
+                  activeNavItem: 1,
+                  activeItemType: "employment-details",
+                }) : this.props.location.pathname ===
+                  this.props.match.url + "/apply"
+                  ? this.setState({
+                    activeNavItem: 6,
+                    activeItemType: "apply",
+                  })
+                  : this.setState({
+                    activeNavItem: 0,
+                    activeItemType: "home",
+                  });
+  }
   render() {
-    return <div>
-      <Navbar bg="dark" expand="sm" className={classes.Navbar}>
-        <Container fluid>
-          <Nav className="justify-content-end flex-grow-1 pe-3">
-            <Nav.Link className={classes.NavLink} href="/personalDetails">Personal Details</Nav.Link>
-            <Nav.Link className={classes.NavLink} href="/applications">Applications</Nav.Link>
-            <Nav.Link className={classes.NavLink} href="/changePassword">Change Password</Nav.Link>
-            <Nav.Link className={classes.NavLink} href="/">Log-Out</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
-    </div >;
+    let renderdata;
+    switch (this.state.activeNavItem) {
+      case 0:
+        renderdata = <div> this is post login </div>;
+        break;
+      case 1:
+        renderdata = <EmploymentDetails />;
+        break;
+      case 2:
+        renderdata = <div> this is change password </div>;
+        break;
+      case 3:
+        renderdata = <Applications />;
+        break;
+      case 4:
+        renderdata = <PersonalDetails />;
+        break;
+      case 5:
+        renderdata = <EducationalDetails />;
+        break;
+      case 6:
+        renderdata = <ApplyPage />;
+        break;
+      default:
+        renderdata = <div> this is post login </div>;
+        break;
+    }
+
+    return (
+      <div>
+        <LoginNav
+          onNavigationItemClick={this.onNavigationItemClick}
+          activeItem={this.state.activeNavItem}
+        />
+        <div>{renderdata}</div>
+      </div>
+    );
   }
 }
 

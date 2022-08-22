@@ -1,0 +1,29 @@
+.DisplayDiv {
+    padding: 1rem;
+    width: 95%;
+    margin: auto;
+    border-radius: 10px;
+    border: 1px rgb(177, 174, 174) solid;
+    box-shadow: -2px -2px 6px 6px #d5d4d4;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.MainHeading {
+    font-size: 2rem;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.ButtonsDiv {
+    display: flex;
+    margin: auto;
+    width: 100%;
+}
+
+.AddButton {
+    width: 15%;
+    margin: auto;
+}

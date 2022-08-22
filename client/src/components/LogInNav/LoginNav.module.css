@@ -1,0 +1,24 @@
+.Navbar {
+    height: 2rem;
+}
+
+.NavLink {
+    color: white !important;
+    background-color: #212529;
+    font-size: 1rem;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    border: #212529 solid 1px;
+    border-left: 1px white solid;
+
+}
+
+.NavLink:hover {
+    color: #e6f8ff !important;
+}
+
+.Details {
+    width: 40%;
+    margin-left: 30%;
+    background-color: #e6f8ff;
+}

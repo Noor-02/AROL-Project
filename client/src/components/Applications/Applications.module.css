@@ -1,0 +1,44 @@
+.DivCard {
+    display: flex;
+    justify-content: space-between;
+}
+
+.DivCardButtons {
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.CardClasses {
+    width: 90%;
+    margin: auto;
+    margin-top: 1.5rem;
+    box-shadow: -2px -2px 6px 6px #d5d4d4;
+}
+
+.HeaderClasses {
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.GreenText {
+    color: rgb(74, 237, 74);
+}
+
+.RedText {
+    color: red;
+}
+
+.YellowText {
+    color: rgb(246, 136, 33);
+}
+
+.StatusTextClasses {
+    font-size: 1rem;
+    margin-top: 0.4rem;
+}
+
+.HeadingDivContainer {
+    display: flex;
+    justify-content: space-between;
+}
