@@ -57,6 +57,7 @@ class Advertisement(models.Model):
         _("Letter of Recommendation Template"),
         upload_to=upload_recommendation,
     )
+    # Any other document
 
     def __str__(self):
         return "{advertisement_id}".format(advertisement_id=self.advertisement_id)

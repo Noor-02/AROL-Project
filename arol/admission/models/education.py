@@ -74,6 +74,6 @@ class Education_Detail(models.Model):
         super(Education_Detail, self).delete(*args, **kwargs)
 
     class Meta:
-        verbose_name = _("Educationional Information")
+        verbose_name = _("Educational Information")
         verbose_name_plural = _("Educational Information")
         ordering = ["applicant_id"]
