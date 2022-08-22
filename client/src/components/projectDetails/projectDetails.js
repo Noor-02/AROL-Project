@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ReactDOM } from "react";
 import { withRouter } from "react-router";
-import classes from './projectDetails.module.css'
+import classes from './ProjectDetails.module.css'
 import { Form, Button, Table } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/commonMethods";
 
