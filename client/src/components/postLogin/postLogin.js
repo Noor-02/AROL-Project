@@ -7,7 +7,8 @@ import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
 import ApplyPage from "../ApplyPage/ApplyPage";
 import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";
-import { Switch, withRouter, Route } from "react-router";
+import { withRouter } from "react-router";
+import CompleteForm from "../ApplyPage/CompleteForm";
 
 class PostLogin extends Component {
   state = {
@@ -18,7 +19,7 @@ class PostLogin extends Component {
       { label: "Applications", type: "applications" },
       { label: "Personal Details", type: "personal-details" },
       { label: "Educational Details", type: "educational-details" },
-      { label: "Apply", type: "apply" }
+      { label: "Apply", type: "apply" },
     ],
     name: "Full Name",
     username: "appicant1",
@@ -46,47 +47,52 @@ class PostLogin extends Component {
   componentDidMount() {
     this.props.location.pathname === this.props.match.url + "/home"
       ? this.setState({
-        activeNavItem: 0,
-        activeItemType: "home",
-      })
+          activeNavItem: 0,
+          activeItemType: "home",
+        })
       : this.props.location.pathname ===
         this.props.match.url + "/change-password"
-        ? this.setState({
+      ? this.setState({
           activeNavItem: 2,
           activeItemType: "change-password",
         })
-        : this.props.location.pathname === this.props.match.url + "/applications"
-          ? this.setState({
-            activeNavItem: 3,
-            activeItemType: "applications",
-          })
-          : this.props.location.pathname ===
-            this.props.match.url + "/personal-details"
-            ? this.setState({
-              activeNavItem: 4,
-              activeItemType: "personal-details",
-            })
-            : this.props.location.pathname ===
-              this.props.match.url + "/educational-details"
-              ? this.setState({
-                activeNavItem: 5,
-                activeItemType: "educational-details",
-              })
-              : this.props.location.pathname ===
-                this.props.match.url + "/employment-details"
-                ? this.setState({
-                  activeNavItem: 1,
-                  activeItemType: "employment-details",
-                }) : this.props.location.pathname ===
-                  this.props.match.url + "/apply"
-                  ? this.setState({
-                    activeNavItem: 6,
-                    activeItemType: "apply",
-                  })
-                  : this.setState({
-                    activeNavItem: 0,
-                    activeItemType: "home",
-                  });
+      : this.props.location.pathname === this.props.match.url + "/applications"
+      ? this.setState({
+          activeNavItem: 3,
+          activeItemType: "applications",
+        })
+      : this.props.location.pathname ===
+        this.props.match.url + "/personal-details"
+      ? this.setState({
+          activeNavItem: 4,
+          activeItemType: "personal-details",
+        })
+      : this.props.location.pathname ===
+        this.props.match.url + "/educational-details"
+      ? this.setState({
+          activeNavItem: 5,
+          activeItemType: "educational-details",
+        })
+      : this.props.location.pathname ===
+        this.props.match.url + "/employment-details"
+      ? this.setState({
+          activeNavItem: 1,
+          activeItemType: "employment-details",
+        })
+      : this.props.location.pathname === this.props.match.url + "/apply"
+      ? this.setState({
+          activeNavItem: 6,
+          activeItemType: "apply",
+        })
+      : this.props.location.pathname === this.props.match.url + "/complete-form"
+      ? this.setState({
+          activeNavItem: 7,
+          activeItemType: "complete-form",
+        })
+      : this.setState({
+          activeNavItem: 0,
+          activeItemType: "home",
+        });
   }
   render() {
     let renderdata;
@@ -111,6 +117,9 @@ class PostLogin extends Component {
         break;
       case 6:
         renderdata = <ApplyPage />;
+        break;
+      case 7:
+        renderdata = <CompleteForm />;
         break;
       default:
         renderdata = <div> this is post login </div>;
