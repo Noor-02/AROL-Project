@@ -27,10 +27,13 @@ class Registration_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ("email", "password1", "password2")
+        fields = ("email", "full_name", "password1", "password2")
 
     def save(self):
-        account = Account(email=self.validated_data["email"])
+        account = Account(
+            email=self.validated_data["email"],
+            full_name=self.validated_data["full_name"],
+        )
         password1 = self.validated_data["password1"]
         password2 = self.validated_data["password2"]
 
@@ -105,6 +108,7 @@ class Change_Password_Serializer(serializers.Serializer):
 
 class Reset_Password_Serializer(serializers.Serializer):
     email = serializers.EmailField()
+
     class Meta:
         fields = ["email"]
 

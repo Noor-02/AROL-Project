@@ -17,6 +17,7 @@ def upload_document(instance, filename):
 class Qualifying_Examination(models.Model):
 
     applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    # To be changed to application_id
     examination = models.ForeignKey(Qualifying_Exam, on_delete=models.PROTECT)
     registration_number = models.CharField(_("Registration Number"), max_length=255)
     document = models.FileField(_("Document"), upload_to=upload_document)

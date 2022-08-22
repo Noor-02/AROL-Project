@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ReactDOM } from "react";
+
 import Login from "./components/login/login";
 import HomePage from "./components/home/HomePage";
 import Register from "./components/register/Register";
@@ -10,6 +11,8 @@ import EducationalDetails from "./components/educationalDetails/educationalDetai
 import ReferenceDetails from "./components/ReferenceDetails/ReferenceDetails";
 import Header from "./components/Header/Header"
 import PostLogin from "./components/postLogin/postLogin";
+// import ApplyPage from "./components/ApplyPage/ApplyPage";
+
 import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
 
@@ -28,6 +31,10 @@ class App extends Component {
           <Route path="/educationalDetails" component={EducationalDetails} />
           <Route path="/post-login" component={PostLogin} />
 
+          {/* <Route path="/post-login/apply" exact component={ApplyPage} />
+          <Route path="/post-login/completeForm" component={CompleteForm} /> */}
+          {/* <Route path="/projectDetails" component={ProjectDetails} /> */}
+          {/* <Route path="/educationalDetails" component={EducationalDetails} /> */}
         </Switch>
       </div>
     );

@@ -5,12 +5,22 @@
 .NavLink {
     color: white !important;
     background-color: #212529;
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
     border: #212529 solid 1px;
     border-left: 1px white solid;
+}
 
+.LastNavLink {
+    color: white !important;
+    background-color: #212529;
+    font-size: 0.9rem;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    border: #212529 solid 1px;
+    border-left: 1px white solid;
+    border-right: 1px white solid;
 }
 
 .NavLink:hover {
