@@ -3,12 +3,12 @@
     border-radius: 2%;
     background-color: #e6f8ff;
     width: 40%;
-    margin-left: 35%;
+    margin: auto;
     margin-top: 3%;
 }
 
 .LoginText {
-    margin-left: 43%;
+    margin-left: 42%;
     font-size: 1.7rem;
     font-weight: 500;
 }

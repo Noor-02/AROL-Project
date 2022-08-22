@@ -1,0 +1,24 @@
+.details {
+    margin-top: 3rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    padding-left: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: #e6f8ff;;
+}
+
+.detailsElement {
+    color: black;
+    font-weight: 700;
+    padding-bottom: 1rem;
+}
+
+.welcome {
+    font-weight: 500;
+    font-size: x-large;
+    padding-top: 2rem;
+    margin: auto;
+    padding: auto;
+    text-align: center;
+}

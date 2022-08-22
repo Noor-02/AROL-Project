@@ -1,0 +1,12 @@
+.Heading{
+    margin: auto;
+    margin-top: 4rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: large;
+}
+
+.Admissions {
+    display: flex;
+    flex-direction: row;
+}
