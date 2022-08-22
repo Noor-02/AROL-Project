@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import classes from "./PostLogin.module.css";
 import LoginNav from "../LogInNav/LoginNav";
-import PersonalDetails from "../personalDetails/personalDetails";
-import EducationalDetails from "../educationalDetails/educationalDetails";
-import EmploymentDetails from "../employmentDetails/employmentDetails";
+import PersonalDetails from "../PersonalDetails/PersonalDetails";
+import EducationalDetails from "../EducationalDetails/EducationalDetails";
+import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
 import ApplyPage from "../ApplyPage/ApplyPage";
 import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";
 import { withRouter } from "react-router";
 import CompleteForm from "../ApplyPage/CompleteForm";
-import PostLoginHome from "../PostLogin/PostLoginHome";
+import PostLoginHome from "./PostLoginHome";
 import ChangePassword from "../ChangePassword/ChangePassword";
 
 class PostLogin extends Component {

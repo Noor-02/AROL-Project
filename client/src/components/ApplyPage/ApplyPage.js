@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { ReactDOM } from "react";
 import classes from "./ApplyPage.module.css";
-import PersonalDetails from "../personalDetails/personalDetails";
-import EducationalDetails from "../educationalDetails/educationalDetails";
-import EmploymentDetails from "../employmentDetails/employmentDetails";
+import PersonalDetails from "../PersonalDetails/PersonalDetails";
+import EducationalDetails from "../EducationalDetails/EducationalDetails";
+import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
 import { Button, Card } from "react-bootstrap";
 
 class ApplyPage extends Component {
