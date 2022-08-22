@@ -9,6 +9,8 @@ import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";
 import { withRouter } from "react-router";
 import CompleteForm from "../ApplyPage/CompleteForm";
+import PostLoginHome from "../PostLogin/PostLoginHome";
+import ChangePassword from "../ChangePassword/ChangePassword";
 
 class PostLogin extends Component {
   state = {
@@ -89,6 +91,12 @@ class PostLogin extends Component {
           activeNavItem: 7,
           activeItemType: "complete-form",
         })
+      : this.props.location.pathname ===
+        this.props.match.url + "/change-password"
+      ? this.setState({
+          activeNavItem: 7,
+          activeItemType: "change-password",
+        })
       : this.setState({
           activeNavItem: 0,
           activeItemType: "home",
@@ -98,13 +106,13 @@ class PostLogin extends Component {
     let renderdata;
     switch (this.state.activeNavItem) {
       case 0:
-        renderdata = <div> this is post login </div>;
+        renderdata = <PostLoginHome />;
         break;
       case 1:
         renderdata = <EmploymentDetails />;
         break;
       case 2:
-        renderdata = <div> this is change password </div>;
+        renderdata = <ChangePassword />;
         break;
       case 3:
         renderdata = <Applications />;
@@ -122,7 +130,7 @@ class PostLogin extends Component {
         renderdata = <CompleteForm />;
         break;
       default:
-        renderdata = <div> this is post login </div>;
+        renderdata = <PostLoginHome />;
         break;
     }
 

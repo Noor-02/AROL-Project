@@ -28,7 +28,7 @@ class Header extends Component {
                 />{" "}
                 <div>
                   <span className={classes.InstiName}>
-                    Indian Institute of Technology
+                    Indian Institute of Technology Indore
                   </span>
                   <br />
                   <span className={classes.HeadingName}>Admissions</span>
