@@ -11,6 +11,8 @@ import { withRouter } from "react-router";
 import CompleteForm from "../ApplyPage/CompleteForm";
 import PostLoginHome from "./PostLoginHome";
 import ChangePassword from "../ChangePassword/ChangePassword";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
+import { GetFromLocalStorage } from "../../utilities/CommonMethods";
 
 class PostLogin extends Component {
   state = {
@@ -31,7 +33,13 @@ class PostLogin extends Component {
 
   onNavigationItemClick = (type) => {
     if (type === 7) {
-      this.props.history.push("/");
+      ResourceAPIController.UserLogout(GetFromLocalStorage("Token")).then(response => {
+        console.log(response.data);
+        this.props.history.push("/");
+      })
+        .catch(error => {
+          console.log("Failed =>", error);
+        })
     } else {
       let activeType = "";
       if (type !== this.state.activeNavItem) {
@@ -49,58 +57,58 @@ class PostLogin extends Component {
   componentDidMount() {
     this.props.location.pathname === this.props.match.url + "/home"
       ? this.setState({
-          activeNavItem: 0,
-          activeItemType: "home",
-        })
+        activeNavItem: 0,
+        activeItemType: "home",
+      })
       : this.props.location.pathname ===
         this.props.match.url + "/change-password"
-      ? this.setState({
+        ? this.setState({
           activeNavItem: 2,
           activeItemType: "change-password",
         })
-      : this.props.location.pathname === this.props.match.url + "/applications"
-      ? this.setState({
-          activeNavItem: 3,
-          activeItemType: "applications",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/personal-details"
-      ? this.setState({
-          activeNavItem: 4,
-          activeItemType: "personal-details",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/educational-details"
-      ? this.setState({
-          activeNavItem: 5,
-          activeItemType: "educational-details",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/employment-details"
-      ? this.setState({
-          activeNavItem: 1,
-          activeItemType: "employment-details",
-        })
-      : this.props.location.pathname === this.props.match.url + "/apply"
-      ? this.setState({
-          activeNavItem: 6,
-          activeItemType: "apply",
-        })
-      : this.props.location.pathname === this.props.match.url + "/complete-form"
-      ? this.setState({
-          activeNavItem: 7,
-          activeItemType: "complete-form",
-        })
-      : this.props.location.pathname ===
-        this.props.match.url + "/change-password"
-      ? this.setState({
-          activeNavItem: 7,
-          activeItemType: "change-password",
-        })
-      : this.setState({
-          activeNavItem: 0,
-          activeItemType: "home",
-        });
+        : this.props.location.pathname === this.props.match.url + "/applications"
+          ? this.setState({
+            activeNavItem: 3,
+            activeItemType: "applications",
+          })
+          : this.props.location.pathname ===
+            this.props.match.url + "/personal-details"
+            ? this.setState({
+              activeNavItem: 4,
+              activeItemType: "personal-details",
+            })
+            : this.props.location.pathname ===
+              this.props.match.url + "/educational-details"
+              ? this.setState({
+                activeNavItem: 5,
+                activeItemType: "educational-details",
+              })
+              : this.props.location.pathname ===
+                this.props.match.url + "/employment-details"
+                ? this.setState({
+                  activeNavItem: 1,
+                  activeItemType: "employment-details",
+                })
+                : this.props.location.pathname === this.props.match.url + "/apply"
+                  ? this.setState({
+                    activeNavItem: 6,
+                    activeItemType: "apply",
+                  })
+                  : this.props.location.pathname === this.props.match.url + "/complete-form"
+                    ? this.setState({
+                      activeNavItem: 7,
+                      activeItemType: "complete-form",
+                    })
+                    : this.props.location.pathname ===
+                      this.props.match.url + "/change-password"
+                      ? this.setState({
+                        activeNavItem: 7,
+                        activeItemType: "change-password",
+                      })
+                      : this.setState({
+                        activeNavItem: 0,
+                        activeItemType: "home",
+                      });
   }
   render() {
     let renderdata;
