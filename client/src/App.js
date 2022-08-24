@@ -5,7 +5,7 @@ import Login from "./components/Login/Login";
 import HomePage from "./components/Home/HomePage";
 import Register from "./components/Register/Register";
 // import PersonalDetails from "./components/PersonalDetails/PersonalDetails";
-// import ProjectDetails from "./components/ProjectDetails/ProjectDetails";
+import ProjectDetails from "./components/ProjectDetails/ProjectDetails";
 // import EducationalDetails from "./components/EducationalDetails/EducationalDetails";
 // import CompleteForm from "./components/ApplyPage/CompleteForm";
 import Header from "./components/Header/Header";
@@ -31,7 +31,7 @@ class App extends Component {
           <Route path="/post-login" component={PostLogin} />
           {/* <Route path="/post-login/apply" exact component={ApplyPage} />
           <Route path="/post-login/completeForm" component={CompleteForm} /> */}
-          {/* <Route path="/projectDetails" component={ProjectDetails} /> */}
+          <Route path="/projectDetails" component={ProjectDetails} />
           {/* <Route path="/educationalDetails" component={EducationalDetails} /> */}
           {/* >>>>>>> 57d7a528e8ef4155c6799d3087b289fbd70b7ebb */}
         </Switch>
