@@ -19,7 +19,7 @@ class EmploymentDetails extends Component {
         workType: "",
         responsibility: "",
         emoluments: 0,
-        current: false,
+        current: "No",
         regularity: "",
       },
     ],
@@ -34,7 +34,7 @@ class EmploymentDetails extends Component {
       workType: "",
       responsibility: "",
       emoluments: 0,
-      current: false,
+      current: "No",
       regularity: "",
     };
     let tempEmploymentList = this.state.employmentList;
@@ -43,6 +43,7 @@ class EmploymentDetails extends Component {
       employmentList: tempEmploymentList,
     });
   };
+
   onChange = (val, index, label) => {
     let temp = this.state.employmentList;
     temp[index][label] = val;
@@ -52,24 +53,24 @@ class EmploymentDetails extends Component {
     });
   };
 
-  checkBoxClicked = (index) => {
-    let temp = this.state.employmentList;
-    if (temp[index]["current"] === false) {
-      for (let i = 0; i < temp.length; i++) {
-        if (i === index) {
-          temp[i]["current"] = true;
-        } else {
-          temp[i]["current"] = false;
-        }
-      }
-    } else {
-      temp[index]["current"] = false;
-    }
+  // checkBoxClicked = (index) => {
+  //   let temp = this.state.employmentList;
+  //   if (temp[index]["current"] === false) {
+  //     for (let i = 0; i < temp.length; i++) {
+  //       if (i === index) {
+  //         temp[i]["current"] = true;
+  //       } else {
+  //         temp[i]["current"] = false;
+  //       }
+  //     }
+  //   } else {
+  //     temp[index]["current"] = false;
+  //   }
 
-    this.setState({
-      employmentList: temp,
-    });
-  };
+  //   this.setState({
+  //     employmentList: temp,
+  //   });
+  // };
 
   deleteClicked = (i) => {
     let tempEmploymentList = this.state.employmentList;
@@ -87,7 +88,7 @@ class EmploymentDetails extends Component {
     return (
       <div className={classes.DisplayDiv}>
         <h2 className={classes.MainHeading}>EMPLOYMENT DETAILS</h2>
-        <Table striped bordered hover>
+        {/* <Table striped bordered hover>
           <thead>
             <tr>
               <th>#</th>
@@ -241,10 +242,10 @@ class EmploymentDetails extends Component {
               </>
             }
           </tbody>
-        </Table>
+        </Table> */}
         <>
           {!IsListEmpty(this.state.employmentList) ? this.state.employmentList.map((item, index) => {
-            return (<EmploymentDetailsCard details={this.state.employmentList[index]} />)
+            return (<EmploymentDetailsCard details={this.state.employmentList[index]} optionList={this.state.optionList} index={index} onChange={this.onChange} onDelete={this.deleteClicked} />)
           }) : null}
         </>
         <div className={classes.ButtonsDiv}>

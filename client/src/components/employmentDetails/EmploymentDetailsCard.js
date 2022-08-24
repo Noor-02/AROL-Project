@@ -10,55 +10,47 @@ import TwoInputForm from "../Forms/TwoInputForm/TwoInputForm";
 class EmploymentDetails extends Component {
     state = {
         cardIndex: null,
-        optionList: ["Regular", "Temporary", "Permanent", "Contract"],
-        organization: "",
-        to: "",
-        from: "",
-        post: "",
-        duration: 0,
-        workType: "",
-        responsibility: "",
-        emoluments: 0,
-        current: false,
-        regularity: "",
+        optionList: [],
+        currentList: ["Yes", "No"],
+        // organization: "",
+        // to: "",
+        // from: "",
+        // post: "",
+        // duration: 0,
+        // workType: "",
+        // responsibility: "",
+        // emoluments: 0,
+        // current: "No",
+        // regularity: "",
     };
 
 
-    onChange = (val, index, label) => {
-        this.props.onChange(val, this.cardIndex, label);
-    };
-
-    checkBoxClicked = (index) => {
-        let temp = this.state.employmentList;
-        if (temp[index]["current"] === false) {
-            for (let i = 0; i < temp.length; i++) {
-                if (i === index) {
-                    temp[i]["current"] = true;
-                } else {
-                    temp[i]["current"] = false;
-                }
-            }
-        } else {
-            temp[index]["current"] = false;
-        }
-
-        this.setState({
-            employmentList: temp,
-        });
+    onChange = (val, label) => {
+        this.props.onChange(val, this.state.cardIndex, label);
     };
 
     deleteClicked = (i) => {
-        this.props.onDelete(this.state.cardindex);
+        this.props.onDelete(this.state.cardIndex);
     };
+
+    componentDidMount = () => {
+        let optionList = this.props.optionList;
+        let cardIndex = this.props.index;
+
+        this.setState({
+            optionList: optionList,
+            cardIndex: cardIndex
+        })
+    }
     render() {
         return (
             <div className={classes.InnerContainerDiv}>
                 <div className={classes.HorizontalSections}>
                     <div className={classes.Sections}>
                         <div className={classes.Row}>
-                            <Form.Group className={classes.AdmissionInput}>
+                            <Form.Group className={classes.NameInputWidth}>
                                 <Form.Label className={classes.FormLabels}>
-                                    Organization
+                                    Name of Organization
                                 </Form.Label>
                                 <Form.Control
                                     value={this.props.details.organization}
@@ -69,7 +61,24 @@ class EmploymentDetails extends Component {
                                     required
                                 />
                             </Form.Group>
-                            <Form.Group className={classes.TypeOfApplicantInput}>
+                        </div>
+                        <div className={classes.Row}>
+                            <Form.Group className={classes.InputWidthSet}>
+                                <Form.Label className={classes.FormLabels}>
+                                    Regularity
+                                </Form.Label>
+                                <Form.Select value={this.props.details.regularity} onChange={(e) => this.onChange(e.target.value, "regularity")}>
+                                    {this.state.optionList.map((item, index) => {
+                                        return (
+                                            <option
+                                                key={index}>
+                                                {item}
+                                            </option>
+                                        );
+                                    })}
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group className={classes.InputWidthSet}>
                                 <Form.Label className={classes.FormLabels}>
                                     Post Held
                                 </Form.Label>
@@ -77,21 +86,6 @@ class EmploymentDetails extends Component {
                                     value={this.props.details.post}
                                     onChange={(e) =>
                                         this.onChange(e.target.value, "post")
-                                    }
-                                    type="text"
-                                    required
-                                />
-                            </Form.Group>
-                        </div>
-                        <div className={classes.Row}>
-                            <Form.Group className={classes.NameInputWidth}>
-                                <Form.Label className={classes.FormLabels}>
-                                    Responsibility
-                                </Form.Label>
-                                <Form.Control
-                                    value={this.props.details.Responsibility}
-                                    onChange={(e) =>
-                                        this.onChange(e.target.value, "Responsibility")
                                     }
                                     type="text"
                                     required
@@ -114,7 +108,7 @@ class EmploymentDetails extends Component {
                             </Form.Group>
                             <Form.Group className={classes.InputWidthSet}>
                                 <Form.Label className={classes.FormLabels}>
-                                    Emoluments
+                                    Gross Emoluments
                                 </Form.Label>
                                 <Form.Control
                                     value={this.props.details.emoluments}
@@ -126,47 +120,59 @@ class EmploymentDetails extends Component {
                                 />
                             </Form.Group>
                         </div>
-                        <div className={classes.SpecialRow}>
-                            <Form.Group className={classes.InputWidthSet}>
-                                <Form.Label className={classes.FormLabels}>
-                                    Class/Division
-                                </Form.Label>
-                                <Form.Select value={this.props.details.class} onChange={(e) => this.onChange(e.target.value, "class")}>
-                                    {this.state.classList.map((item, index) => {
-                                        return (
-                                            <option
-                                                key={index}>
-                                                {item}
-                                            </option>
-                                        );
-                                    })}
-                                </Form.Select>
-                            </Form.Group>
-                        </div>
                     </div>
                     <div className={classes.Sections}>
                         <div className={classes.Row}>
                             <Form.Group className={classes.NameInputWidth}>
                                 <Form.Label className={classes.FormLabels}>
-                                    Board/Institute/University
+                                    Responsibility
                                 </Form.Label>
                                 <Form.Control
-                                    value={this.props.details.board}
+                                    value={this.props.details.Responsibility}
                                     onChange={(e) =>
-                                        this.onChange(e.target.value, "board")
+                                        this.onChange(e.target.value, "Responsibility")
                                     }
                                     type="text"
                                     required
                                 />
                             </Form.Group>
+
                         </div>
                         <div className={classes.Row}>
                             <Form.Group className={classes.InputWidthSet}>
                                 <Form.Label className={classes.FormLabels}>
-                                    Qualification Status
+                                    From:
                                 </Form.Label>
-                                <Form.Select value={this.props.details.status} onChange={(e) => this.onChange(e.target.value, "status")}>
-                                    {this.state.statusList.map((item, index) => {
+                                <Form.Control
+                                    value={this.props.details.from}
+                                    onChange={(e) =>
+                                        this.onChange(e.target.value, "from")
+                                    }
+                                    type="date"
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group className={classes.InputWidthSet}>
+                                <Form.Label className={classes.FormLabels}>
+                                    To:
+                                </Form.Label>
+                                <Form.Control
+                                    value={this.props.details.to}
+                                    onChange={(e) =>
+                                        this.onChange(e.target.value, "to")
+                                    }
+                                    type="date"
+                                    required
+                                />
+                            </Form.Group>
+                        </div>
+                        <div className={classes.SpecialRow}>
+                            <Form.Group className={classes.InputWidthSet}>
+                                <Form.Label className={classes.FormLabels}>
+                                    Currently Employed
+                                </Form.Label>
+                                <Form.Select value={this.props.details.current} onChange={(e) => this.onChange(e.target.value, "current")}>
+                                    {this.state.currentList.map((item, index) => {
                                         return (
                                             <option
                                                 key={index}>
@@ -176,23 +182,8 @@ class EmploymentDetails extends Component {
                                     })}
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group className={classes.InputWidthSet}>
-                                <Form.Label className={classes.FormLabels}>
-                                    Expected Year of Passing
-                                </Form.Label>
-                                <Form.Select value={this.props.details.yearOfPassing} onChange={(e) => this.onChange(e.target.value, "yearOfPassing")}>
-                                    {this.state.timeList.map((item, index) => {
-                                        return (
-                                            <option
-                                                key={index}>
-                                                {item}
-                                            </option>
-                                        );
-                                    })}
-                                </Form.Select>
-                            </Form.Group>
                         </div>
-                        <div className={classes.Row}>
+                        {/* <div className={classes.Row}>
                             <Form.Group className={classes.InputWidthSet}>
                                 <Form.Label className={classes.FormLabels}>
                                     Acquired percentage Or CPI/CGPA
@@ -221,8 +212,8 @@ class EmploymentDetails extends Component {
                                     required
                                 />
                             </Form.Group>
-                        </div>
-                        <div className={classes.Row}>
+                        </div> */}
+                        {/* <div className={classes.Row}>
                             <Form.Group controlId="formFile" className={classes.InputWidthSet}>
                                 <Form.Label>Latest Marksheet</Form.Label>
                                 <Form.Control type="file" required />
@@ -235,10 +226,10 @@ class EmploymentDetails extends Component {
                                 <Form.Control type="file" required />
                             </Form.Group>}
 
-                        </div>
+                        </div> */}
                     </div>
                 </div>
-                <Button onClick={this.onDelete} className={classes.SaveButton}> <svg
+                <Button onClick={this.deleteClicked} className={classes.SaveButton}> <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"

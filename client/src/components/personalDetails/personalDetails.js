@@ -125,368 +125,370 @@ class PersonalDetails extends Component {
 
   render() {
     return (
-      <div className={classes.ContainerDiv}>
-        {/* <div className={classes.FistHorizontalSection}> */}
-        <h2 className={classes.MainHeading}>PERSONAL DETAILS</h2>
-        {/* </div> */}
-        <div className={classes.HorizontalSections}>
-          <div className={classes.Sections}>
-            <div className={classes.Row}>
-              <Form.Group className={classes.AdmissionInput}>
-                <Form.Label className={classes.FormLabels}>
-                  Admission For The Year
-                </Form.Label>
-                <Form.Select value={this.state.admissionYear} onChange={(e) => this.onChange(e.target.value, "admissionYear")}>
-                  {this.state.admissionYrList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className={classes.TypeOfApplicantInput}>
-                <Form.Label className={classes.FormLabels}>
-                  Type Of Applicant
-                </Form.Label>
-                <Form.Select value={this.state.typeOfApplicant} onChange={(e) => this.onChange(e.target.value, "typeOfApplicant")}>
-                  {this.state.optionList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
+      <>
+        <div className={classes.ContainerDiv}>
+          {/* <div className={classes.FistHorizontalSection}> */}
+          <h2 className={classes.MainHeading}>PERSONAL DETAILS</h2>
+          {/* </div> */}
+          <div className={classes.HorizontalSections}>
+            <div className={classes.Sections}>
+              <div className={classes.Row}>
+                <Form.Group className={classes.AdmissionInput}>
+                  <Form.Label className={classes.FormLabels}>
+                    Admission For The Year
+                  </Form.Label>
+                  <Form.Select value={this.state.admissionYear} onChange={(e) => this.onChange(e.target.value, "admissionYear")}>
+                    {this.state.admissionYrList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className={classes.TypeOfApplicantInput}>
+                  <Form.Label className={classes.FormLabels}>
+                    Type Of Applicant
+                  </Form.Label>
+                  <Form.Select value={this.state.typeOfApplicant} onChange={(e) => this.onChange(e.target.value, "typeOfApplicant")}>
+                    {this.state.optionList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    Father's/Spouse Name
+                  </Form.Label>
+                  <span className={classes.ErrorMessage}>{!this.state.parentNameValidity ? "* Please enter a valid name." : null}</span>
+                  <Form.Control
+                    value={this.state.fatherSpouseName}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "fatherSpouseName")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Category
+                  </Form.Label>
+                  <Form.Select value={this.state.caste} onChange={(e) => this.onChange(e.target.value, "caste")}>
+                    {this.state.casteList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Marital Status
+                  </Form.Label>
+                  <Form.Select value={this.state.maritalStatus} onChange={(e) => this.onChange(e.target.value, "maritalStatus")}>
+                    {this.state.maritalList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Nationality
+                  </Form.Label>
+                  <Form.Select
+                    value={this.state.typeOfApplicant === "Indian Applicant" ? "Indian" : this.state.nationality}
+                    onChange={(e) => this.onChange(e.target.value, "nationality")}>
+                    {nationalitiesList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className={classes.DisabilityTypeInput}>
+                  <Form.Label className={classes.FormLabels}>
+                    Nationality
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.otherNationality}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "otherNationality")
+                    }
+                    type="text"
+                    disabled={this.state.nationality === "Other" ? false : true}
+                  />
+                </Form.Group>
+              </div>
             </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
-                <Form.Label className={classes.FormLabels}>
-                  Father's/Spouse Name
-                </Form.Label>
-                <span className={classes.ErrorMessage}>{!this.state.parentNameValidity ? "* Please enter a valid name." : null}</span>
-                <Form.Control
-                  value={this.state.fatherSpouseName}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "fatherSpouseName")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Category
-                </Form.Label>
-                <Form.Select value={this.state.caste} onChange={(e) => this.onChange(e.target.value, "caste")}>
-                  {this.state.casteList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Marital Status
-                </Form.Label>
-                <Form.Select value={this.state.maritalStatus} onChange={(e) => this.onChange(e.target.value, "maritalStatus")}>
-                  {this.state.maritalList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Nationality
-                </Form.Label>
-                <Form.Select
-                  value={this.state.typeOfApplicant === "Indian Applicant" ? "Indian" : this.state.nationality}
-                  onChange={(e) => this.onChange(e.target.value, "nationality")}>
-                  {nationalitiesList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className={classes.DisabilityTypeInput}>
-                <Form.Label className={classes.FormLabels}>
-                  Nationality
-                </Form.Label>
-                <Form.Control
-                  value={this.state.otherNationality}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "otherNationality")
-                  }
-                  type="text"
-                  disabled={this.state.nationality === "Other" ? false : true}
-                />
-              </Form.Group>
+            <div className={classes.Sections}>
+              <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    Full Name
+                  </Form.Label>
+                  <span className={classes.ErrorMessage}>{!this.state.nameValidity ? "* Please enter a valid name." : null}</span>
+                  <Form.Control
+                    value={this.state.fullName}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "fullName")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Date Of Birth
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.dob}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "dob")
+                    }
+                    type="date"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Gender
+                  </Form.Label>
+                  <Form.Select value={this.state.gender} onChange={(e) => this.onChange(e.target.value, "gender")}>
+                    {this.state.genderList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Contact Number
+                  </Form.Label>
+                  <span className={classes.ErrorMessage}>{!this.state.phoneValidity ? "* Please enter a valid number." : null}</span>
+                  <Form.Control
+                    value={this.state.contactNumber}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "contactNumber")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Parent Contact Number
+                  </Form.Label>
+                  <span className={classes.ErrorMessage}>{!this.state.parentConatctValidity ? "* Please enter a valid number." : null}</span>
+                  <Form.Control
+                    value={this.state.parentConatct}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "parentConatct")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Person With Disablity (PwD)
+                  </Form.Label>
+                  <Form.Select value={this.state.pwd} onChange={(e) => this.onChange(e.target.value, "pwd")}>
+                    {this.state.disabilityList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className={classes.DisabilityTypeInput}>
+                  <Form.Label className={classes.FormLabels}>
+                    Type Of Disablity
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.typeOfDisability}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "typeOfDisability")
+                    }
+                    type="text"
+                    disabled={this.state.pwd === "Yes" ? false : true}
+                  />
+                </Form.Group>
+              </div>
             </div>
           </div>
-          <div className={classes.Sections}>
-            <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
-                <Form.Label className={classes.FormLabels}>
-                  Full Name
-                </Form.Label>
-                <span className={classes.ErrorMessage}>{!this.state.nameValidity ? "* Please enter a valid name." : null}</span>
-                <Form.Control
-                  value={this.state.fullName}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "fullName")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
+          <div className={classes.HorizontalSections}>
+            <div className={classes.Sections}>
+              <h4 className={classes.Heading1}>Address For Correspondence</h4>
+              <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    Address
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.correspondanceAddress.address}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "address", "correspondanceAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    City
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.correspondanceAddress.city}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "city", "correspondanceAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    State
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.correspondanceAddress.state}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "state", "correspondanceAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Pin/Zip Code
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.correspondanceAddress.pinCode}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "pinCode", "correspondanceAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
             </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Date Of Birth
-                </Form.Label>
-                <Form.Control
-                  value={this.state.dob}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "dob")
-                  }
-                  type="date"
-                  required
+            <div className={classes.Sections}>
+              <h4 className={classes.Heading}>Permanent Address</h4>
+              <div className={`mb-3 ${classes.Checker}`}>
+                <Form.Check
+                  type="checkbox"
+                  id="default-checkbox"
+                  label="Same as Correspondence Address"
+                  onClick={this.checkBoxClicked}
                 />
-              </Form.Group>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Gender
-                </Form.Label>
-                <Form.Select value={this.state.gender} onChange={(e) => this.onChange(e.target.value, "gender")}>
-                  {this.state.genderList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Contact Number
-                </Form.Label>
-                <span className={classes.ErrorMessage}>{!this.state.phoneValidity ? "* Please enter a valid number." : null}</span>
-                <Form.Control
-                  value={this.state.contactNumber}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "contactNumber")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Parent Contact Number
-                </Form.Label>
-                <span className={classes.ErrorMessage}>{!this.state.parentConatctValidity ? "* Please enter a valid number." : null}</span>
-                <Form.Control
-                  value={this.state.parentConatct}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "parentConatct")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Person With Disablity (PwD)
-                </Form.Label>
-                <Form.Select value={this.state.pwd} onChange={(e) => this.onChange(e.target.value, "pwd")}>
-                  {this.state.disabilityList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className={classes.DisabilityTypeInput}>
-                <Form.Label className={classes.FormLabels}>
-                  Type Of Disablity
-                </Form.Label>
-                <Form.Control
-                  value={this.state.typeOfDisability}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "typeOfDisability")
-                  }
-                  type="text"
-                  disabled={this.state.pwd === "Yes" ? false : true}
-                />
-              </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    Address
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.addressSame ? this.state.correspondanceAddress.address : this.state.permanentAddress.address}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "address", "permanentAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    City
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.addressSame ? this.state.correspondanceAddress.city : this.state.permanentAddress.city}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "city", "permanentAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    State
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.addressSame ? this.state.correspondanceAddress.state : this.state.permanentAddress.state}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "state", "permanentAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Pin/Zip Code
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.addressSame ? this.state.correspondanceAddress.pinCode : this.state.permanentAddress.pinCode}
+                    onChange={(e) =>
+                      this.onAddressChange(e.target.value, "pinCode", "permanentAddress")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
             </div>
           </div>
+          <Button onClick={this.onSave} className={classes.SaveButton}>SAVE</Button>
         </div>
-        <div className={classes.HorizontalSections}>
-          <div className={classes.Sections}>
-            <h4 className={classes.Heading1}>Address For Correspondence</h4>
-            <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
-                <Form.Label className={classes.FormLabels}>
-                  Address
-                </Form.Label>
-                <Form.Control
-                  value={this.state.correspondanceAddress.address}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "address", "correspondanceAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
-                <Form.Label className={classes.FormLabels}>
-                  City
-                </Form.Label>
-                <Form.Control
-                  value={this.state.correspondanceAddress.city}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "city", "correspondanceAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  State
-                </Form.Label>
-                <Form.Control
-                  value={this.state.correspondanceAddress.state}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "state", "correspondanceAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Pin/Zip Code
-                </Form.Label>
-                <Form.Control
-                  value={this.state.correspondanceAddress.pinCode}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "pinCode", "correspondanceAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-          </div>
-          <div className={classes.Sections}>
-            <h4 className={classes.Heading}>Permanent Address</h4>
-            <div className={`mb-3 ${classes.Checker}`}>
-              <Form.Check
-                type="checkbox"
-                id="default-checkbox"
-                label="Same as Correspondence Address"
-                onClick={this.checkBoxClicked}
-              />
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
-                <Form.Label className={classes.FormLabels}>
-                  Address
-                </Form.Label>
-                <Form.Control
-                  value={this.state.addressSame ? this.state.correspondanceAddress.address : this.state.permanentAddress.address}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "address", "permanentAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
-                <Form.Label className={classes.FormLabels}>
-                  City
-                </Form.Label>
-                <Form.Control
-                  value={this.state.addressSame ? this.state.correspondanceAddress.city : this.state.permanentAddress.city}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "city", "permanentAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className={classes.Row}>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  State
-                </Form.Label>
-                <Form.Control
-                  value={this.state.addressSame ? this.state.correspondanceAddress.state : this.state.permanentAddress.state}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "state", "permanentAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-              <Form.Group className={classes.InputWidthSet}>
-                <Form.Label className={classes.FormLabels}>
-                  Pin/Zip Code
-                </Form.Label>
-                <Form.Control
-                  value={this.state.addressSame ? this.state.correspondanceAddress.pinCode : this.state.permanentAddress.pinCode}
-                  onChange={(e) =>
-                    this.onAddressChange(e.target.value, "pinCode", "permanentAddress")
-                  }
-                  type="text"
-                  required
-                />
-              </Form.Group>
-            </div>
-          </div>
-        </div>
-        <Button onClick={this.onSave} className={classes.SaveButton}>SAVE</Button>
-      </div>
+      </>
     );
   }
 }
