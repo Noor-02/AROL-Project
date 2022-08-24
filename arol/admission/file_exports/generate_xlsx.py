@@ -13,9 +13,14 @@ def generate_xlsx(request, queryset):
     workbook = Workbook()
     worksheet = workbook.active
     worksheet.title = "Applications"
-    row_num = 1
+    row_num = 2
     columns = [
+        "Applicantion ID",
         "Applicant ID",
+        "Advertisement ID",
+        "Payment ID",
+        "Approved",
+        "Date of Application",
     ]
 
     for col_num, column_title in enumerate(columns, start=1):
@@ -26,6 +31,11 @@ def generate_xlsx(request, queryset):
         row_num += 1
         row = [
             application.application_id,
+            application.applicant_id,
+            application.advertisement_id,
+            application.payment_id,
+            application.is_approved,
+            application.date_applied,
         ]
 
         for col_num, cell_value in enumerate(row, 1):
