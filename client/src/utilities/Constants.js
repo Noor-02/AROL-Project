@@ -1,5 +1,6 @@
 const Constants = {
     KEY_TOKEN: 'token',
+    REFRESH_TOKEN: 'Refresh token',
     KEY_USER_LOGGED_IN: 'userLoggedIn',
     REGEX_PASSWORD_VALIDITY: /^[\w\_\.\@\#\$]{8,32}$/,
     REGEX_EMAIL_VALIDITY: /^(?:\w+)(?:[.-][\w]+)*@(?:\w+)(?:[.-][\w]+)*(\.\w{2,3})$/,

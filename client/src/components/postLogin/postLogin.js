@@ -13,6 +13,7 @@ import PostLoginHome from "./PostLoginHome";
 import ChangePassword from "../ChangePassword/ChangePassword";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";
 import { GetFromLocalStorage } from "../../utilities/CommonMethods";
+import Constants from "../../utilities/Constants";
 
 class PostLogin extends Component {
   state = {
@@ -33,7 +34,7 @@ class PostLogin extends Component {
 
   onNavigationItemClick = (type) => {
     if (type === 7) {
-      ResourceAPIController.UserLogout(GetFromLocalStorage("Token")).then(response => {
+      ResourceAPIController.UserLogout(GetFromLocalStorage(Constants.REFRESH_TOKEN)).then(response => {
         console.log(response.data);
         this.props.history.push("/");
       })

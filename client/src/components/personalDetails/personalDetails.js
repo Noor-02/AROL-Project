@@ -18,6 +18,7 @@ class PersonalDetails extends Component {
     contactNumber: "",
     parentConatct: "",
     nationality: "",
+    otherNationality: "",
     pwd: "No",
     typeOfDisability: "",
     correspondanceAddress: { address: "", state: "", city: "", pinCode: "" },
@@ -28,6 +29,7 @@ class PersonalDetails extends Component {
     maritalList: ["Married", "Not Married"],
     disabilityList: ["Yes", "No"],
     genderList: ["Male", "Female", "Other"],
+    admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
     phoneValidity: false,
     parentConatctValidity: false,
     parentNameValidity: false,
@@ -134,14 +136,16 @@ class PersonalDetails extends Component {
                 <Form.Label className={classes.FormLabels}>
                   Admission For The Year
                 </Form.Label>
-                <Form.Control
-                  value={this.state.admissionYear}
-                  onChange={(e) =>
-                    this.onChange(e.target.value, "admissionYear")
-                  }
-                  type="text"
-                  required
-                />
+                <Form.Select value={this.state.admissionYear} onChange={(e) => this.onChange(e.target.value, "admissionYear")}>
+                  {this.state.admissionYrList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
               </Form.Group>
               <Form.Group className={classes.TypeOfApplicantInput}>
                 <Form.Label className={classes.FormLabels}>
@@ -178,7 +182,7 @@ class PersonalDetails extends Component {
             <div className={classes.Row}>
               <Form.Group className={classes.InputWidthSet}>
                 <Form.Label className={classes.FormLabels}>
-                  Caste Category
+                  Category
                 </Form.Label>
                 <Form.Select value={this.state.caste} onChange={(e) => this.onChange(e.target.value, "caste")}>
                   {this.state.casteList.map((item, index) => {
@@ -225,20 +229,18 @@ class PersonalDetails extends Component {
                   })}
                 </Form.Select>
               </Form.Group>
-              <Form.Group className={classes.InputWidthSet}>
+              <Form.Group className={classes.DisabilityTypeInput}>
                 <Form.Label className={classes.FormLabels}>
-                  Person With Disablity (PwD)
+                  Nationality
                 </Form.Label>
-                <Form.Select value={this.state.pwd} onChange={(e) => this.onChange(e.target.value, "pwd")}>
-                  {this.state.disabilityList.map((item, index) => {
-                    return (
-                      <option
-                        key={index}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
+                <Form.Control
+                  value={this.state.otherNationality}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, "otherNationality")
+                  }
+                  type="text"
+                  disabled={this.state.nationality === "Other" ? false : true}
+                />
               </Form.Group>
             </div>
           </div>
@@ -319,7 +321,22 @@ class PersonalDetails extends Component {
                 />
               </Form.Group>
             </div>
-            <div className={classes.SpecialRow}>
+            <div className={classes.Row}>
+              <Form.Group className={classes.InputWidthSet}>
+                <Form.Label className={classes.FormLabels}>
+                  Person With Disablity (PwD)
+                </Form.Label>
+                <Form.Select value={this.state.pwd} onChange={(e) => this.onChange(e.target.value, "pwd")}>
+                  {this.state.disabilityList.map((item, index) => {
+                    return (
+                      <option
+                        key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+              </Form.Group>
               <Form.Group className={classes.DisabilityTypeInput}>
                 <Form.Label className={classes.FormLabels}>
                   Type Of Disablity

@@ -24,7 +24,7 @@ class Login extends Component {
   loginInitiated = () => {
     let data = { email: this.state.email, password: this.state.pwd }
     ResourceAPIController.UserLogin(data).then(response => {
-      console.log(response.data);
+      console.log(response);
       this.props.history.push("/post-login");
     })
       .catch(error => {
