@@ -1,3 +1,13 @@
+const AddInLocalStorage = (key, value) => {
+  // Log('SetItem -> ' + key, value);
+  window.localStorage.setItem(key, value);
+}
+
+const GetFromLocalStorage = (key) => {
+  // Log('GetItem -> ' + key + "'s Value ", window.localStorage.getItem(key));
+  return window.localStorage.getItem(key);
+}
+
 const IsListEmpty = (list) => {
   if (
     list !== undefined &&
@@ -24,4 +34,4 @@ const IsStringEmpty = (str) => {
   return true;
 };
 
-export { IsListEmpty, IsObjectEmpty, IsStringEmpty };
+export { IsListEmpty, IsObjectEmpty, IsStringEmpty, GetFromLocalStorage, AddInLocalStorage };

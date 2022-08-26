@@ -1,5 +1,11 @@
+.HomeContainer {
+    background-image: url("../../background.png");
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .ButtonContainer {
-    margin-top: 5rem;
     margin-left: 38%;
 }
 
@@ -7,17 +13,17 @@
     background-color: #e6f8ff;
     color: black;
     font-weight: 600;
-    margin-right: 4rem;
+    margin-right: 4rem; 
+    margin-top: 10rem;
     padding-right: 2rem;
     padding-left: 2rem;
 }
 
-.RegisterButton {
-    background-color: #e6f8ff;
+.RegisterButton {background-color: #e6f8ff;
     color: black;
     font-weight: 600;
+    margin-right: 4rem; 
+    margin-top: 10rem;
     padding-right: 2rem;
     padding-left: 2rem;
 }
-
-.HomeContainer {}

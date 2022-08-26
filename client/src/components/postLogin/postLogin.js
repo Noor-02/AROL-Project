@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import classes from "./PostLogin.module.css";
 import LoginNav from "../LogInNav/LoginNav";
-import PersonalDetails from "../personalDetails/personalDetails";
-import EducationalDetails from "../educationalDetails/educationalDetails";
-import EmploymentDetails from "../employmentDetails/employmentDetails";
+import PersonalDetails from "../PersonalDetails/PersonalDetails";
+import EducationalDetails from "../EducationalDetails/EducationalDetails";
+import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
 import ApplyPage from "../ApplyPage/ApplyPage";
 import Applications from "../Applications/Applications";
 import { ReactDOM } from "react";
-import { Switch, withRouter, Route } from "react-router";
+import { withRouter } from "react-router";
+import CompleteForm from "../ApplyPage/CompleteForm";
+import PostLoginHome from "./PostLoginHome";
+import ChangePassword from "../ChangePassword/ChangePassword";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
+import { GetFromLocalStorage } from "../../utilities/CommonMethods";
 
 class PostLogin extends Component {
   state = {
@@ -18,7 +23,7 @@ class PostLogin extends Component {
       { label: "Applications", type: "applications" },
       { label: "Personal Details", type: "personal-details" },
       { label: "Educational Details", type: "educational-details" },
-      { label: "Apply", type: "apply" }
+      { label: "Apply", type: "apply" },
     ],
     name: "Full Name",
     username: "appicant1",
@@ -28,7 +33,13 @@ class PostLogin extends Component {
 
   onNavigationItemClick = (type) => {
     if (type === 7) {
-      this.props.history.push("/");
+      ResourceAPIController.UserLogout(GetFromLocalStorage("Token")).then(response => {
+        console.log(response.data);
+        this.props.history.push("/");
+      })
+        .catch(error => {
+          console.log("Failed =>", error);
+        })
     } else {
       let activeType = "";
       if (type !== this.state.activeNavItem) {
@@ -77,28 +88,39 @@ class PostLogin extends Component {
                 ? this.setState({
                   activeNavItem: 1,
                   activeItemType: "employment-details",
-                }) : this.props.location.pathname ===
-                  this.props.match.url + "/apply"
+                })
+                : this.props.location.pathname === this.props.match.url + "/apply"
                   ? this.setState({
                     activeNavItem: 6,
                     activeItemType: "apply",
                   })
-                  : this.setState({
-                    activeNavItem: 0,
-                    activeItemType: "home",
-                  });
+                  : this.props.location.pathname === this.props.match.url + "/complete-form"
+                    ? this.setState({
+                      activeNavItem: 7,
+                      activeItemType: "complete-form",
+                    })
+                    : this.props.location.pathname ===
+                      this.props.match.url + "/change-password"
+                      ? this.setState({
+                        activeNavItem: 7,
+                        activeItemType: "change-password",
+                      })
+                      : this.setState({
+                        activeNavItem: 0,
+                        activeItemType: "home",
+                      });
   }
   render() {
     let renderdata;
     switch (this.state.activeNavItem) {
       case 0:
-        renderdata = <div> this is post login </div>;
+        renderdata = <PostLoginHome />;
         break;
       case 1:
         renderdata = <EmploymentDetails />;
         break;
       case 2:
-        renderdata = <div> this is change password </div>;
+        renderdata = <ChangePassword />;
         break;
       case 3:
         renderdata = <Applications />;
@@ -112,8 +134,11 @@ class PostLogin extends Component {
       case 6:
         renderdata = <ApplyPage />;
         break;
+      case 7:
+        renderdata = <CompleteForm />;
+        break;
       default:
-        renderdata = <div> this is post login </div>;
+        renderdata = <PostLoginHome />;
         break;
     }
 

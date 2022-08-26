@@ -33,7 +33,7 @@ router.register(
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("export_xlsx/", generate_xlsx, name="export_xlsx"),
+    path("export_xlsx/<year>", generate_xlsx, name="export_xlsx_by_year"),
     path("export_pdf/<application_id>", export_pdf_wrapper, name="export_pdf"),
     path("export_zip/<year>", generate_zip_by_year, name="export_zip"),
 ]

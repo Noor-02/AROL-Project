@@ -9,10 +9,12 @@
 .InstiName {
     font-weight: 700;
     font-size: 2rem;
+    padding-left: 1rem;
 }
 
 .HeadingName {
     font-weight: 700;
     color: #335196;
     font-size: 1.8rem;
+    padding-left: 1rem;
 }

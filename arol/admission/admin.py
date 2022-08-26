@@ -1,4 +1,6 @@
 from django.contrib import admin
+from .file_exports import generate_zip
+from .file_exports import generate_xlsx
 from django.utils.html import mark_safe
 
 from .file_exports import generate_zip
@@ -74,6 +76,7 @@ class Application_Admin(admin.ModelAdmin):
         "approve_application",
         "disapprove_application",
         "export_zip",
+        "export_xlxs",
     ]
     fieldsets = (
         (
@@ -102,6 +105,12 @@ class Application_Admin(admin.ModelAdmin):
     @admin.action(description="Download selected Applications")
     def export_zip(modeladmin, request, queryset):
         return generate_zip(request, queryset)
+
+    @admin.action(description="Download Selected Applications as a spreadsheet")
+    def export_xlxs(modeladmin, request, queryset):
+        return generate_xlsx(request, queryset)
+
+    pass
 
 
 @admin.register(Education_Detail)
