@@ -1,7 +1,9 @@
-import sys
-sys.path.append("..")
+import imp
 from .. models . advertisement import Advertisement
-from  management .models import Programme
+from .. models . education import Education_Detail
+from .. models . employment import Employment
+from .. models . project import Project_Detail
+from .. models . examination import Qualifying_Examination
 from .. models . application import Application
 from .. models . profile import Profile
 from email.mime import application
@@ -106,6 +108,17 @@ def export_pdf_wrapper(request, application_id):
 
 def generate_pdf(request, application_id):
 
+    application = Application.objects.get(application_id = application_id)
+    applicant_id = application.applicant_id
+    applicant_profile = Profile.objects.get(applicant_id = applicant_id)
+    advertisement_ids = application_id.split('-')
+    advertisement_id = advertisement_ids[0]
+    advertisement = Advertisement.objects.get(advertisement_id = advertisement_id)
+    programme = advertisement.programme
+    educations = Education_Detail.objects.filter(applicant_id = applicant_id)
+    employments = Employment.objects.filter(applicant_id = applicant_id)
+    projects = Project_Detail.objects.filter(applicant_id = applicant_id)
+
     buffer = BytesIO()
 
     pdf = SimpleDocTemplate(
@@ -119,7 +132,7 @@ def generate_pdf(request, application_id):
 
     flowables = []
     frames = [[]]
-
+    pageTemplates = []
     create_frame(frames, 1, pdf.leftMargin, 725, 86, 86, 0)
     flowables.append(logo("./static/logo.png"))
     flowables.append(FrameBreak())
@@ -132,14 +145,6 @@ def generate_pdf(request, application_id):
     flowables.append(title)
     flowables.append(subtitle)
     flowables.append(FrameBreak())
-
-    application = Application.objects.get(application_id = application_id)
-    applicant_id = application.applicant_id
-    applicant_profile = Profile.objects.get(applicant_id = applicant_id)
-    advertisement_ids = application_id.split('-')
-    advertisement_id = advertisement_ids[0]
-    advertisement = Advertisement.objects.get(advertisement_id = advertisement_id)
-    programme = advertisement.programme
 
     create_frame(frames, 1, pdf.leftMargin, 645, 200, 40)
     fill_field(flowables, "Application ID", application_id)
@@ -223,47 +228,175 @@ def generate_pdf(request, application_id):
     create_frame(frames, 1, pdf.leftMargin + 340, 85, 170, 40)
     fill_field(flowables, "Pin/Zip", applicant_profile.p_pin)
     create_frame(frames, 1, pdf.leftMargin, 45, 510, 40, 0)
-    flowables.append(NextPageTemplate("second_page"))
+    flowables.append(NextPageTemplate(1))
     flowables.append(PageBreak())
-
+    pageTemplates.append(PageTemplate(id = 0, frames=frames[0]))
     frames.append([])
-    create_frame(frames, 2, pdf.leftMargin, 735, 510, 40, 0)
-    subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
-    flowables.append(subheading)
-    flowables.append(FrameBreak())
+    i = 0
+    page_number = 1
+    
+    for education in educations:
+        create_frame(frames, 2, pdf.leftMargin, 745-(40*i), 510, 40, 0)
+        subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
+        flowables.append(subheading)
+        flowables.append(FrameBreak())
+        create_frame(frames, 2, pdf.leftMargin, 705-(40*i), 170, 40)
+        fill_field(flowables, "Examination", education.qualification)
+        create_frame(frames, 2, pdf.leftMargin + 170, 705-(40*i), 340, 40)
+        fill_field(flowables, "Name of Examination", education.examination)
 
-    create_frame(frames, 2, pdf.leftMargin, 705, 170, 40)
-    fill_field(flowables, "Examination", "Graduation")
-    create_frame(frames, 2, pdf.leftMargin + 170, 705, 340, 40)
-    fill_field(flowables, "Name of Examination", "IIT Boards")
+        create_frame(frames, 2, pdf.leftMargin, 665-(40*i), 340, 40)
+        fill_field(flowables, "Board/Institute/University", "IIT Boards")
+        create_frame(frames, 2, pdf.leftMargin + 340, 665-(40*i), 170, 40)
+        fill_field(flowables, "Duration of Degree", "4 years")
 
-    create_frame(frames, 2, pdf.leftMargin, 665, 340, 40)
-    fill_field(flowables, "Board/Institute/University", "IIT Boards")
-    create_frame(frames, 2, pdf.leftMargin + 340, 665, 170, 40)
-    fill_field(flowables, "Duration of Degree", "4 years")
+        create_frame(frames, 2, pdf.leftMargin, 625-(40*i), 340, 40)
+        fill_field(flowables, "Expected Year of Passing", "2022")
+        create_frame(frames, 2, pdf.leftMargin + 340, 625-(40*i), 170, 40)
+        fill_field(flowables, "Status", "Completed")
 
-    create_frame(frames, 2, pdf.leftMargin, 625, 340, 40)
-    fill_field(flowables, "Expected Year of Passing", "2022")
-    create_frame(frames, 2, pdf.leftMargin + 340, 625, 170, 40)
-    fill_field(flowables, "Status", "Completed")
+        create_frame(frames, 2, pdf.leftMargin, 585-(40*i), 170, 40)
+        fill_field(flowables, "% of Marks or CPI/CGPA", "% of Marks")
+        create_frame(frames, 2, pdf.leftMargin + 170, 585-(40*i), 170, 40)
+        fill_field(flowables, "% or CPI/CGPA", "85")
+        create_frame(frames, 2, pdf.leftMargin + 340, 585-(40*i), 170, 40)
+        fill_field(flowables, "Out of CPI/CGPA", "100")
 
-    create_frame(frames, 2, pdf.leftMargin, 585, 170, 40)
-    fill_field(flowables, "% of Marks or CPI/CGPA", "% of Marks")
-    create_frame(frames, 2, pdf.leftMargin + 170, 585, 170, 40)
-    fill_field(flowables, "% or CPI/CGPA", "85")
-    create_frame(frames, 2, pdf.leftMargin + 340, 585, 170, 40)
-    fill_field(flowables, "Out of CPI/CGPA", "100")
+        create_frame(frames, 2, pdf.leftMargin, 545-(40*i), 170, 40)
+        fill_field(flowables, "Class/Division", "First")
+        create_frame(frames, 2, pdf.leftMargin + 170, 545-(40*i), 340, 40)
+        fill_field(flowables, "Specialization", "IT")
+        i=i+6
+        if 545-(40*(i+6)) <= 0:
+            flowables.append(NextPageTemplate(page_number))
+            flowables.append(PageBreak())
+            pageTemplates.append(PageTemplate(id = page_number, frames=frames[page_number]))
+            page_number=page_number+1
+            i=0
+            frames.append([])
+    
+    for employment in employments:
+        create_frame(frames, 2, pdf.leftMargin, 745-(40*i), 510, 40, 0)
+        subheading = Paragraph("Employment Details", subheading_style(sample_style_sheet))
+        flowables.append(subheading)
+        flowables.append(FrameBreak())
+        create_frame(frames, 2, pdf.leftMargin, 705-(40*i), 170, 40)
+        fill_field(flowables, "Post Held", employment.post_held)
+        create_frame(frames, 2, pdf.leftMargin + 170, 705-(40*i), 340, 40)
+        fill_field(flowables, "Name of Organisation", employment.organization)
 
-    create_frame(frames, 2, pdf.leftMargin, 545, 170, 40)
-    fill_field(flowables, "Class/Division", "First")
-    create_frame(frames, 2, pdf.leftMargin + 170, 545, 340, 40)
-    fill_field(flowables, "Specialization", "IT")
+        create_frame(frames, 2, pdf.leftMargin, 665-(40*i), 340, 40)
+        fill_field(flowables, "From", employment.from_date)
+        create_frame(frames, 2, pdf.leftMargin + 340, 665-(40*i), 170, 40)
+        fill_field(flowables, "To", employment.to_date)
 
-    pdf.addPageTemplates(
-        [
-            PageTemplate(id="first_page", frames=frames[0]),
-            PageTemplate(id="second_page", frames=frames[1]),
-        ]
+        create_frame(frames, 2, pdf.leftMargin, 625-(40*i), 340, 40)
+        fill_field(flowables, "Work Type", employment.work_type)
+        create_frame(frames, 2, pdf.leftMargin + 340, 625-(40*i), 170, 40)
+        fill_field(flowables, "Duration", employment.duration)
+        create_frame(frames, 2, pdf.leftMargin, 585-(40*i), 170, 40)
+        fill_field(flowables, "Nature of Responsibilities", employment.responsibilities)
+        create_frame(frames, 2, pdf.leftMargin + 170, 585-(40*i), 170, 40)
+        fill_field(flowables, "Gross Emoluments", employment.emoluments)
+        create_frame(frames, 2, pdf.leftMargin + 340, 585-(40*i), 170, 40)
+        fill_field(flowables, "Currently Employed", "-")
+        i=i+6
+        if 545-(40*(i+6)) <= 0:
+            flowables.append(NextPageTemplate(page_number))
+            flowables.append(PageBreak())
+            pageTemplates.append(PageTemplate(id = page_number, frames=frames[page_number]))
+            page_number=page_number+1
+            i=0
+            frames.append([])
+
+    for project in projects:
+        create_frame(frames, 2, pdf.leftMargin, 745-(40*i), 510, 40, 0)
+        subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
+        flowables.append(subheading)
+        flowables.append(FrameBreak())
+        create_frame(frames, 2, pdf.leftMargin, 705-(40*i), 170, 40)
+        fill_field(flowables, "Examination", education.qualification)
+        create_frame(frames, 2, pdf.leftMargin + 170, 705-(40*i), 340, 40)
+        fill_field(flowables, "Name of Examination", education.examination)
+
+        create_frame(frames, 2, pdf.leftMargin, 665-(40*i), 340, 40)
+        fill_field(flowables, "Board/Institute/University", "IIT Boards")
+        create_frame(frames, 2, pdf.leftMargin + 340, 665-(40*i), 170, 40)
+        fill_field(flowables, "Duration of Degree", "4 years")
+
+        create_frame(frames, 2, pdf.leftMargin, 625-(40*i), 340, 40)
+        fill_field(flowables, "Expected Year of Passing", "2022")
+        create_frame(frames, 2, pdf.leftMargin + 340, 625-(40*i), 170, 40)
+        fill_field(flowables, "Status", "Completed")
+
+        create_frame(frames, 2, pdf.leftMargin, 585-(40*i), 170, 40)
+        fill_field(flowables, "% of Marks or CPI/CGPA", "% of Marks")
+        create_frame(frames, 2, pdf.leftMargin + 170, 585-(40*i), 170, 40)
+        fill_field(flowables, "% or CPI/CGPA", "85")
+        create_frame(frames, 2, pdf.leftMargin + 340, 585-(40*i), 170, 40)
+        fill_field(flowables, "Out of CPI/CGPA", "100")
+
+        create_frame(frames, 2, pdf.leftMargin, 545-(40*i), 170, 40)
+        fill_field(flowables, "Class/Division", "First")
+        create_frame(frames, 2, pdf.leftMargin + 170, 545-(40*i), 340, 40)
+        fill_field(flowables, "Specialization", "IT")
+        i=i+6
+        if 545-(40*(i+6)) <= 0:
+            flowables.append(NextPageTemplate(page_number))
+            flowables.append(PageBreak())
+            page_number=page_number+1
+            i=0
+            frames.append([])
+    
+    # for education in educations:
+    #     create_frame(frames, 2, pdf.leftMargin, 745-(40*i), 510, 40, 0)
+    #     subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
+    #     flowables.append(subheading)
+    #     flowables.append(FrameBreak())
+    #     create_frame(frames, 2, pdf.leftMargin, 705-(40*i), 170, 40)
+    #     fill_field(flowables, "Examination", education.qualification)
+    #     create_frame(frames, 2, pdf.leftMargin + 170, 705-(40*i), 340, 40)
+    #     fill_field(flowables, "Name of Examination", education.examination)
+
+    #     create_frame(frames, 2, pdf.leftMargin, 665-(40*i), 340, 40)
+    #     fill_field(flowables, "Board/Institute/University", "IIT Boards")
+    #     create_frame(frames, 2, pdf.leftMargin + 340, 665-(40*i), 170, 40)
+    #     fill_field(flowables, "Duration of Degree", "4 years")
+
+    #     create_frame(frames, 2, pdf.leftMargin, 625-(40*i), 340, 40)
+    #     fill_field(flowables, "Expected Year of Passing", "2022")
+    #     create_frame(frames, 2, pdf.leftMargin + 340, 625-(40*i), 170, 40)
+    #     fill_field(flowables, "Status", "Completed")
+
+    #     create_frame(frames, 2, pdf.leftMargin, 585-(40*i), 170, 40)
+    #     fill_field(flowables, "% of Marks or CPI/CGPA", "% of Marks")
+    #     create_frame(frames, 2, pdf.leftMargin + 170, 585-(40*i), 170, 40)
+    #     fill_field(flowables, "% or CPI/CGPA", "85")
+    #     create_frame(frames, 2, pdf.leftMargin + 340, 585-(40*i), 170, 40)
+    #     fill_field(flowables, "Out of CPI/CGPA", "100")
+
+    #     create_frame(frames, 2, pdf.leftMargin, 545-(40*i), 170, 40)
+    #     fill_field(flowables, "Class/Division", "First")
+    #     create_frame(frames, 2, pdf.leftMargin + 170, 545-(40*i), 340, 40)
+    #     fill_field(flowables, "Specialization", "IT")
+    #     i=i+6
+    #     if 545-(40*(i+6)) <= 0:
+    #         flowables.append(NextPageTemplate(page_number))
+    #         flowables.append(PageBreak())
+    #         page_number=page_number+1
+    #         i=0
+    #         frames.append([])
+    
+
+          
+    pdf.addPageTemplates( pageTemplates
+        # [
+        #     PageTemplate(id=0, frames=frames[0]),
+        #     PageTemplate(id=1, frames=frames[1]),
+        #     PageTemplate(id=1, frames=frames[1]),
+        #     PageTemplate(id=1, frames=frames[1]),
+        #     PageTemplate(id=1, frames=frames[1])
+        # ]
     )
     pdf.build(flowables)
     return buffer

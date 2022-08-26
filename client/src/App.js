@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { ReactDOM } from "react";
 
-import Login from "./components/login/login";
-import HomePage from "./components/home/HomePage";
-import Register from "./components/register/Register";
-import PersonalDetails from "./components/personalDetails/personalDetails";
+import Login from "./components/Login/Login";
+import HomePage from "./components/Home/HomePage";
+import Register from "./components/Register/Register";
+import PersonalDetails from "./components/PersonalDetails/PersonalDetails";
 import ProjectDetails from "./components/ProjectDetails/ProjectDetails";
 import QualifyingDetails from "./components/QualifyingDetails/QualifyingDetails";
-import EducationalDetails from "./components/educationalDetails/educationalDetails";
+import EducationalDetails from "./components/EducationalDetails/EducationalDetails";
 import ReferenceDetails from "./components/ReferenceDetails/ReferenceDetails";
-import Header from "./components/Header/Header"
-import PostLogin from "./components/postLogin/postLogin";
+import Header from "./components/Header/Header";
+import PostLogin from "./components/PostLogin/PostLogin";
 // import ApplyPage from "./components/ApplyPage/ApplyPage";
 
 import { Switch, Route } from "react-router-dom";
