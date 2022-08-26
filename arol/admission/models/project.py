@@ -5,7 +5,11 @@ from .profile import Profile
 
 class Project_Detail(models.Model):
 
-    DEGREE = [("Bachelors", _("Bachelors")), ("Masters", _("Masters"))]
+    DEGREE = [
+        ("Bachelors", _("Bachelors")),
+        ("Masters", _("Masters")),
+        ("Others", _("Others")),
+    ]
 
     applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     degree = models.CharField(_("Degree"), max_length=255, choices=DEGREE)

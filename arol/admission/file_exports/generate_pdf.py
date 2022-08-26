@@ -136,7 +136,7 @@ def generate_pdf(request):
     create_frame(frames, 1, pdf.leftMargin, 565, 170, 40)
     fill_field(flowables, "Department", "CSE")
     create_frame(frames, 1, pdf.leftMargin + 170, 565, 170, 40)
-    fill_field(flowables, "Programme", "PhD")
+    fill_field(flowables, "Program", "PhD")
 
     create_frame(frames, 1, pdf.leftMargin, 525, 170, 40)
     fill_field(flowables, "Applicant", "Indian Applicant")

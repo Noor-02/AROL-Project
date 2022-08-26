@@ -11,6 +11,7 @@ from .views import (
     Profile_Viewset,
     Project_Viewset,
     Recommendation_Viewset,
+    Recommendation_Referral_Viewset,
 )
 from .file_exports import export_pdf_wrapper
 from .file_exports import generate_xlsx
@@ -24,6 +25,11 @@ router.register(r"examination", Examination_Viewset, "examination")
 router.register(r"profile", Profile_Viewset, "profile")
 router.register(r"project", Project_Viewset, "project")
 router.register(r"recommendation", Recommendation_Viewset, "recommendation")
+router.register(
+    r"recommendation_referral",
+    Recommendation_Referral_Viewset,
+    "recommendation_referral",
+)
 
 urlpatterns = [
     path("", include(router.urls)),

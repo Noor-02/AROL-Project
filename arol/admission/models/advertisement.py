@@ -1,24 +1,22 @@
-"""Advertisements for the Admissions of different Programmes."""
+"""Advertisements for the Admissions of different Programs."""
 
 from django.db import models
 from django.forms import ValidationError
 from django.utils.translation import gettext as _
-from django.utils.timezone import now
-from management.models import Programme
+from management.models import Program
+from choice.models import Academic_Year
 
 
 def upload_advertisement(instance, filename):
-    file_path = "admission/advertisement/{advertisement_id}.{extension}".format(
-        advertisement_id=instance.advertisement_id,
-        extension=filename.rsplit(".", 1)[-1],
+    file_path = "admission/advertisement/{advertisement_id}/{filename}".format(
+        advertisement_id=instance.advertisement_id, filename=filename
     )
     return file_path
 
 
-def upload_recommendation(instance, filename):
-    file_path = "admission/recommendation/{advertisement_id}.{extension}".format(
-        advertisement_id=instance.advertisement_id,
-        extension=filename.rsplit(".", 1)[-1],
+def upload_document(instance, filename):
+    file_path = "admission/document/{advertisement_id}/{filename}".format(
+        advertisement_id=instance.advertisement_id, filename=filename
     )
     return file_path
 
@@ -47,17 +45,15 @@ class Advertisement(models.Model):
     )
     begins_from = models.DateField(_("Admission Begins from"))
     deadline = models.DateField(_("Admission Deadline"))
-    academic_year = models.IntegerField(_("Academic Year"), default=now().year)
-    programme = models.ForeignKey(Programme, on_delete=models.PROTECT)
+    academic_year = models.ForeignKey(Academic_Year, on_delete=models.PROTECT)
+    program = models.ForeignKey(Program, on_delete=models.PROTECT)
     document = models.FileField(
         _("Advertisement File"),
         upload_to=upload_advertisement,
     )
-    letter_of_recommendation = models.FileField(
-        _("Letter of Recommendation Template"),
-        upload_to=upload_recommendation,
+    other_document = models.FileField(
+        _("Any Other Document"), upload_to=upload_document, null=True, blank=True
     )
-    # Any other document
 
     def __str__(self):
         return "{advertisement_id}".format(advertisement_id=self.advertisement_id)
@@ -66,10 +62,10 @@ class Advertisement(models.Model):
         if not self.is_cleaned:
             self.clean()
         if self.id is None:
-            programme_code = self.programme.full_programme_code
+            program_code = self.program.full_program_code
             self.advertisement_id = (
                 str(self.academic_year)[-2:]
-                + programme_code
+                + program_code
                 + self.session
                 + self.advertisement_number
             )
@@ -89,24 +85,16 @@ class Advertisement(models.Model):
             if obj.academic_year != self.academic_year:
                 flag = True
                 error_messages["academic_year"] = "This field can't be updated"
-            if obj.programme != self.programme:
+            if obj.program != self.program:
                 flag = True
-                error_messages["programme"] = "This field can't be updated"
-            if obj.document != self.document:
-                flag = True
-                error_messages["document"] = "This field can't be updated"
-            if obj.letter_of_recommendation != self.letter_of_recommendation:
-                flag = True
-                error_messages[
-                    "letter_of_recommendation"
-                ] = "This field can't be updated"
+                error_messages["program"] = "This field can't be updated"
             if flag:
                 raise ValidationError(error_messages)
         self.is_cleaned = True
 
     def delete(self, *args, **kwargs):
         self.document.delete()
-        self.letter_of_recommendation.delete()
+        self.other_document.delete()
         super(Advertisement, self).delete(*args, **kwargs)
 
     class Meta:

@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .file_exports import generate_zip
 from django.utils.html import mark_safe
+
+from .file_exports import generate_zip
 from .models import (
     Advertisement,
     Application,
@@ -18,8 +19,8 @@ class Advertisement_Admin(admin.ModelAdmin):
     model = Advertisement
     ordering = ("-advertisement_id",)
     search_fields = ("advertisement_id",)
-    list_display = ("advertisement_id", "programme")
-    list_filter = ("academic_year", "programme", "session")
+    list_display = ("advertisement_id", "program")
+    list_filter = ("academic_year", "program", "session")
     fieldsets = (
         (
             None,
@@ -27,12 +28,14 @@ class Advertisement_Admin(admin.ModelAdmin):
                 "fields": (
                     "advertisement_id",
                     "academic_year",
-                    "programme",
+                    "program",
                     "session",
                     "advertisement_number",
                     ("begins_from", "deadline"),
-                    "document",
-                    "letter_of_recommendation",
+                    (
+                        "document",
+                        "other_document",
+                    ),
                 )
             },
         ),
@@ -45,7 +48,7 @@ class Advertisement_Admin(admin.ModelAdmin):
                 "advertisement_number",
                 "session",
                 "academic_year",
-                "programme",
+                "program",
                 "file",
             ]
         else:
@@ -156,21 +159,13 @@ class Employment_Admin(admin.ModelAdmin):
 @admin.register(Qualifying_Examination)
 class Examination_Admin(admin.ModelAdmin):
     model = Qualifying_Examination
-    ordering = ("applicant_id",)
-    search_fields = ("applicant_id__applicant_id", "registration_number")
-    list_display = ("applicant_id", "examination")
-    list_filter = ("examination",)
+    ordering = ("application_id",)
+    search_fields = ("application_id__application_id", "registration_number")
+    list_display = ("application_id",)
     fieldsets = (
         (
             None,
-            {
-                "fields": (
-                    "applicant_id",
-                    "examination",
-                    "registration_number",
-                    "document",
-                )
-            },
+            {"fields": ("application_id",)},
         ),
     )
 
@@ -181,8 +176,11 @@ class Profile_Admin(admin.ModelAdmin):
     ordering = ("applicant_id",)
     search_fields = ("applicant_id", "full_name")
     list_display = ("applicant_id", "full_name")
-    list_filter = ("pwd", "gender", "caste_category", "type_of_applicant")
-    readonly_fields = ("applicant_id", "image_preview")
+    list_filter = ("pwd", "gender", "category", "type_of_applicant", "ex_serviceman")
+    readonly_fields = (
+        "applicant_id",
+        "image_preview",
+    )
 
     def image_preview(self, obj):
         return obj.image_preview
@@ -197,14 +195,16 @@ class Profile_Admin(admin.ModelAdmin):
                 "fields": (
                     ("applicant_id", "account"),
                     ("type_of_applicant", "nationality"),
-                    "full_name",
+                    ("full_name", "signature"),
                     ("photograph", "image_preview"),
                     "father_or_spouse_name",
                     "marital_status",
                     "date_of_birth",
-                    ("gender", "caste_category"),
+                    ("gender", "category"),
                     ("contact_number", "parent_contact_number"),
                     ("pwd", "disability"),
+                    ("percentage_disability", "disability_certificate"),
+                    ("ex_serviceman", "serviceman_certificate"),
                 )
             },
         ),
@@ -261,7 +261,6 @@ class Recommendation_Admin(admin.ModelAdmin):
                 "fields": (
                     "application_id",
                     "referree_email",
-                    "letter_of_recommendation",
                 )
             },
         ),
