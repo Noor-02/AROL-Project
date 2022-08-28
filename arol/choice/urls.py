@@ -10,10 +10,10 @@ from .views import (
 )
 
 urlpatterns = [
-    path("academic_year/", Academic_Year_View.as_view(), "academic_year"),
-    path("category/", Category_View.as_view(), "category"),
-    path("gender/", Gender_View.as_view(), "gender"),
-    path("marital_status/", Marital_Status_View.as_view(), "marital_status"),
-    path("qualifying_exam/", Qualifying_Exam_View.as_view(), "qualifying_exam"),
-    path("work_type/", Work_Type_View.as_view(), "work_type"),
+    path("academic_year/", Academic_Year_View.as_view(), name="academic_year"),
+    path("category/", Category_View.as_view(), name="category"),
+    path("gender/", Gender_View.as_view(), name="gender"),
+    path("marital_status/", Marital_Status_View.as_view(), name="marital_status"),
+    path("qualifying_exam/", Qualifying_Exam_View.as_view(), name="qualifying_exam"),
+    path("work_type/", Work_Type_View.as_view(), name="work_type"),
 ]
