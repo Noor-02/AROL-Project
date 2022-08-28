@@ -44,10 +44,10 @@ const UserRegistration = async (data) => {
 }
 
 const UserLogout = async (data) => {
-    // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-    let response = await axios.post(EndPoints.USER_LOGOUT, data
-        // headers: { 'Authorization': token }
-    ).then((response) => {
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.post(EndPoints.USER_LOGOUT, data, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
         AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "false");
         console.log(response.data);
         return response.data;
@@ -65,30 +65,27 @@ const UserLogout = async (data) => {
 
 
 
-// const GetEducationalDetails = async () => {
-//     const token = (localStorage.get(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-//     let response = await axios.get(EndPoints.GET_EDUCATIONAL_DETAILS).then((response, {
-//         headers: {
-//             'Authorization': token
-//         }
-//     }) => {
+const GetEducationalDetails = async () => {
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.get(EndPoints.GET_EDUCATIONAL_DETAILS, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
 
-//         console.log(response.data);
-//         return response.data;
-//     })
-//         .catch((error) => {
-//             return Promise.reject({
-//                 error: ParsedError(error, EndPoints.GET_EDUCATIONAL_DETAILS)
-//             });
-//         })
-
-//     return Promise.resolve({
-//         result: response.data
-//     });
-// }
+    return Promise.resolve({
+        result: response.data
+    });
+}
 
 const ResourceAPIController = {
-    UserLogin, UserRegistration, UserLogout,
+    UserLogin, UserRegistration, UserLogout, GetEducationalDetails
 }
 
 

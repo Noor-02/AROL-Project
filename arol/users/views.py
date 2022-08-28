@@ -157,7 +157,7 @@ class Reset_Password_View(generics.CreateAPIView):
 
 
 class Password_Token_View(generics.ListAPIView):
-    #TODO Redirects
+    # TODO Redirects
     permission_classes = [AllowAny]
 
     def get(self, request, uidb64, token):
@@ -219,4 +219,3 @@ class Logout_View(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(status=status.HTTP_205_RESET_CONTENT)
-

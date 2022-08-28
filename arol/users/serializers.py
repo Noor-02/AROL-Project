@@ -39,7 +39,8 @@ class Registration_Serializer(serializers.ModelSerializer):
         password2 = self.validated_data["password2"]
 
         if password1 != password2:
-            raise serializers.ValidationError({"password": "Passwords should match"})
+            raise serializers.ValidationError(
+                {"password": "Passwords should match"})
 
         try:
             validate_password(password1)
@@ -102,7 +103,8 @@ class Change_Password_Serializer(serializers.Serializer):
             password1 = self.validated_data["new_password1"]
             password2 = self.validated_data["new_password2"]
             if password1 != password2:
-                raise serializers.ValidationError({"error": "Passwords should match"})
+                raise serializers.ValidationError(
+                    {"error": "Passwords should match"})
         return validity
 
     class Meta:
@@ -136,7 +138,8 @@ class Set_Password_Serializer(serializers.Serializer):
             user = Account.objects.get(email=email)
 
             if not PasswordResetTokenGenerator().check_token(user, token):
-                raise ObjectDoesNotExist({"error": "The Reset Link is invalid"})
+                raise ObjectDoesNotExist(
+                    {"error": "The Reset Link is invalid"})
 
             validate_password(password)
             user.set_password(password)
@@ -145,7 +148,8 @@ class Set_Password_Serializer(serializers.Serializer):
             return user
 
         except (ObjectDoesNotExist, DjangoUnicodeDecodeError):
-            raise serializers.ValidationError({"error": "The Reset Link is invalid"})
+            raise serializers.ValidationError(
+                {"error": "The Reset Link is invalid"})
 
 
 class Logout_Serializer(serializers.Serializer):

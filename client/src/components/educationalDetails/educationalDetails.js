@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 import { Table, Form, Button } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 import EducationalDetailsCard from "./EducationalDetailsCard";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class EducationalDetails extends Component {
   state = {
@@ -62,13 +63,14 @@ class EducationalDetails extends Component {
     ],
   };
 
-  // componentDidMount = () => {
-  //   let optionList = this.props.optionList;
-  //   // console.log(optionList);
-  //   this.setState({
-  //     optionList: optionList,
-  //   });
-  // };
+  componentDidMount = () => {
+    ResourceAPIController.GetEducationalDetails().then(response => {
+      console.log(response.data);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  };
 
   onChange = (val, index, label) => {
     let temp = this.state.details;
