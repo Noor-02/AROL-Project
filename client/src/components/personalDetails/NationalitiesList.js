@@ -197,5 +197,7 @@ export const nationalitiesList = ["Afghan",
     "Welsh",
     "Yemenite",
     "Zambian",
-    "Zimbabwean"]
+    "Zimbabwean",
+    "Other"
+]
 

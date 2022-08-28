@@ -2,9 +2,9 @@
     padding: 1rem;
     width: 95%;
     margin: auto;
-    border-radius: 10px;
+    /* border-radius: 10px;
     border: 1px rgb(177, 174, 174) solid;
-    box-shadow: -2px -2px 6px 6px #d5d4d4;
+    box-shadow: -2px -2px 6px 6px #d5d4d4; */
     display: flex;
     flex-direction: column;
     margin-top: 1.5rem;
@@ -26,4 +26,102 @@
 .AddButton {
     width: 15%;
     margin: auto;
+}
+
+/* CSS FOR EMPLOYMENT CARD */
+
+.InnerContainerDiv {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: auto;
+    border: 1px rgb(177, 174, 174) solid;
+    border-radius: 10px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    box-shadow: -2px -2px 6px 6px #d5d4d4;
+}
+
+.MainHeading {
+    /* color: white; */
+    font-size: 2rem;
+    margin: auto;
+}
+
+.HorizontalSections {
+    display: flex;
+    width: 100%;
+}
+
+.Sections {
+    margin-top: 2rem;
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.Row {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+}
+
+.SpecialRow {
+    margin-bottom: 1rem;
+    margin-left: 1.5rem;
+}
+
+.FormLabels {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-top: 0.2rem;
+}
+
+.InputWidthSet {
+    width: 45%
+}
+
+.NameInputWidth {
+    width: 94%;
+}
+
+.AdmissionInput {
+    width: 50%;
+}
+
+.TypeOfApplicantInput {
+    width: 40%;
+}
+
+.DisabilityTypeInput {
+    width: 45%;
+}
+
+.Heading1 {
+    margin-left: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.Heading {
+    margin-left: 1.5rem;
+}
+
+.Checker {
+    margin-left: 1.5rem;
+}
+
+.SaveButton {
+    margin-bottom: 1rem;
+    width: 20%;
+    margin: auto;
+}
+
+.ErrorMessage {
+    color: red;
+    font-size: 0.7rem;
+    float: right;
+    margin-top: 0.5rem;
 }

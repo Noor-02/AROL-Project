@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { ReactDOM } from "react";
 
 import Login from "./components/Login/Login";
 import HomePage from "./components/Home/HomePage";
@@ -33,7 +32,7 @@ class App extends Component {
 
           {/* <Route path="/post-login/apply" exact component={ApplyPage} />
           <Route path="/post-login/completeForm" component={CompleteForm} /> */}
-          {/* <Route path="/projectDetails" component={ProjectDetails} /> */}
+          <Route path="/projectDetails" component={ProjectDetails} />
           {/* <Route path="/educationalDetails" component={EducationalDetails} /> */}
         </Switch>
       </div>
