@@ -1,3 +1,4 @@
+from django.contrib.auth.models import update_last_login
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -48,18 +49,18 @@ class Registration_Serializer(serializers.ModelSerializer):
         account.set_password(password1)
         account.is_active = False
         account.save()
-        account.groups.set([1])
+        # account.groups.set([1])
         account.send_verification_mail()
 
         return account
 
 
-class Email_Verification_Serializer(serializers.ModelSerializer):
-    token = serializers.CharField()
+# class Email_Verification_Serializer(serializers.ModelSerializer):
+#     token = serializers.CharField()
 
-    class Meta:
-        model = Account
-        fields = ["token"]
+#     class Meta:
+#         model = Account
+#         fields = ["token"]
 
 
 class Login_Serializer(TokenObtainPairSerializer):
@@ -70,6 +71,8 @@ class Login_Serializer(TokenObtainPairSerializer):
         data["access"] = str(refresh.access_token)
         data["email"] = self.user.email
         data["groups"] = self.user.groups.values_list("name", flat=True)
+
+        update_last_login(None, self.user)
         return data
 
 

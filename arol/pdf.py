@@ -117,7 +117,7 @@ fill_field("Full Name", "Raja Krishnappa Bairya")
 create_frame(1, pdf.leftMargin, 565, 170, 40)
 fill_field("Department", "CSE")
 create_frame(1, pdf.leftMargin + 170, 565, 170, 40)
-fill_field("Programme", "PhD")
+fill_field("Program", "PhD")
 
 create_frame(1, pdf.leftMargin, 525, 170, 40)
 fill_field("Applicant", "Indian Applicant")

@@ -20,11 +20,29 @@
     padding-left: 1.8rem;
 } */
 
+.Container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
 .MainHeading {
     /* color: white; */
     font-size: 2rem;
     margin: auto;
 }
+
+.SubHeading {
+    /* color: white; */
+    font-size: 1.5rem;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
 
 .HorizontalSections {
     display: flex;
@@ -57,7 +75,7 @@
 }
 
 .SupervisorName{
-    width: 100%;
+    width: 40%;
 }
 .InputWidthSet {
     width: 45%
@@ -68,11 +86,11 @@
 }
 
 .Title{
-    width: 100%;
+    width: 40%;
 }
 
 .AdmissionInput {
-    width: 50%;
+    width: 40%;
 }
 
 .TypeOfApplicantInput {
@@ -84,15 +102,15 @@
 }
 
 .Degree{
-    width: 100%;
+    width: 20%;
 }
 
 .University{
-    width: 100%;
+    width: 45%;
 }
 
 .CompletionYear{
-    width:100%;
+    width:20%;
 }
 
 
@@ -144,10 +162,10 @@
 .ButtonsDiv {
     display: flex;
     margin: auto;
-    width: 100%;
+    width: 60%;
 }
 
 .AddButton {
-    width: 15%;
+    width: 25%;
     margin: auto;
 }

@@ -7,9 +7,12 @@ import { ParsedError } from './DataParser';
 const UserLogin = async (data) => {
     // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
     let response = await axios.post(EndPoints.USER_LOGIN, data).then((response) => {
-        console.log(response.data);
-        // let token = response.data.access;
-        // AddInLocalStorage(Constants.KEY_TOKEN, token);
+        let token = response.data.access;
+        let refreshToken = response.data.refresh;
+        console.log(refreshToken);
+        AddInLocalStorage(Constants.KEY_TOKEN, token);
+        AddInLocalStorage(Constants.REFRESH_TOKEN, refreshToken);
+        AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "true");
         return response.data;
     })
         .catch(error => {
@@ -40,8 +43,12 @@ const UserRegistration = async (data) => {
     });
 }
 
-const UserLogout = async (token) => {
-    let response = await axios.post(EndPoints.USER_LOGOUT, token).then((response) => {
+const UserLogout = async (data) => {
+    // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.post(EndPoints.USER_LOGOUT, data
+        // headers: { 'Authorization': token }
+    ).then((response) => {
+        AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "false");
         console.log(response.data);
         return response.data;
     })

@@ -26,7 +26,7 @@ class HomePage extends Component {
             variant="outline-info"
           >
             LOGIN
-          </Button>{" "}
+          </Button>
           <Button
             onClick={this.registerClicked}
             className={classes.RegisterButton}
@@ -34,7 +34,7 @@ class HomePage extends Component {
             variant="outline-info"
           >
             REGISTER
-          </Button>{" "}
+          </Button>
         </div>
       </div>
     );

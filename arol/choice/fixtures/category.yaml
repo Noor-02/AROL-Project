@@ -1,0 +1,16 @@
+- model: choice.category
+  pk: null
+  fields:
+    category: General
+- model: choice.category
+  pk: null
+  fields:
+    category: SC
+- model: choice.category
+  pk: null
+  fields:
+    category: ST
+- model: choice.category
+  pk: null
+  fields:
+    category: OBC-NC

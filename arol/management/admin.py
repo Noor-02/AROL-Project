@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.utils.translation import gettext as _
 
-from .models import Department, Programme
+from .models import Department, Program
 
 
 @admin.register(LogEntry)
@@ -40,19 +40,19 @@ class Department_Admin(admin.ModelAdmin):
     list_display = ("department_code", "department_name", "department_id")
 
 
-@admin.register(Programme)
-class Programme_Admin(admin.ModelAdmin):
-    model = Programme
-    ordering = ("programme_code",)
-    search_fields = ("programme_id", "programme_name")
-    readonly_fields = ("full_programme_code",)
+@admin.register(Program)
+class Program_Admin(admin.ModelAdmin):
+    model = Program
+    ordering = ("program_code",)
+    search_fields = ("program_name",)
+    readonly_fields = ("full_program_code",)
     list_display = (
-        "full_programme_code",
-        "programme_name",
-        "programme_id",
+        "__str__",
+        "full_program_code",
         "get_department_id",
+        "program_name",
     )
-    list_filter = ("department", "programme_id")
+    list_filter = ("department", "program_name")
 
     @admin.display(description="Department")
     def get_department_id(self, obj):

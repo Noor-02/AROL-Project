@@ -1,7 +1,7 @@
 .ContainerDiv {
     display: flex;
     flex-direction: column;
-    width: 95%;
+    width: 88.5%;
     margin: auto;
     border: 1px rgb(177, 174, 174) solid;
     border-radius: 10px;
@@ -11,14 +11,6 @@
     padding-top: 1rem;
     box-shadow: -2px -2px 6px 6px #d5d4d4;
 }
-
-/* .FistHorizontalSection {
-    background-color: #0d6efd;
-    height: 10%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding-left: 1.8rem;
-} */
 
 .MainHeading {
     /* color: white; */
@@ -45,10 +37,10 @@
     margin-bottom: 1rem;
 }
 
-.SpecialRow {
+/* .SpecialRow {
     margin-bottom: 1rem;
     margin-left: 1.6rem;
-}
+} */
 
 .FormLabels {
     font-weight: 500;
@@ -73,7 +65,7 @@
 }
 
 .DisabilityTypeInput {
-    width: 47%;
+    width: 45%;
 }
 
 .Heading1 {

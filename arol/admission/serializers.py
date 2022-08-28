@@ -71,10 +71,28 @@ class Project_Serializer(serializers.ModelSerializer):
 class Recommendation_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Recommendation
-        fields = "__all__"
+        fields = [
+            "application_id",
+            "referree_email",
+            "referree_name",
+            "referree_designation",
+            "referree_organization",
+        ]
 
 
-class Recommendation_File_Serializer(serializers.ModelSerializer):
+class Recommendation_Referral_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Recommendation
-        fields = ["letter_of_recommendation"]
+        fields = [
+            "overall_intellectual_ability",
+            "analytical_ability",
+            "goal_clarity",
+            "overall_potential",
+            "oral_expression_english",
+            "written_expression_english",
+            "work_independently",
+            "work_with_others",
+            "research_potential",
+            "motivation",
+            "recommendation",
+        ]
