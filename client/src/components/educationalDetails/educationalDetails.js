@@ -26,6 +26,8 @@ class EducationalDetails extends Component {
         maxMarks: 0,
         class: "",
         specialization: "None",
+        marksheet: {},
+        certificate: {}
       },
       {
         examination: "12th",
@@ -39,6 +41,8 @@ class EducationalDetails extends Component {
         maxMarks: 0,
         class: "",
         specialization: "None",
+        marksheet: {},
+        certificate: {}
       },
       {
         examination: "Graduation",
@@ -52,6 +56,8 @@ class EducationalDetails extends Component {
         maxMarks: 0,
         class: "",
         specialization: "None",
+        marksheet: {},
+        certificate: {}
       },
     ],
   };
@@ -113,7 +119,14 @@ class EducationalDetails extends Component {
         <h2 className={classes.MainHeading}>EDUCATIONAL DETAILS</h2>
         {<>
           {!IsListEmpty(this.state.details) ? this.state.details.map((item, index) => {
-            return (<EducationalDetailsCard key={index} timeList={this.state.timeList} optionList={this.state.optionList} index={index} details={this.state.details[index]} onDelete={this.deleteClicked} onChange={this.onChange} />)
+            return (<EducationalDetailsCard
+              key={index}
+              timeList={this.state.timeList}
+              optionList={this.state.optionList}
+              index={index}
+              details={this.state.details[index]}
+              onDelete={this.deleteClicked}
+              onChange={this.onChange} />)
           }) : null}
         </>}
 
