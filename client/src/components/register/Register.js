@@ -36,31 +36,33 @@ class Register extends Component {
 
   render() {
     return (
-      <div className={classes.RegisterConatiner}>
-        <div>
-          <span className={classes.RegisterText}> REGISTER </span>
-        </div>
-        <div className={classes.FormDiv}>
-          <Form.Group className="mb-3">
-            <Form.Label className={classes.FormLabels}>Full Name</Form.Label>
-            <Form.Control name="fullName" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
-            <Form.Label className={classes.FormLabels}>Email Id</Form.Label>
-            <Form.Control name="email" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
-            <Form.Label className={classes.FormLabels}>Password</Form.Label>
-            <Form.Control name="pwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
-            <Form.Label className={classes.FormLabels}>
-              Confirm Password
-            </Form.Label>
-            <Form.Control name="confirmPwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
-          </Form.Group>
-          <Button
-            onClick={this.loginInitiated}
-            className={classes.RegisterButton}
-            size="lg"
-            variant="outline-info"
-          >
-            REGISTER
-          </Button>{" "}
+      <div className={classes.MainContainer}>
+        <div className={classes.RegisterConatiner}>
+          <div>
+            <span className={classes.RegisterText}> REGISTER </span>
+          </div>
+          <div className={classes.FormDiv}>
+            <Form.Group className="mb-3">
+              <Form.Label className={classes.FormLabels}>Full Name</Form.Label>
+              <Form.Control name="fullName" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
+              <Form.Label className={classes.FormLabels}>Email Id</Form.Label>
+              <Form.Control name="email" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
+              <Form.Label className={classes.FormLabels}>Password</Form.Label>
+              <Form.Control name="pwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
+              <Form.Label className={classes.FormLabels}>
+                Confirm Password
+              </Form.Label>
+              <Form.Control name="confirmPwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
+            </Form.Group>
+            <Button
+              onClick={this.loginInitiated}
+              className={classes.RegisterButton}
+              size="lg"
+              variant="outline-info"
+            >
+              REGISTER
+            </Button>{" "}
+          </div>
         </div>
       </div>
     );

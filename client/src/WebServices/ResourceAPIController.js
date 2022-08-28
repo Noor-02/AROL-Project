@@ -12,6 +12,7 @@ const UserLogin = async (data) => {
         console.log(refreshToken);
         AddInLocalStorage(Constants.KEY_TOKEN, token);
         AddInLocalStorage(Constants.REFRESH_TOKEN, refreshToken);
+        AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "true");
         return response.data;
     })
         .catch(error => {
@@ -47,6 +48,7 @@ const UserLogout = async (data) => {
     let response = await axios.post(EndPoints.USER_LOGOUT, data
         // headers: { 'Authorization': token }
     ).then((response) => {
+        AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "false");
         console.log(response.data);
         return response.data;
     })
