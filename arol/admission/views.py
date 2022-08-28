@@ -25,7 +25,7 @@ from .serializers import (
     Examination_Serializer,
     Profile_Serializer,
     Project_Serializer,
-    Recommendation_File_Serializer,
+    Recommendation_Referral_Serializer,
     Recommendation_Serializer,
 )
 
@@ -123,23 +123,18 @@ class Project_Viewset(viewsets.ModelViewSet):
         return Project_Detail.objects.all()
 
 
+class Recommendation_Referral_Viewset(viewsets.ModelViewSet):
+    lookup_field = "referral_id"
+    serializer_class = Recommendation_Referral_Serializer
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+
 class Recommendation_Viewset(viewsets.ModelViewSet):
     serializer_class = Recommendation_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ["s_no", "name", "occupation"]
-
-    def get_serializer_class(self):
-        serializer_class = self.serializer_class
-        if self.request.method == "PUT":
-            serializer_class = Recommendation_File_Serializer
-        return serializer_class
-
-    def update(self, request, pk=None):
-        instance = self.get_object()
-        if instance.letter_of_recommendation:
-            return Response({"response": "File has already been uploaded."})
-        return super(Recommendation_Viewset, self).update(request, pk)
+    
 
     def get_queryset(self):
         return Recommendation.objects.all()

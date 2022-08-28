@@ -220,4 +220,3 @@ class Logout_View(APIView):
         serializer.save()
         return Response(status=status.HTTP_205_RESET_CONTENT)
 
-from django.contrib.sites.shortcuts import get_current_site

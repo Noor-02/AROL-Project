@@ -158,7 +158,7 @@ def generate_pdf(request, application_id):
     create_frame(frames, 1, pdf.leftMargin, 565, 170, 40)
     fill_field(flowables, "Department", programme.department.department_id)
     create_frame(frames, 1, pdf.leftMargin + 170, 565, 170, 40)
-    fill_field(flowables, "Programme", programme.programme_name)
+    fill_field(flowables, "Program", "PhD")
 
     create_frame(frames, 1, pdf.leftMargin, 525, 170, 40)
     type_of_applicant = "Indian Applicant" if applicant_profile.type_of_applicant else "Foreign Applicant"
