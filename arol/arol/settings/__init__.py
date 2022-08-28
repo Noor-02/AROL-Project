@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from pathlib import Path
 import os
+from corsheaders.defaults import default_headers
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -85,13 +86,16 @@ WSGI_APPLICATION = "arol.wsgi.application"
 # Django CORS Headers
 # https://pypi.org/project/django-cors-headers/
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = ["*"]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -158,7 +162,8 @@ SIMPLE_JWT = {
 # https://pypi.org/project/django-crontab/
 
 CRONJOBS = [
-    ("0 0 * * *", "django.core.management.call_command", ["flushexpiredtokens"]),
+    ("0 0 * * *", "django.core.management.call_command",
+     ["flushexpiredtokens"]),
 ]
 
 
