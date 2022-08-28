@@ -40,6 +40,7 @@ admin.AdminSite.index_title = _("AROL Administration")
 api_patterns = [
     path("admission/", include("admission.urls")),
     path("choices/", include("choice.urls")),
+    path("management/", include("management.urls")),
     path("login/", Login_View.as_view(), name="token_obtain_pair"),
     path("login/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
     path("register/", Registration_View.as_view(), name="register"),
