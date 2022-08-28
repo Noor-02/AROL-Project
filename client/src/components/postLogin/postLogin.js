@@ -34,7 +34,8 @@ class PostLogin extends Component {
 
   onNavigationItemClick = (type) => {
     if (type === 7) {
-      ResourceAPIController.UserLogout(GetFromLocalStorage(Constants.REFRESH_TOKEN)).then(response => {
+      let data = { refresh_token: Constants.REFRESH_TOKEN }
+      ResourceAPIController.UserLogout(GetFromLocalStorage(data)).then(response => {
         console.log(response.data);
         this.props.history.push("/");
       })

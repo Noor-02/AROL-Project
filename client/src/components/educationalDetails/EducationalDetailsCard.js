@@ -29,6 +29,10 @@ class EducationalDetails extends Component {
         })
     };
 
+    onFileUpload = (e, label) => {
+        this.props.onChange(e.target.files[0], this.state.cardIndex, label);
+    }
+
     onDelete = () => {
         this.props.onDelete(this.state.cardIndex)
     }
@@ -216,14 +220,14 @@ class EducationalDetails extends Component {
                         <div className={classes.Row}>
                             <Form.Group controlId="formFile" className={classes.InputWidthSet}>
                                 <Form.Label>Latest Marksheet</Form.Label>
-                                <Form.Control type="file" required />
+                                <Form.Control type="file" onChange={(e) => this.onFileUpload(e, "marksheet")} required />
                             </Form.Group>
                             {this.props.details.status === "Pursuing" ? <Form.Group controlId="formFile" className={classes.InputWidthSet}>
                                 <Form.Label>Certificate</Form.Label>
-                                <Form.Control type="file" />
+                                <Form.Control type="file" onChange={(e) => this.onFileUpload(e, "certificate")} />
                             </Form.Group> : <Form.Group controlId="formFile" className={classes.InputWidthSet}>
                                 <Form.Label>Certificate</Form.Label>
-                                <Form.Control type="file" required />
+                                <Form.Control type="file" onChange={(e) => this.onFileUpload(e, "certificate")} required />
                             </Form.Group>}
 
                         </div>
@@ -239,7 +243,7 @@ class EducationalDetails extends Component {
                 >
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                     <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
                     />
                 </svg>DELETE QUALIFICATION</Button>

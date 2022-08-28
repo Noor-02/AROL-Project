@@ -32,18 +32,20 @@ class Login extends Component {
       })
   }
   render() {
-    return <div className={classes.LoginContainer}>
-      <div>
-        <span className={classes.LoginText}> LOGIN </span>
-      </div>
-      <div className={classes.FormDiv}>
-        <Form.Group className="mb-3">
-          <Form.Label className={classes.FormLabels}>User Email</Form.Label>
-          <Form.Control name="email" type="text" required onChange={(e) => this.inputFieldHandler(e)} />
-          <Form.Label className={classes.FormLabels} >Password</Form.Label>
-          <Form.Control name="pwd" type="text" required onChange={(e) => this.inputFieldHandler(e)} />
-        </Form.Group>
-        <Button onClick={this.loginInitiated} className={classes.LoginButton} size="lg" variant="outline-info">LOGIN</Button>
+    return <div className={classes.MainContainer} >
+      <div className={classes.LoginContainer}>
+        <div>
+          <span className={classes.LoginText}> LOGIN </span>
+        </div>
+        <div className={classes.FormDiv}>
+          <Form.Group className="mb-3">
+            <Form.Label className={classes.FormLabels}>User Email</Form.Label>
+            <Form.Control name="email" type="text" required onChange={(e) => this.inputFieldHandler(e)} />
+            <Form.Label className={classes.FormLabels} >Password</Form.Label>
+            <Form.Control name="pwd" type="text" required onChange={(e) => this.inputFieldHandler(e)} />
+          </Form.Group>
+          <Button onClick={this.loginInitiated} className={classes.LoginButton} size="lg" variant="outline-info">LOGIN</Button>
+        </div>
       </div>
     </div>;
   }
