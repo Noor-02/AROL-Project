@@ -1,16 +1,12 @@
 - model: choice.work_type
-  pk: null
   fields:
     work_type: Regular
 - model: choice.work_type
-  pk: null
   fields:
     work_type: Temporary
 - model: choice.work_type
-  pk: null
   fields:
     work_type: Permanent
 - model: choice.work_type
-  pk: null
   fields:
     work_type: Contract

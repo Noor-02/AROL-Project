@@ -1,0 +1,15 @@
+- model: choice.marital_status
+  fields:
+    marital_status: Never Married
+- model: choice.marital_status
+  fields:
+    marital_status: Currently Married
+- model: choice.marital_status
+  fields:
+    marital_status: Widow / Widower
+- model: choice.marital_status
+  fields:
+    marital_status: Divorced
+- model: choice.marital_status
+  fields:
+    marital_status: Separated

@@ -19,7 +19,7 @@ class Application_Serializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs["applicant_id"].account != self.context["request"].user:
-            raise ValidationError({"error": "Applicant_ID is not valid"})
+            raise ValidationError({"error": "Applicant ID is not valid"})
         return super().validate(attrs)
 
 
@@ -30,7 +30,7 @@ class Education_Serializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs["applicant_id"].account != self.context["request"].user:
-            raise ValidationError({"error": "Applicant_ID is not valid"})
+            raise ValidationError({"error": "Applicant ID is not valid"})
         return super().validate(attrs)
 
 

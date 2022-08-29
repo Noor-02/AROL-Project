@@ -1,0 +1,9 @@
+- model: choice.qualifying_exam
+  fields:
+    qualifying_exam: GATE
+- model: choice.qualifying_exam
+  fields:
+    qualifying_exam: JAM
+- model: choice.qualifying_exam
+  fields:
+    qualifying_exam: UGC CSIR
