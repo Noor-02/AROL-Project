@@ -99,14 +99,14 @@ class QualifyingDetails extends Component {
     }
   };
 
-  componentDidMount = () => {
-    ResourceAPIController.GetQualifyingDetails().then(response => {
-      console.log(response.data);
-    })
-      .catch(error => {
-        console.log("Failed =>", error);
-      })
-  }
+  // componentDidMount = () => {
+  //   ResourceAPIController.GetQualifyingDetails().then(response => {
+  //     console.log(response.data);
+  //   })
+  //     .catch(error => {
+  //       console.log("Failed =>", error);
+  //     })
+  // }
 
   render() {
     return (

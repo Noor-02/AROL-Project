@@ -247,14 +247,16 @@ def generate_pdf(request, application_id):
     frames.append([])
     i = 0
     page_number = 1
-
+    
+    check = 0
+    l = len(educations)
+    print(l)
+    last_filled_page = True
     for education in educations:
-        create_frame(
-            frames, page_number + 1, pdf.leftMargin, 745 - (40 * i), 510, 40, 0
-        )
-        subheading = Paragraph(
-            "Educational Details", subheading_style(sample_style_sheet)
-        )
+        last_filled_page = False
+        check = check + 1
+        create_frame(frames, page_number+1, pdf.leftMargin, 745-(40*i), 510, 40, 0)
+        subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
         flowables.append(subheading)
         flowables.append(FrameBreak())
         create_frame(frames, page_number + 1, pdf.leftMargin, 705 - (40 * i), 170, 40)
@@ -295,9 +297,9 @@ def generate_pdf(request, application_id):
             frames, page_number + 1, pdf.leftMargin + 170, 545 - (40 * i), 340, 40
         )
         fill_field(flowables, "Specialization", "IT")
-        i = i + 6
-        if 545 - (40 * (i + 6)) <= 0:
-            print(page_number)
+        i=i+6
+        if 545-(40*(i+6)) <= 0:
+            last_filled_page = True
             flowables.append(NextPageTemplate(page_number))
             flowables.append(PageBreak())
             pageTemplates.append(
@@ -306,7 +308,16 @@ def generate_pdf(request, application_id):
             page_number = page_number + 1
             i = 0
             frames.append([])
-
+    
+    # if l!=0 & last_filled_page == False:        
+    #     print(page_number)
+    #     flowables.append(NextPageTemplate(page_number))
+    #     flowables.append(PageBreak())
+    #     pageTemplates.append(PageTemplate(id = page_number, frames=frames[page_number]))
+    #     page_number=page_number+1
+    #     i=0
+    #     frames.append([])
+    
     for employment in employments:
         create_frame(
             frames, page_number + 1, pdf.leftMargin, 745 - (40 * i), 510, 40, 0
@@ -359,6 +370,6 @@ def generate_pdf(request, application_id):
             frames.append([])
 
     print(pageTemplates)
-    pdf.addPageTemplates([pageTemplates[0], pageTemplates[1], pageTemplates[1]])
+    pdf.addPageTemplates(pageTemplates)
     pdf.build(flowables)
     return buffer

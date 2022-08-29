@@ -6,6 +6,7 @@ import { Table, Form, Button } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 import EducationalDetailsCard from "./EducationalDetailsCard";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";
+import { ParseBackEducationList } from '../../WebServices/DataParser'
 
 class EducationalDetails extends Component {
   state = {
@@ -91,6 +92,7 @@ class EducationalDetails extends Component {
   };
 
   onAddEducation = () => {
+    let tempCount = this.state.count;
     let tempEducationalList = this.state.details;
     let tempEducation = {
       examination: "",
@@ -107,11 +109,13 @@ class EducationalDetails extends Component {
     };
     tempEducationalList.push(tempEducation);
     this.setState({
+      count: tempCount + 1,
       details: tempEducationalList,
     });
   };
 
   deleteClicked = (i) => {
+    let tempCount = this.state.count;
     let tempEducationalList = this.state.details;
     tempEducationalList = tempEducationalList.filter((item, index) => {
       if (index !== i) {
@@ -120,9 +124,31 @@ class EducationalDetails extends Component {
     });
 
     this.setState({
+      count: tempCount - 1,
       details: tempEducationalList,
     });
   };
+
+  saveDetails = () => {
+    // let data = {
+    //   count: this.state.count,
+    //   previous: this.state.previous,
+    //   next: this.state.next,
+    //   results: ParseBackEducationList(this.state.details)
+
+    // }
+
+    let data = ParseBackEducationList(this.state.details)[0];
+
+
+    ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
+      console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+
+  }
 
   render() {
     return (

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ReactDOM } from "react";
 import { withRouter } from "react-router";
-
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
 import classes from "./ProjectDetails.module.css";
 import { Form, Button, Table } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
@@ -13,6 +13,7 @@ class ProjectDetails extends Component {
         title: "",
         university: "",
         supervisorName: "",
+        completionYear: null,
         degree: "Under Graduation",
         degreeList: ["Under Graduation", "Post Graduation","Other"],
         parentNameValidity: false,
@@ -64,6 +65,7 @@ class ProjectDetails extends Component {
       university: "",
       supervisorName: "",
       degree: "Under Graduation",
+      completionYear: null,
       degreeList: ["Under Graduation", "Post Graduation"],
       parentNameValidity: false,
       nameValidity: false,
@@ -137,6 +139,18 @@ class ProjectDetails extends Component {
     }
   };
 
+  componentDidMount = () => {
+    ResourceAPIController.GetProjectDetails().then(response => {
+      console.log(response.result.results);
+      this.setState({
+        projectList: response.result.results
+      })
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  };
+
   render() {
     return (
         <div className={classes.DisplayDiv}>
@@ -185,12 +199,12 @@ class ProjectDetails extends Component {
                   Completion Year
                 </Form.Label>
                 <Form.Control
-                  value={item.admissionYear}
+                  value={item.completionYear}
                   onChange={(e) =>
                     this.onChange(
                       e.target.value,
                       index,
-                      "admissionYear"
+                      "completionYear"
                     )
                   }
                   type="number"

@@ -4,8 +4,6 @@ import { withRouter } from "react-router";
 import { Button, Form, Table } from "react-bootstrap";
 import classes from "./EmploymentDetails.module.css";
 import { IsListEmpty } from "../../utilities/CommonMethods";
-import ThreeInputForm from "../Forms/ThreeInputForm/ThreeInputForm";
-import TwoInputForm from "../Forms/TwoInputForm/TwoInputForm";
 
 class EmploymentDetails extends Component {
     state = {
