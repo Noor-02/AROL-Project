@@ -9,6 +9,9 @@ import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class EducationalDetails extends Component {
   state = {
+    count: null,
+    next: null,
+    previous: null,
     optionList: ["10th", "12th", "Graduation", "Post Graduation", "PhD", "Other"],
     timeList: ["2023", "2024", "2025", "2026"],
     statusList: ["Completed", "Ongoing"],
@@ -65,7 +68,13 @@ class EducationalDetails extends Component {
 
   componentDidMount = () => {
     ResourceAPIController.GetEducationalDetails().then(response => {
-      console.log(response.data);
+      // console.log("EDUCATIONAL DETAILS=> ", response.result);
+      this.setState({
+        details: response.result.results,
+        count: response.result.count,
+        next: response.result.next,
+        previous: response.result.previous,
+      })
     })
       .catch(error => {
         console.log("Failed =>", error);
