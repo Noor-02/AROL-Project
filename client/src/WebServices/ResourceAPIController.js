@@ -117,9 +117,10 @@ const GetEmploymentDetails = async () => {
     });
 }
 
-const GetQualifyingDetails = async () => {
+const EducationalDetailsSubmit = async (data) => {
+    console.log("API CALL DATA =>", data)
     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-    let response = await axios.get(EndPoints.GET_QUALIFYING_EXAMINATION_DETAILS, {
+    let response = await axios.post(EndPoints.GET_EDUCATIONAL_DETAILS, data, {
         headers: { 'Authorization': 'Bearer ' + token }
     }).then((response) => {
         console.log(response.data);
@@ -136,8 +137,29 @@ const GetQualifyingDetails = async () => {
     });
 }
 
+
+
+// const GetQualifyingDetails = async () => {
+//     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+//     let response = await axios.get(EndPoints.GET_QUALIFYING_EXAMINATION_DETAILS, {
+//         headers: { 'Authorization': 'Bearer ' + token }
+//     }).then((response) => {
+//         console.log(response.data);
+//         return response.data;
+//     })
+//         .catch(error => {
+//             return Promise.reject({
+//                 err: error
+//             });
+//         })
+
+//     return Promise.resolve({
+//         result: response.data
+//     });
+// }
+
 const ResourceAPIController = {
-    UserLogin, UserRegistration, UserLogout, GetEducationalDetails, GetEmploymentDetails, GetQualifyingDetails
+    UserLogin, UserRegistration, UserLogout, GetEducationalDetails, GetEmploymentDetails, EducationalDetailsSubmit
 }
 
 

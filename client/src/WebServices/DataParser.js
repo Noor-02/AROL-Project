@@ -33,6 +33,30 @@ const ParseEducationList = (list) => {
     return updateList;
 }
 
+const ParseBackEducationList = (list) => {
+    const updateList = !IsListEmpty(list)
+        ? list.map(item => {
+            return {
+                qualification: item.examination,
+                examination: item.nameOfExamPassed,
+                university: item.board,
+                duration: item.duration,
+                status: item.status,
+                year_of_passing: item.yearOfPassing,
+                marks_type: item.percentOrCpi,
+                percent: item.acquiredMarks,
+                out_of: item.maxMarks,
+                division: item.class,
+                specialization: item.specialization,
+                marksheet: item.marksheet,
+                certificate: item.certificate,
+                applicant_id: item.applicantId
+            }
+        }) : []
+
+    return updateList;
+}
+
 const ParseEmploymentList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
@@ -58,5 +82,5 @@ const ParseEmploymentList = (list) => {
 }
 
 export {
-    ParseEducationList, ParseEmploymentList
+    ParseEducationList, ParseEmploymentList, ParseBackEducationList
 };
