@@ -14,9 +14,9 @@ class CompleteForm extends Component {
         <PersonalDetails />
         <EducationalDetails />
         <EmploymentDetails />
-        <QualifyingDetails/>
-        <ProjectDetails/>
-        <ReferenceDetails/>
+        <QualifyingDetails />
+        <ProjectDetails />
+        <ReferenceDetails />
       </div>
     );
   }

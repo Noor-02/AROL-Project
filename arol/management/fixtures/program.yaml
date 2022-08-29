@@ -78,63 +78,64 @@
 #     department: "05"
 #     full_program_code: "0105"
 
-- model: management.program
-  pk: 15
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "71"
-    full_program_code: "0171"
-
-- model: management.program
-  pk: 14
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "31"
-    full_program_code: "0131"
-
-- model: management.program
-  pk: 13
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "41"
-    full_program_code: "0141"
-
-- model: management.program
-  pk: 12
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "51"
-    full_program_code: "0151"
-
-- model: management.program
-  pk: 11
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "21"
-    full_program_code: "0121"
-
-- model: management.program
-  pk: 10
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "61"
-    full_program_code: "0161"
-
-- model: management.program
-  pk: 1
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "91"
-    full_program_code: "0191"
 # - model: management.program
-#   pk: 8
+#   pk: null
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "71"
+#     full_program_code: "0171"
+
+# - model: management.program
+#   pk: 14
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "31"
+#     full_program_code: "0131"
+
+# - model: management.program
+#   pk: 13
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "41"
+#     full_program_code: "0141"
+
+# - model: management.program
+#   pk: 12
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "51"
+#     full_program_code: "0151"
+
+# - model: management.program
+#   pk: 11
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "21"
+#     full_program_code: "0121"
+
+# - model: management.program
+#   pk: 10
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "61"
+#     full_program_code: "0161"
+
+# - model: management.program
+#   pk: null
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "91"
+#     full_program_code: "0191"
+
+# - model: management.program
+#   pk: null
 #   fields:
 #     program_code: "02"
 #     program_name: M.Tech.
@@ -142,7 +143,7 @@
 #     full_program_code: "0102"
 
 # - model: management.program
-#   pk: 7
+#   pk: null
 #   fields:
 #     program_code: "03"
 #     program_name: M.Sc.
@@ -150,7 +151,7 @@
 #     full_program_code: "0103"
 
 # - model: management.program
-#   pk: 6
+#   pk: null
 #   fields:
 #     program_code: "04"
 #     program_name: MS(Research)
@@ -158,7 +159,7 @@
 #     full_program_code: "0104"
 
 # - model: management.program
-#   pk: 5
+#   pk: null
 #   fields:
 #     program_code: "05"
 #     program_name: MS(R) + Ph.D.
@@ -166,7 +167,7 @@
 #     full_program_code: "0105"
 
 # - model: management.program
-#   pk: 4
+#   pk: null
 #   fields:
 #     program_code: "06"
 #     program_name: M.Tech. + Ph.D.
@@ -174,7 +175,7 @@
 #     full_program_code: "0106"
 
 # - model: management.program
-#   pk: 3
+#   pk: null
 #   fields:
 #     program_code: "07"
 #     program_name: M.Sc.+ Ph.D.
@@ -182,7 +183,7 @@
 #     full_program_code: "0107"
 
 # - model: management.program
-#   pk: 2
+#   pk: null
 #   fields:
 #     program_code: "09"
 #     program_name: Prepratory
@@ -190,7 +191,7 @@
 #     full_program_code: "0109"
 
 # - model: management.program
-#   pk: 1
+#   pk: null
 #   fields:
 #     program_code: "20"
 #     program_name: Exchange

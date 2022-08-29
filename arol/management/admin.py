@@ -43,7 +43,7 @@ class Department_Admin(admin.ModelAdmin):
 @admin.register(Program)
 class Program_Admin(admin.ModelAdmin):
     model = Program
-    ordering = ("program_code",)
+    ordering = ("full_program_code",)
     search_fields = ("program_name",)
     readonly_fields = ("full_program_code",)
     list_display = (

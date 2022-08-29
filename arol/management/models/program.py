@@ -29,4 +29,4 @@ class Program(models.Model):
     class Meta:
         verbose_name = _("Program")
         verbose_name_plural = _("Programs")
-        ordering = ["program_code"]
+        ordering = ["full_program_code"]
