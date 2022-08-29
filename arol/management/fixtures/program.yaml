@@ -1,5 +1,5 @@
 - model: management.program
-  pk: null
+  pk: 25
   fields:
     program_code: "00"
     program_name: B.Tech.
@@ -7,7 +7,7 @@
     full_program_code: "0001"
 
 - model: management.program
-  pk: null
+  pk: 24
   fields:
     program_code: "00"
     program_name: B.Tech.
@@ -15,7 +15,7 @@
     full_program_code: "0002"
 
 - model: management.program
-  pk: null
+  pk: 23
   fields:
     program_code: "00"
     program_name: B.Tech.
@@ -23,7 +23,7 @@
     full_program_code: "0003"
 
 - model: management.program
-  pk: null
+  pk: 22
   fields:
     program_code: "00"
     program_name: B.Tech.
@@ -31,7 +31,7 @@
     full_program_code: "0004"
 
 - model: management.program
-  pk: null
+  pk: 21
   fields:
     program_code: "00"
     program_name: B.Tech.
@@ -39,7 +39,7 @@
     full_program_code: "0005"
 
 - model: management.program
-  pk: null
+  pk: 20
   fields:
     program_code: "01"
     program_name: Ph.D.
@@ -47,7 +47,7 @@
     full_program_code: "0101"
 
 - model: management.program
-  pk: null
+  pk: 19
   fields:
     program_code: "01"
     program_name: Ph.D.
@@ -55,7 +55,7 @@
     full_program_code: "0102"
 
 - model: management.program
-  pk: null
+  pk: 18
   fields:
     program_code: "01"
     program_name: Ph.D.
@@ -63,20 +63,20 @@
     full_program_code: "0103"
 
 - model: management.program
-  pk: null
+  pk: 17
   fields:
     program_code: "01"
     program_name: Ph.D.
     department: "04"
     full_program_code: "0104"
 
-- model: management.program
-  pk: null
-  fields:
-    program_code: "01"
-    program_name: Ph.D.
-    department: "05"
-    full_program_code: "0105"
+# - model: management.program
+#   pk: 16
+#   fields:
+#     program_code: "01"
+#     program_name: Ph.D.
+#     department: "05"
+#     full_program_code: "0105"
 
 # - model: management.program
 #   pk: null
@@ -87,7 +87,7 @@
 #     full_program_code: "0171"
 
 # - model: management.program
-#   pk: null
+#   pk: 14
 #   fields:
 #     program_code: "01"
 #     program_name: Ph.D.
@@ -95,7 +95,7 @@
 #     full_program_code: "0131"
 
 # - model: management.program
-#   pk: null
+#   pk: 13
 #   fields:
 #     program_code: "01"
 #     program_name: Ph.D.
@@ -103,7 +103,7 @@
 #     full_program_code: "0141"
 
 # - model: management.program
-#   pk: null
+#   pk: 12
 #   fields:
 #     program_code: "01"
 #     program_name: Ph.D.
@@ -111,7 +111,7 @@
 #     full_program_code: "0151"
 
 # - model: management.program
-#   pk: null
+#   pk: 11
 #   fields:
 #     program_code: "01"
 #     program_name: Ph.D.
@@ -119,7 +119,7 @@
 #     full_program_code: "0121"
 
 # - model: management.program
-#   pk: null
+#   pk: 10
 #   fields:
 #     program_code: "01"
 #     program_name: Ph.D.

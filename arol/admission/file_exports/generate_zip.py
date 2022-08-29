@@ -8,6 +8,11 @@ from ..models import Application
 
 
 def generate_zip(request, queryset):
+    if not (request.user.is_staff):
+        return HttpResponse(
+            "Error: 404 Not Found",
+            content_type="text/html",
+        )
     if len(queryset) > 1:
         response = HttpResponse(content_type="application/zip")
         response["Content-Disposition"] = "attachment; filename=application_forms.zip"

@@ -1,11 +1,11 @@
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import (
+    AllowAny,
     DjangoModelPermissionsOrAnonReadOnly,
     IsAuthenticated,
 )
-from rest_framework.response import Response
 
 from .models import (
     Application,
@@ -15,18 +15,22 @@ from .models import (
     Project_Detail,
     Qualifying_Examination,
     Recommendation,
+    Referral,
 )
-from .permissions import IsOwner, IsOwner_Applicant, IsOwner_Application
+from .permissions import (
+    IsOwner,
+    IsOwner_Applicant,
+    IsOwner_Application,
+)
 from .serializers import (
     Application_Serializer,
-    Education_File_Serializer,
     Education_Serializer,
     Employment_Serializer,
     Examination_Serializer,
     Profile_Serializer,
     Project_Serializer,
-    Recommendation_Referral_Serializer,
     Recommendation_Serializer,
+    Referral_Serializer,
 )
 
 
@@ -44,7 +48,8 @@ class Application_Viewset(viewsets.ModelViewSet):
     # search_fields = ["s_no", "name", "occupation"]
 
     def get_queryset(self):
-        return Application.objects.all()
+        user = self.request.user
+        return Application.objects.filter(applicant_id__account=user)
 
 
 class Education_Viewset(viewsets.ModelViewSet):
@@ -58,20 +63,6 @@ class Education_Viewset(viewsets.ModelViewSet):
     )
     # search_fields = ["s_no", "name", "occupation"]
 
-    def get_serializer_class(self):
-        serializer_class = self.serializer_class
-        if self.request.method == "PUT":
-            serializer_class = Education_File_Serializer
-        return serializer_class
-
-    def update(self, request, pk=None):
-        instance = self.get_object()
-        if instance.marksheet:
-            request.data.pop("marksheet")
-        if instance.certificate:
-            request.data.pop("certificate")
-        return super(Education_Viewset, self).update(request, pk)
-
     def get_queryset(self):
         user = self.request.user
         return Education_Detail.objects.filter(applicant_id__account=user)
@@ -84,7 +75,8 @@ class Employment_Viewset(viewsets.ModelViewSet):
     # search_fields = ["s_no", "name", "occupation"]
 
     def get_queryset(self):
-        return Employment.objects.all()
+        user = self.request.user
+        return Employment.objects.filter(applicant_id__account=user)
 
 
 class Examination_Viewset(viewsets.ModelViewSet):
@@ -120,21 +112,43 @@ class Project_Viewset(viewsets.ModelViewSet):
     # search_fields = ["s_no", "name", "occupation"]
 
     def get_queryset(self):
-        return Project_Detail.objects.all()
+        user = self.request.user
+        return Project_Detail.objects.filter(applicant_id__account=user)
 
 
-class Recommendation_Referral_Viewset(viewsets.ModelViewSet):
-    lookup_field = "referral_id"
-    serializer_class = Recommendation_Referral_Serializer
-    pagination_class = PageNumberPagination
-    filter_backends = (SearchFilter, OrderingFilter)
-
-
-class Recommendation_Viewset(viewsets.ModelViewSet):
+class Recommendation_Viewset(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     serializer_class = Recommendation_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
+    permission_classes = (
+        IsOwner_Application,
+        IsAuthenticated,
+        # DjangoModelPermissionsOrAnonReadOnly,
+    )
     # search_fields = ["s_no", "name", "occupation"]
 
     def get_queryset(self):
-        return Recommendation.objects.all()
+        user = self.request.user
+        return Recommendation.objects.filter(application_id__applicant_id__account=user)
+
+
+class Referral_Viewset(
+    mixins.DestroyModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    viewsets.GenericViewSet,
+):
+    lookup_field = "recommendation_id__referral_id"
+    serializer_class = Referral_Serializer
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        return Referral.objects.all()

@@ -5,6 +5,12 @@ from ..models import Application
 
 
 def generate_xlsx(request, queryset):
+    if not (request.user.is_staff):
+        return HttpResponse(
+            "Error: 404 Not Found",
+            content_type="text/html",
+        )
+
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     )
@@ -15,7 +21,7 @@ def generate_xlsx(request, queryset):
     worksheet.title = "Applications"
     row_num = 2
     columns = [
-        "Applicantion ID",
+        "Application ID",
         "Applicant ID",
         "Advertisement ID",
         "Payment ID",
