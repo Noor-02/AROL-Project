@@ -26,6 +26,10 @@ class Application_Serializer(serializers.ModelSerializer):
 
 
 class Education_Serializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        many = kwargs.pop("many", True)
+        super(Education_Serializer, self).__init__(many=many, *args, **kwargs)
+
     class Meta:
         model = Education_Detail
         fields = "__all__"
