@@ -137,7 +137,7 @@ class EmploymentDetails extends Component {
                                     Responsibility
                                 </Form.Label>
                                 <Form.Control
-                                    value={this.props.details.Responsibility}
+                                    value={this.props.details.responsibility}
                                     onChange={(e) =>
                                         this.onChange(e.target.value, "Responsibility")
                                     }
@@ -166,7 +166,7 @@ class EmploymentDetails extends Component {
                                     To:
                                 </Form.Label>
                                 <Form.Control
-                                    value={this.state.current === "Yes" ? date : this.props.details.to}
+                                    value={this.props.details.to}
                                     onChange={(e) =>
                                         this.onChange(e.target.value, "to")
                                     }

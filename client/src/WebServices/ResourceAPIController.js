@@ -2,7 +2,7 @@ import axios from 'axios';
 import { EndPoints } from './APIEndPoints';
 import { GetFromLocalStorage, AddInLocalStorage } from '../utilities/CommonMethods';
 import Constants from '../utilities/Constants';
-import { ParsedError } from './DataParser';
+import { ParseEducationList, ParseEmploymentList } from './DataParser';
 
 const UserLogin = async (data) => {
     // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
@@ -71,7 +71,14 @@ const GetEducationalDetails = async () => {
         headers: { 'Authorization': 'Bearer ' + token }
     }).then((response) => {
         console.log(response.data);
-        return response.data;
+        let responseObj = {
+            count: response.data.count,
+            next: response.data.next,
+            previous: response.data.previous,
+            results: ParseEducationList(response.data.results)
+        }
+        response.data = responseObj;
+        return response;
     })
         .catch(error => {
             return Promise.reject({
@@ -89,8 +96,15 @@ const GetEmploymentDetails = async () => {
     let response = await axios.get(EndPoints.GET_EMPLOYMENT_DETAILS, {
         headers: { 'Authorization': 'Bearer ' + token }
     }).then((response) => {
-        console.log(response.data);
-        return response.data;
+        // console.log(response.data);
+        let responseObj = {
+            count: response.data.count,
+            next: response.data.next,
+            previous: response.data.previous,
+            results: ParseEmploymentList(response.data.results)
+        }
+        response.data = responseObj;
+        return response;
     })
         .catch(error => {
             return Promise.reject({

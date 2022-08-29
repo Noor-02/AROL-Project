@@ -69,7 +69,13 @@ class EmploymentDetails extends Component {
 
   componentDidMount = () => {
     ResourceAPIController.GetEmploymentDetails().then(response => {
-      console.log(response.data);
+      console.log("EMPLOYMENT DETAILS=> ", response.result);
+      this.setState({
+        employmentList: response.result.results,
+        count: response.result.count,
+        next: response.result.next,
+        previous: response.result.previous,
+      })
     })
       .catch(error => {
         console.log("Failed =>", error);
