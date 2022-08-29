@@ -54,7 +54,7 @@ class Education_Viewset(viewsets.ModelViewSet):
     permission_classes = (
         IsOwner_Applicant,
         IsAuthenticated,
-        DjangoModelPermissionsOrAnonReadOnly,
+        # DjangoModelPermissionsOrAnonReadOnly,
     )
     # search_fields = ["s_no", "name", "occupation"]
 
@@ -129,12 +129,12 @@ class Recommendation_Referral_Viewset(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
 
+
 class Recommendation_Viewset(viewsets.ModelViewSet):
     serializer_class = Recommendation_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ["s_no", "name", "occupation"]
-    
 
     def get_queryset(self):
         return Recommendation.objects.all()
