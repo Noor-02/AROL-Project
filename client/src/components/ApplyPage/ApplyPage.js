@@ -4,6 +4,9 @@ import classes from "./ApplyPage.module.css";
 import PersonalDetails from "../PersonalDetails/PersonalDetails";
 import EducationalDetails from "../EducationalDetails/EducationalDetails";
 import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
+import ProjectDetails from "../ProjectDetails/ProjectDetails";
+import ReferenceDetails from "../ReferenceDetails/ReferenceDetails";
+import QualifyingDetails from "../QualifyingDetails/QualifyingDetails";
 import { Button, Card } from "react-bootstrap";
 
 class ApplyPage extends Component {

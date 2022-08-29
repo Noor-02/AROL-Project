@@ -139,7 +139,7 @@ class ProjectDetails extends Component {
 
   render() {
     return (
-        <div className={classes.Container}>
+        <div className={classes.DisplayDiv}>
             <h2 className={classes.MainHeading}>PROJECT DETAILS</h2>
       {!IsListEmpty(this.state.projectList)
         ? this.state.projectList.map((item, index) => {

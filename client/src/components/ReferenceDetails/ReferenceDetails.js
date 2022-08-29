@@ -10,8 +10,12 @@ class ReferenceDetails extends Component {
     referenceDetailsList: [
       {
         refereeEmail: "",
+        refereeName:"",
+        designation:"",
+        organization:"",
         document: "",
         refereeEmailValidity: false,
+        refereeNameValidity:false,
         formValid: false,
       },
     ],
@@ -20,15 +24,24 @@ class ReferenceDetails extends Component {
 
   nameValidity = (val, index, label) => {
     let isValid = true;
-    const validNameFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    isValid = validNameFormat.test(val) && isValid;
+    const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const validNameFormat= /^[a-z ,.'-]+$/i;
     let temp = this.state.referenceDetailsList;
 
     if (label === "refereeEmail") {
+      isValid= validEmailFormat.test(val) && isValid;
       temp[index]["refereeEmailValidity"] = isValid;
       this.setState({
-        refereeEmailValidity: isValid,
-        formValid: isValid,
+        refereeEmailValidity: temp,
+        formValid: temp,
+      });
+    }
+    else if (label === "refereeName") {
+      isValid = validNameFormat.test(val) && isValid;
+      temp[index]["refereeNameValidity"] = isValid;
+      this.setState({
+        refereeNameValidity: temp,
+        formValid: temp,
       });
     }
 
@@ -41,9 +54,13 @@ class ReferenceDetails extends Component {
   addProject = () => {
     let tempReferenceDetails = {
       refereeEmail: "",
-      document: "",
-      refereeEmailValidity: false,
-      formValid: false,
+        refereeName:"",
+        designation:"",
+        organization:"",
+        document: "",
+        refereeNameValidity:false,
+        refereeEmailValidity: false,
+        formValid: false,
     };
 
     let tempReferenceDetailsList = this.state.referenceDetailsList;
@@ -59,6 +76,10 @@ class ReferenceDetails extends Component {
 
     if (label === "refereeEmail") {
       this.nameValidity(val, index, label);
+    }
+    else if(label==="refereeName")
+    {
+      this.nameValidity(val,index,label)
     }
 
     this.setState({
@@ -111,94 +132,120 @@ class ReferenceDetails extends Component {
   render() {
     return (
       <div className={classes.DisplayDiv}>
-        <h2 className={classes.MainHeading}>QUALIFYING EXAMINATION DETAILS</h2>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Refree Email</th>
-              <th>Document</th>
-              <th>#</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              <>
-                {!IsListEmpty(this.state.referenceDetailsList)
-                  ? this.state.referenceDetailsList.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            <Form.Group className={classes.RefereeEmail}>
-                              <Form.Control
-                                value={item.refereeEmail}
-                                onChange={(e) =>
-                                  this.onChange(
-                                    e.target.value,
-                                    index,
-                                    "refereeEmail"
-                                  )
-                                }
-                                type="email"
-                                required
-                              />
-                              <span className={classes.ErrorMessage}>
-                                {!item.refereeEmailValidity
-                                  ? "* Please enter a valid title."
-                                  : null}
-                              </span>
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group className={classes.Document}>
-                              <Form.Control
-                                value={item.document}
-                                onChange={(e) =>
-                                  this.onChange(
-                                    e.target.value,
-                                    index,
-                                    "document"
-                                  )
-                                }
-                                type="file"
-                                required
-                              />
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              className="bi bi-trash"
-                              viewBox="0 0 16 16"
-                              onClick={(e) => this.deleteClicked(index)}
-                            >
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path
-                                fill-rule="evenodd"
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                              />
-                            </svg>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  : null}
-              </>
-            }
-          </tbody>
-        </Table>
-        <div className={classes.ButtonsDiv}>
+        <h2 className={classes.MainHeading}>REFERRALS</h2>
+        {!IsListEmpty(this.state.referenceDetailsList)
+        ? this.state.referenceDetailsList.map((item, index) => {
+          return (
+            <div className={classes.ContainerDiv}>
+              <h2 className={classes.SubHeading}>REFEREE {index+1}</h2>
+              <div className={classes.Row}>
+              <Form.Group className={classes.RefereeName}>
+              <Form.Label className={classes.FormLabels}>
+                  Referee Name
+                </Form.Label>
+                <Form.Control
+                  value={item.refereeName}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, index, "refereeName")
+                  }
+                  type="text"
+                  required
+                />
+                <span className={classes.ErrorMessage}>
+                  {!item.refereeNameValidity
+                    ? "* Please enter a valid Name."
+                    : null}
+                </span>
+              </Form.Group>
+
+              <Form.Group className={classes.Organization}>
+              <Form.Label className={classes.FormLabels}>
+                  Referee Organization
+                </Form.Label>
+                <Form.Control
+                  value={item.organization}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, index, "organization")
+                  }
+                  type="text"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className={classes.Designation}>
+              <Form.Label className={classes.FormLabels}>
+                  Referee Designation
+                </Form.Label>
+                <Form.Control
+                  value={item.designation}
+                  onChange={(e) =>
+                    this.onChange(e.target.value, index, "designation")
+                  }
+                  type="text"
+                  required
+                />
+              </Form.Group>
+
+              </div>
+              <div className={classes.Row}>
+
+              <Form.Group className={classes.RefereeEmail}>
+              <Form.Label className={classes.FormLabels}>
+                  Referee Email
+                </Form.Label>
+                <Form.Control
+                  value={item.refereeEmail}
+                  onChange={(e) =>
+                    this.onChange(
+                      e.target.value,
+                      index,
+                      "refereeEmail"
+                    )
+                  }
+                  type="email"
+                  required
+                />
+                <span className={classes.ErrorMessage}>
+                  {!item.refereeEmailValidity
+                    ? "* Please enter a valid Email."
+                    : null}
+                </span>
+              </Form.Group>
+
+              <Form.Group className={classes.Document}>
+              <Form.Label className={classes.FormLabels}>
+                  Letter Of Recomendation
+                </Form.Label>
+                <Form.Control
+                  value={item.document}
+                  onChange={(e) =>
+                    this.onChange(
+                      e.target.value,
+                      index,
+                      "document"
+                    )
+                  }
+                  type="file"
+                  required
+                />
+              </Form.Group>
+
+              </div>
+              <div className={classes.Row}>
+              <div className={classes.ButtonsDiv}>
           <Button className={classes.AddButton} onClick={this.addProject}>
-            Add Employment
+            ADD REFERRAL
           </Button>
-          <Button className={classes.AddButton} onClick={this.onSave}>
-            SAVE
+          <Button className={classes.AddButton} onClick={(e) => this.deleteClicked(index)}>
+            DELETE
           </Button>
         </div>
+              </div>
+              </div>
+          );
+        })
+        : null
+  }
       </div>
     );
   }
