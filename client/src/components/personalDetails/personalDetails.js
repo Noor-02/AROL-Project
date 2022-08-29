@@ -4,6 +4,7 @@ import { ReactDOM } from "react";
 import { nationalitiesList } from './NationalitiesList'
 import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class PersonalDetails extends Component {
   state = {
@@ -122,6 +123,47 @@ class PersonalDetails extends Component {
     }
 
   }
+
+  
+  componentDidMount = () => {
+    ResourceAPIController.GetPersonalDetails().then(response => {
+      console.log(response);
+      this.setState({
+        admissionYear: response.result.results[0].admissionYear,
+        typeOfApplicant: response.result.results[0].typeOfApplicant,
+        fullName: response.result.results[0].fullName,
+        fatherSpouseName: response.result.results[0].fatherSpouseName,
+        dob: response.result.results[0].dob,
+        gender: response.result.results[0].gender,
+        caste: response.result.results[0].caste,
+        maritalStatus: response.result.results[0].maritalStatus,
+        contactNumber: response.result.results[0].contactNumber,
+        parentConatct: response.result.results[0].parentConatct,
+        nationality: response.result.results[0].nationality,
+        otherNationality: response.result.results[0].otherNationality,
+        pwd: response.result.results[0].pwd,
+        typeOfDisability: response.result.results[0].typeOfDisability,
+        correspondanceAddress: { address: response.result.results[0].cAddress, state: response.result.results[0].cState, city: response.result.results[0].cCity, pinCode: response.result.results[0].cPinCode },
+        permanantAddress: { address: response.result.results[0].pAddress, state: response.result.results[0].pState, city: response.result.results[0].pCity, pinCode: response.result.results[0].pPinCode },
+        addressSame: false,
+        optionList: ["Indian Applicant", "Foreign Applicant"],
+        casteList: ["GEN", "SC", "ST", "OBC", "Other"],
+        maritalList: ["Married", "Not Married"],
+        disabilityList: ["Yes", "No"],
+        genderList: ["Male", "Female", "Other"],
+        admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
+        phoneValidity: false,
+        parentConatctValidity: false,
+        parentNameValidity: false,
+        nameValidity: false,
+        formValid: false,
+      })
+      // console.log(this.state);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  };
 
   render() {
     return (

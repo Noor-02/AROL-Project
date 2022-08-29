@@ -114,7 +114,7 @@ def generate_pdf(request, application_id):
     advertisement_ids = application_id.split('-')
     advertisement_id = advertisement_ids[0]
     advertisement = Advertisement.objects.get(advertisement_id = advertisement_id)
-    programme = advertisement.programme
+    programme = advertisement.program
     educations = Education_Detail.objects.filter(applicant_id = applicant_id)
     employments = Employment.objects.filter(applicant_id = applicant_id)
     projects = Project_Detail.objects.filter(applicant_id = applicant_id)
@@ -185,7 +185,7 @@ def generate_pdf(request, application_id):
     create_frame(frames, 1, pdf.leftMargin + 170, 405, 170, 40)
     fill_field(flowables, "Gender", applicant_profile.gender)
     create_frame(frames, 1, pdf.leftMargin + 340, 405, 170, 40)
-    fill_field(flowables, "Caste Category", applicant_profile.caste_category)
+    fill_field(flowables, "Caste Category", applicant_profile.category)
 
     create_frame(frames, 1, pdf.leftMargin, 365, 225, 40)
     fill_field(flowables, "Contact Number", applicant_profile.contact_number)
@@ -235,7 +235,13 @@ def generate_pdf(request, application_id):
     i = 0
     page_number = 1
     
+    check = 0
+    l = len(educations)
+    print(l)
+    last_filled_page = True
     for education in educations:
+        last_filled_page = False
+        check = check + 1
         create_frame(frames, page_number+1, pdf.leftMargin, 745-(40*i), 510, 40, 0)
         subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
         flowables.append(subheading)
@@ -268,7 +274,7 @@ def generate_pdf(request, application_id):
         fill_field(flowables, "Specialization", "IT")
         i=i+6
         if 545-(40*(i+6)) <= 0:
-            print(page_number)
+            last_filled_page = True
             flowables.append(NextPageTemplate(page_number))
             flowables.append(PageBreak())
             pageTemplates.append(PageTemplate(id = page_number, frames=frames[page_number]))
@@ -276,6 +282,14 @@ def generate_pdf(request, application_id):
             i=0
             frames.append([])
     
+    # if l!=0 & last_filled_page == False:        
+    #     print(page_number)
+    #     flowables.append(NextPageTemplate(page_number))
+    #     flowables.append(PageBreak())
+    #     pageTemplates.append(PageTemplate(id = page_number, frames=frames[page_number]))
+    #     page_number=page_number+1
+    #     i=0
+    #     frames.append([])
     
     for employment in employments:
         create_frame(frames, page_number+1, pdf.leftMargin, 745-(40*i), 510, 40, 0)
@@ -313,6 +327,6 @@ def generate_pdf(request, application_id):
             frames.append([])
 
     print(pageTemplates)
-    pdf.addPageTemplates([pageTemplates[0],pageTemplates[1],pageTemplates[1]])
+    pdf.addPageTemplates(pageTemplates)
     pdf.build(flowables)
     return buffer
