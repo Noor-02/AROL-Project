@@ -57,6 +57,26 @@ const ParseBackEducationList = (list) => {
     return updateList;
 }
 
+const ParseBackEmploymentList = (list) => {
+    const updateList = !IsListEmpty(list)
+        ? list.map(item => {
+            return {
+                applicant_id: item.applicantId,
+                duration: item.duration,
+                emoluments: item.emoluments,
+                from_date: item.from,
+                id: item.id,
+                organization: item.organization,
+                post_held: item.post,
+                responsibilities: item.responsibility,
+                to_date: item.to,
+                work_type: item.workType,
+            }
+        }) : []
+
+    return updateList;
+}
+
 const ParseEmploymentList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
@@ -82,5 +102,5 @@ const ParseEmploymentList = (list) => {
 }
 
 export {
-    ParseEducationList, ParseEmploymentList, ParseBackEducationList
+    ParseEducationList, ParseEmploymentList, ParseBackEducationList, ParseBackEmploymentList
 };

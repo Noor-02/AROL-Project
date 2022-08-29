@@ -6,6 +6,7 @@ import classes from "./EmploymentDetails.module.css";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 import EmploymentDetailsCard from "./EmploymentDetailsCard";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";
+import { ParseBackEmploymentList } from '../../WebServices/DataParser'
 
 class EmploymentDetails extends Component {
   state = {
@@ -81,6 +82,16 @@ class EmploymentDetails extends Component {
         console.log("Failed =>", error);
       })
   };
+
+  saveDetails = () => {
+    let data = ParseBackEmploymentList(this.state.employmentList)[0];
+    ResourceAPIController.EmploymentDetailsSubmit(data).then(response => {
+      console.log("EMPLOYMENT DETAILS FOR POST API CALL=> ", response);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  }
 
   render() {
     return (

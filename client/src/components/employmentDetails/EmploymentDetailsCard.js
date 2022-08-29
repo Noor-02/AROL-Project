@@ -137,7 +137,7 @@ class EmploymentDetails extends Component {
                                 <Form.Control
                                     value={this.props.details.responsibility}
                                     onChange={(e) =>
-                                        this.onChange(e.target.value, "Responsibility")
+                                        this.onChange(e.target.value, "responsibility")
                                     }
                                     type="text"
                                     required

@@ -49,6 +49,8 @@ const UserLogout = async (data) => {
         headers: { 'Authorization': 'Bearer ' + token }
     }).then((response) => {
         AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "false");
+        AddInLocalStorage(Constants.KEY_TOKEN, "");
+        AddInLocalStorage(Constants.REFRESH_TOKEN, "");
         console.log(response.data);
         return response.data;
     })
@@ -137,6 +139,26 @@ const EducationalDetailsSubmit = async (data) => {
     });
 }
 
+const EmploymentDetailsSubmit = async (data) => {
+    // console.log("API CALL DATA =>", data)
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.post(EndPoints.GET_EMPLOYMENT_DETAILS, data, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
+
+    return Promise.resolve({
+        result: response.data
+    });
+}
+
 
 
 // const GetQualifyingDetails = async () => {
@@ -159,7 +181,7 @@ const EducationalDetailsSubmit = async (data) => {
 // }
 
 const ResourceAPIController = {
-    UserLogin, UserRegistration, UserLogout, GetEducationalDetails, GetEmploymentDetails, EducationalDetailsSubmit
+    UserLogin, UserRegistration, EmploymentDetailsSubmit, UserLogout, GetEducationalDetails, GetEmploymentDetails, EducationalDetailsSubmit
 }
 
 

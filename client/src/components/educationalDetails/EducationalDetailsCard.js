@@ -30,6 +30,7 @@ class EducationalDetails extends Component {
     };
 
     onFileUpload = (e, label) => {
+        console.log(e.target.files[0])
         this.props.onChange(e.target.files[0], this.state.cardIndex, label);
     }
 
