@@ -5,6 +5,7 @@ import { Button, Form, Table } from "react-bootstrap";
 import classes from "./EmploymentDetails.module.css";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 import EmploymentDetailsCard from "./EmploymentDetailsCard";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class EmploymentDetails extends Component {
   state = {
@@ -53,25 +54,6 @@ class EmploymentDetails extends Component {
     });
   };
 
-  // checkBoxClicked = (index) => {
-  //   let temp = this.state.employmentList;
-  //   if (temp[index]["current"] === false) {
-  //     for (let i = 0; i < temp.length; i++) {
-  //       if (i === index) {
-  //         temp[i]["current"] = true;
-  //       } else {
-  //         temp[i]["current"] = false;
-  //       }
-  //     }
-  //   } else {
-  //     temp[index]["current"] = false;
-  //   }
-
-  //   this.setState({
-  //     employmentList: temp,
-  //   });
-  // };
-
   deleteClicked = (i) => {
     let tempEmploymentList = this.state.employmentList;
     tempEmploymentList = tempEmploymentList.filter((item, index) => {
@@ -84,6 +66,16 @@ class EmploymentDetails extends Component {
       employmentList: tempEmploymentList,
     });
   };
+
+  componentDidMount = () => {
+    ResourceAPIController.GetEmploymentDetails().then(response => {
+      console.log(response.data);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  };
+
   render() {
     return (
       <div className={classes.DisplayDiv}>

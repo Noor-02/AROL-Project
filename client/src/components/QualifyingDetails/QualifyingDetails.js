@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import classes from "./QualifyingDetails.module.css";
 import { Form, Button, Table } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class QualifyingDetails extends Component {
   state = {
@@ -77,25 +78,6 @@ class QualifyingDetails extends Component {
     });
   };
 
-  checkBoxClicked = (index) => {
-    let temp = this.state.qualifyingDetailsList;
-    if (temp[index]["current"] === false) {
-      for (let i = 0; i < temp.length; i++) {
-        if (i === index) {
-          temp[i]["current"] = true;
-        } else {
-          temp[i]["current"] = false;
-        }
-      }
-    } else {
-      temp[index]["current"] = false;
-    }
-
-    this.setState({
-      qualifyingDetailsList: temp,
-    });
-  };
-
   deleteClicked = (i) => {
     let tempDetailsList = this.state.qualifyingDetailsList;
     tempDetailsList = tempDetailsList.filter((item, index) => {
@@ -117,6 +99,15 @@ class QualifyingDetails extends Component {
     }
   };
 
+  componentDidMount = () => {
+    ResourceAPIController.GetQualifyingDetails().then(response => {
+      console.log(response.data);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  }
+
   render() {
     return (
       <div className={classes.DisplayDiv}>
@@ -137,103 +128,103 @@ class QualifyingDetails extends Component {
               <>
                 {!IsListEmpty(this.state.qualifyingDetailsList)
                   ? this.state.qualifyingDetailsList.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            <Form.Group className={classes.ExaminationName}>
-                              <Form.Control
-                                value={item.examinationName}
-                                onChange={(e) =>
-                                  this.onChange(
-                                    e.target.value,
-                                    index,
-                                    "examinationName"
-                                  )
-                                }
-                                type="text"
-                                required
-                              />
-                              <span className={classes.ErrorMessage}>
-                                {!item.examinationNameValidity
-                                  ? "* Please enter a valid title."
-                                  : null}
-                              </span>
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group className={classes.Year}>
-                              <Form.Control
-                                value={item.yearOfApperance}
-                                onChange={(e) =>
-                                  this.onChange(
-                                    e.target.value,
-                                    index,
-                                    "yearOfApperance"
-                                  )
-                                }
-                                type="number"
-                                required
-                              />
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group className={classes.RegNumber}>
-                              <Form.Control
-                                value={item.regNumber}
-                                onChange={(e) =>
-                                  this.onChange(
-                                    e.target.value,
-                                    index,
-                                    "regNumber"
-                                  )
-                                }
-                                type="text"
-                                required
-                              />
-                              <span className={classes.ErrorMessage}>
-                                {!item.regNumberValidity
-                                  ? "* Please enter a valid title."
-                                  : null}
-                              </span>
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group className={classes.Document}>
-                              <Form.Control
-                                value={item.document}
-                                onChange={(e) =>
-                                  this.onChange(
-                                    e.target.value,
-                                    index,
-                                    "document"
-                                  )
-                                }
-                                type="file"
-                                required
-                              />
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              className="bi bi-trash"
-                              viewBox="0 0 16 16"
-                              onClick={(e) => this.deleteClicked(index)}
-                            >
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path
-                                fill-rule="evenodd"
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                              />
-                            </svg>
-                          </td>
-                        </tr>
-                      );
-                    })
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <Form.Group className={classes.ExaminationName}>
+                            <Form.Control
+                              value={item.examinationName}
+                              onChange={(e) =>
+                                this.onChange(
+                                  e.target.value,
+                                  index,
+                                  "examinationName"
+                                )
+                              }
+                              type="text"
+                              required
+                            />
+                            <span className={classes.ErrorMessage}>
+                              {!item.examinationNameValidity
+                                ? "* Please enter a valid title."
+                                : null}
+                            </span>
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group className={classes.Year}>
+                            <Form.Control
+                              value={item.yearOfApperance}
+                              onChange={(e) =>
+                                this.onChange(
+                                  e.target.value,
+                                  index,
+                                  "yearOfApperance"
+                                )
+                              }
+                              type="number"
+                              required
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group className={classes.RegNumber}>
+                            <Form.Control
+                              value={item.regNumber}
+                              onChange={(e) =>
+                                this.onChange(
+                                  e.target.value,
+                                  index,
+                                  "regNumber"
+                                )
+                              }
+                              type="text"
+                              required
+                            />
+                            <span className={classes.ErrorMessage}>
+                              {!item.regNumberValidity
+                                ? "* Please enter a valid title."
+                                : null}
+                            </span>
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group className={classes.Document}>
+                            <Form.Control
+                              value={item.document}
+                              onChange={(e) =>
+                                this.onChange(
+                                  e.target.value,
+                                  index,
+                                  "document"
+                                )
+                              }
+                              type="file"
+                              required
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-trash"
+                            viewBox="0 0 16 16"
+                            onClick={(e) => this.deleteClicked(index)}
+                          >
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path
+                              fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                            />
+                          </svg>
+                        </td>
+                      </tr>
+                    );
+                  })
                   : null}
               </>
             }

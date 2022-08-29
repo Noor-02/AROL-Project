@@ -5,6 +5,8 @@ const EndPoints = {
     USER_LOGOUT: BASE_URL + 'logout/',
     USER_REGISTERATION: BASE_URL + 'register/',
     GET_EDUCATIONAL_DETAILS: BASE_URL + "admission/education/",
+    GET_EMPLOYMENT_DETAILS: BASE_URL + "admission/employment/",
+    GET_QUALIFYING_EXAMINATION_DETAILS: BASE_URL + "admission/examination/",
 
 }
 
