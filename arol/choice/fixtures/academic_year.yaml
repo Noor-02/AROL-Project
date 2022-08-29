@@ -1,0 +1,3 @@
+- model: choice.academic_year
+  fields:
+    academic_year: AY 2021-2022
