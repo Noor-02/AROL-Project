@@ -1,3 +1,4 @@
+from multiprocessing import managers
 from django.forms import ValidationError
 from rest_framework import serializers
 
@@ -9,6 +10,7 @@ from admission.models import (
     Project_Detail,
     Qualifying_Examination,
     Recommendation,
+    Referral,
 )
 
 
@@ -34,12 +36,6 @@ class Education_Serializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
 
-class Education_File_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model = Education_Detail
-        fields = ["marksheet", "certificate"]
-
-
 class Employment_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Employment
@@ -59,7 +55,7 @@ class Profile_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = "__all__"
+        exclude = ("applicant_number",)
 
 
 class Project_Serializer(serializers.ModelSerializer):
@@ -71,28 +67,10 @@ class Project_Serializer(serializers.ModelSerializer):
 class Recommendation_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Recommendation
-        fields = [
-            "application_id",
-            "referree_email",
-            "referree_name",
-            "referree_designation",
-            "referree_organization",
-        ]
+        fields = "__all__"
 
 
-class Recommendation_Referral_Serializer(serializers.ModelSerializer):
+class Referral_Serializer(serializers.ModelSerializer):
     class Meta:
-        model = Recommendation
-        fields = [
-            "overall_intellectual_ability",
-            "analytical_ability",
-            "goal_clarity",
-            "overall_potential",
-            "oral_expression_english",
-            "written_expression_english",
-            "work_independently",
-            "work_with_others",
-            "research_potential",
-            "motivation",
-            "recommendation",
-        ]
+        model = Referral
+        fields = "__all__"

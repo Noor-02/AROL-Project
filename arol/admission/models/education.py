@@ -4,20 +4,20 @@ from .profile import Profile
 
 
 def upload_marksheet(instance, filename):
-    file_path = "admission/{applicant_id}/marksheet_{qualification}.{extension}".format(
+    file_path = "admission/{applicant_id}/marksheet_{qualification}/{filename}".format(
         applicant_id=instance.applicant_id,
         qualification=instance.qualification,
-        extension=filename.rsplit(".", 1)[-1],
+        filename=filename,
     )
     return file_path
 
 
 def upload_certificate(instance, filename):
     file_path = (
-        "admission/{applicant_id}/certificate_{qualification}.{extension}".format(
+        "admission/{applicant_id}/certificate_{qualification}/{filename}".format(
             applicant_id=instance.applicant_id,
             qualification=instance.qualification,
-            extension=filename.rsplit(".", 1)[-1],
+            filename=filename,
         )
     )
     return file_path

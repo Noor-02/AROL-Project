@@ -11,10 +11,10 @@ from .views import (
     Profile_Viewset,
     Project_Viewset,
     Recommendation_Viewset,
-    Recommendation_Referral_Viewset,
+    Referral_Viewset,
 )
 from .file_exports import export_pdf_wrapper
-from .file_exports import generate_xlsx
+from .file_exports import generate_xlsx_by_year
 from .file_exports import generate_zip_by_year
 
 router = DefaultRouter()
@@ -25,15 +25,16 @@ router.register(r"examination", Examination_Viewset, "examination")
 router.register(r"profile", Profile_Viewset, "profile")
 router.register(r"project", Project_Viewset, "project")
 router.register(r"recommendation", Recommendation_Viewset, "recommendation")
-router.register(
-    r"recommendation_referral",
-    Recommendation_Referral_Viewset,
-    "recommendation_referral",
-)
+router.register(r"referral", Referral_Viewset, "referral")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("export_xlsx/<year>", generate_xlsx, name="export_xlsx_by_year"),
+    path(
+        "export_xlsx/<year>",
+        generate_xlsx_by_year,
+        name="export_xlsx_by_year",
+    ),
     path("export_pdf/<application_id>", export_pdf_wrapper, name="export_pdf"),
     path("export_zip/<year>", generate_zip_by_year, name="export_zip"),
+    # path("send_referral/<id>", , name="send_referral"),
 ]

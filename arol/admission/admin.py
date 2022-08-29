@@ -1,9 +1,8 @@
 from django.contrib import admin
-from .file_exports import generate_zip
-from .file_exports import generate_xlsx
 from django.utils.html import mark_safe
 
-from .file_exports import generate_zip
+from .file_exports import generate_xlsx, generate_zip
+from .forms import Referral_Form
 from .models import (
     Advertisement,
     Application,
@@ -13,6 +12,7 @@ from .models import (
     Project_Detail,
     Qualifying_Examination,
     Recommendation,
+    Referral,
 )
 
 
@@ -109,8 +109,6 @@ class Application_Admin(admin.ModelAdmin):
     @admin.action(description="Download Selected Applications as a spreadsheet")
     def export_xlxs(modeladmin, request, queryset):
         return generate_xlsx(request, queryset)
-
-    pass
 
 
 @admin.register(Education_Detail)
@@ -261,15 +259,62 @@ class Project_Admin(admin.ModelAdmin):
 class Recommendation_Admin(admin.ModelAdmin):
     model = Recommendation
     ordering = ("application_id",)
-    search_fields = ("application_id__application_id", "referree_email")
-    list_display = ("application_id",)
+    search_fields = (
+        "application_id__application_id",
+        "referree_email",
+        "referree_name",
+    )
+    list_display = ("application_id", "referree_name", "referree_email", "send_mail")
     fieldsets = (
         (
             None,
             {
                 "fields": (
                     "application_id",
+                    "referree_name",
                     "referree_email",
+                    "referree_designation",
+                    "referree_organization",
+                )
+            },
+        ),
+    )
+
+    def send_mail(self, obj):
+        return mark_safe(
+            '<a href="/api/admission/send_referral/{id}" style="cursor:pointer;">Send Mail</a>'.format(
+                id=obj.id
+            )
+        )
+
+    send_mail.short_description = "Send Mail"
+    send_mail.allow_tags = True
+
+
+@admin.register(Referral)
+class Referral_Admin(admin.ModelAdmin):
+    model = Referral
+    form = Referral_Form
+    ordering = ("recommendation_id",)
+    search_fields = ("recommendation_id__application_id__application_id",)
+    list_display = ("recommendation_id",)
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "recommendation_id",
+                    "overall_intellectual_ability",
+                    "analytical_ability",
+                    "goal_clarity",
+                    "overall_potential",
+                    "oral_expression_english",
+                    "written_expression_english",
+                    "work_independently",
+                    "work_with_others",
+                    "research_potential",
+                    "motivation",
+                    "recommendation",
                 )
             },
         ),
