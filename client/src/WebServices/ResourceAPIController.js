@@ -5,62 +5,58 @@ import Constants from '../utilities/Constants';
 import { ParseEducationList, ParseEmploymentList, ParseProfileList, ParseProjectList } from './DataParser';
 
 const UserLogin = async (data) => {
-  // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-  let response = await axios
-    .post(EndPoints.USER_LOGIN, data)
-    .then((response) => {
-      let token = response.data.access;
-      let refreshToken = response.data.refresh;
-      console.log(refreshToken);
-      AddInLocalStorage(Constants.KEY_TOKEN, token);
-      AddInLocalStorage(Constants.REFRESH_TOKEN, refreshToken);
-      AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "true");
-      return response.data;
-    })
-    .catch((error) => {
-      return Promise.reject({
-        err: error,
-      });
-    });
+    // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios
+        .post(EndPoints.USER_LOGIN, data)
+        .then((response) => {
+            let token = response.data.access;
+            let refreshToken = response.data.refresh;
+            console.log(refreshToken);
+            AddInLocalStorage(Constants.KEY_TOKEN, token);
+            AddInLocalStorage(Constants.REFRESH_TOKEN, refreshToken);
+            AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "true");
+            return response.data;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
 
-  return Promise.resolve({
-    result: response.data,
-  });
+    return Promise.resolve({
+        result: response.data,
+    });
 };
 
 const UserRegistration = async (data) => {
-  // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-  let response = await axios
-    .post(EndPoints.USER_REGISTERATION, data)
-    .then((response) => {
-      console.log(response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      return Promise.reject({
-        err: error,
-      });
-    });
+    // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios
+        .post(EndPoints.USER_REGISTERATION, data)
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
 
-  return Promise.resolve({
-    result: response.data,
-  });
+    return Promise.resolve({
+        result: response.data,
+    });
 };
 
 const UserLogout = async (data) => {
-  const token =
-    GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
-    GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
-      ? GetFromLocalStorage(Constants.KEY_TOKEN)
-      : "";
-  let response = await axios
-    .post(EndPoints.USER_LOGOUT, data, {
-      headers: { Authorization: "Bearer " + token },
-    })
-    .then((response) => {
-      AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "false");
-      console.log(response.data);
-      return response.data;
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.post(EndPoints.USER_LOGOUT, data, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, "false");
+        AddInLocalStorage(Constants.KEY_TOKEN, "");
+        AddInLocalStorage(Constants.REFRESH_TOKEN, "");
+        console.log(response.data);
+        return response.data;
     })
         .catch(error => {
             return Promise.reject({
@@ -96,9 +92,9 @@ const GetEducationalDetails = async () => {
             });
         })
 
-  return Promise.resolve({
-    result: response.data,
-  });
+    return Promise.resolve({
+        result: response.data,
+    });
 };
 
 const GetEmploymentDetails = async () => {
@@ -116,21 +112,41 @@ const GetEmploymentDetails = async () => {
         response.data = responseObj;
         return response;
     })
-    .catch((error) => {
-      return Promise.reject({
-        err: error,
-      });
-    });
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
 
-  return Promise.resolve({
-    result: response.data,
-  });
+    return Promise.resolve({
+        result: response.data,
+    });
 };
 
-const EducationalDetailsSubmit = async (data) => {
-    console.log("API CALL DATA =>", data)
+// const EmploymentDetailsSubmit = async (data) => {
+//     // console.log("API CALL DATA =>", data)
+//     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+//     let response = await axios.post(EndPoints.GET_EMPLOYMENT_DETAILS, data, {
+//         headers: { 'Authorization': 'Bearer ' + token }
+//     }).then((response) => {
+//         console.log(response.data);
+//         return response.data;
+//     })
+//         .catch(error => {
+//             return Promise.reject({
+//                 err: error
+//             });
+//         })
+
+//     return Promise.resolve({
+//         result: response.data
+//     });
+// }
+
+const EmploymentDetailsSubmit = async (data) => {
+    // console.log("API CALL DATA =>", data)
     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-    let response = await axios.post(EndPoints.GET_EDUCATIONAL_DETAILS, data, {
+    let response = await axios.post(EndPoints.GET_EMPLOYMENT_DETAILS, data, {
         headers: { 'Authorization': 'Bearer ' + token }
     }).then((response) => {
         console.log(response.data);
@@ -142,10 +158,10 @@ const EducationalDetailsSubmit = async (data) => {
             });
         })
 
-  return Promise.resolve({
-    result: response.data,
-  });
-};
+    return Promise.resolve({
+        result: response.data
+    });
+}
 
 
 
@@ -169,60 +185,60 @@ const EducationalDetailsSubmit = async (data) => {
 // }
 
 const GetPersonalDetails = async () => {
-  const token =
-    GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
-    GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
-      ? GetFromLocalStorage(Constants.KEY_TOKEN)
-      : "";
-  let response = await axios
-    .get(EndPoints.GET_PERSONAL_DETAILS, {
-      headers: { Authorization: "Bearer " + token },
-    })
-    .then((response) => {
-      response.data.results = ParseProfileList(response.data.results);
-      // console.log(response)
-      return response;
-    })
-    .catch((error) => {
-      return Promise.reject({
-        err: error,
-      });
-    });
+    const token =
+        GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
+            GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
+            ? GetFromLocalStorage(Constants.KEY_TOKEN)
+            : "";
+    let response = await axios
+        .get(EndPoints.GET_PERSONAL_DETAILS, {
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((response) => {
+            response.data.results = ParseProfileList(response.data.results);
+            // console.log(response)
+            return response;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
 
-  return Promise.resolve({
-    result: response.data,
-  });
+    return Promise.resolve({
+        result: response.data,
+    });
 };
 
 const GetProjectDetails = async () => {
-  const token =
-    GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
-    GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
-      ? GetFromLocalStorage(Constants.KEY_TOKEN)
-      : "";
-  let response = await axios
-    .get(EndPoints.GET_PROJECT_DETAILS, {
-      headers: { Authorization: "Bearer " + token },
-    })
-    .then((response) => {
-      // console.log(response)
-      response.data.results = ParseProjectList(response.data.results);
-      return response;
-    })
-    .catch((error) => {
-      return Promise.reject({
-        err: error,
-      });
-    });
+    const token =
+        GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
+            GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
+            ? GetFromLocalStorage(Constants.KEY_TOKEN)
+            : "";
+    let response = await axios
+        .get(EndPoints.GET_PROJECT_DETAILS, {
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((response) => {
+            // console.log(response)
+            response.data.results = ParseProjectList(response.data.results);
+            return response;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
 
-  return Promise.resolve({
-    result: response.data,
-  });
+    return Promise.resolve({
+        result: response.data,
+    });
 };
 
 
 const ResourceAPIController = {
-    UserLogin, UserRegistration, UserLogout, GetEducationalDetails, GetEmploymentDetails, EducationalDetailsSubmit, GetPersonalDetails, GetProjectDetails
+    UserLogin, UserRegistration, EmploymentDetailsSubmit, GetPersonalDetails, UserLogout, GetEducationalDetails, GetEmploymentDetails, GetProjectDetails
 }
 
 

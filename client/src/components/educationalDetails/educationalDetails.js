@@ -139,6 +139,7 @@ class EducationalDetails extends Component {
     // }
 
     let data = ParseBackEducationList(this.state.details)[0];
+    console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
 
 
     ResourceAPIController.EducationalDetailsSubmit(data).then(response => {

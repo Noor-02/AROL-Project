@@ -14,8 +14,14 @@ import PostLogin from "./components/PostLogin/PostLogin";
 
 import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
+import { AddInLocalStorage } from "./utilities/CommonMethods";
+import Constants from "./utilities/Constants";
 
 class App extends Component {
+
+  componentDidMount = () => {
+    AddInLocalStorage(Constants.KEY_USER_LOGGED_IN, false)
+  }
   render() {
     return (
       <div className="App">
@@ -24,15 +30,15 @@ class App extends Component {
           <Route path="/" exact component={HomePage} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/projectDetails" component={ProjectDetails} />
-          <Route path="/qualifyingDetails" component={QualifyingDetails} />
-          <Route path="/referenceDetails" component={ReferenceDetails} />
-          <Route path="/educationalDetails" component={EducationalDetails} />
+          {/* <Route path="/projectDetails" component={ProjectDetails} /> */}
+          {/* <Route path="/qualifyingDetails" component={QualifyingDetails} /> */}
+          {/* <Route path="/referenceDetails" component={ReferenceDetails} /> */}
+          {/* <Route path="/educationalDetails" component={EducationalDetails} /> */}
           <Route path="/post-login" component={PostLogin} />
 
           {/* <Route path="/post-login/apply" exact component={ApplyPage} />
           <Route path="/post-login/completeForm" component={CompleteForm} /> */}
-          <Route path="/projectDetails" component={ProjectDetails} />
+          {/* <Route path="/projectDetails" component={ProjectDetails} /> */}
           {/* <Route path="/educationalDetails" component={EducationalDetails} /> */}
         </Switch>
       </div>
