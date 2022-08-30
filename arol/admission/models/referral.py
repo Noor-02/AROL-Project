@@ -28,7 +28,9 @@ class Referral(models.Model):
         ),
     ]
 
-    recommendation_id = models.OneToOneField(Recommendation, on_delete=models.CASCADE)
+    recommendation_id = models.OneToOneField(
+        Recommendation, on_delete=models.CASCADE, editable=False
+    )
 
     overall_intellectual_ability = models.CharField(
         _("Overall Intellectual Ability"),

@@ -298,6 +298,7 @@ class Referral_Admin(admin.ModelAdmin):
     ordering = ("recommendation_id",)
     search_fields = ("recommendation_id__application_id__application_id",)
     list_display = ("recommendation_id",)
+    readonly_fields = ("recommendation_id",)
     fieldsets = (
         (
             None,
