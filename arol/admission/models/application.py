@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
+
 from .advertisement import Advertisement
 from .profile import Profile
 

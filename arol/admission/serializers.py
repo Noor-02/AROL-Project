@@ -1,17 +1,8 @@
-from multiprocessing import managers
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from admission.models import (
-    Application,
-    Education_Detail,
-    Employment,
-    Profile,
-    Project_Detail,
-    Qualifying_Examination,
-    Recommendation,
-    Referral,
-)
+from .models import (Application, Education_Detail, Employment, Profile,
+                     Project_Detail, Recommendation, Referral)
 
 
 class Application_Serializer(serializers.ModelSerializer):
@@ -26,10 +17,6 @@ class Application_Serializer(serializers.ModelSerializer):
 
 
 class Education_Serializer(serializers.ModelSerializer):
-    # def __init__(self, *args, **kwargs):
-    #     many = kwargs.pop("many", True)
-    #     super(Education_Serializer, self).__init__(many=many, *args, **kwargs)
-
     class Meta:
         model = Education_Detail
         fields = "__all__"
@@ -43,12 +30,6 @@ class Education_Serializer(serializers.ModelSerializer):
 class Employment_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Employment
-        fields = "__all__"
-
-
-class Examination_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model = Qualifying_Examination
         fields = "__all__"
 
 

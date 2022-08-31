@@ -1,9 +1,9 @@
+from choice.models import Academic_Year, Category, Gender, Marital_Status
 from django.db import models
 from django.forms import ValidationError
 from django.utils.html import mark_safe
-from django.utils.translation import gettext as _
 from django.utils.timezone import now
-from choice.models import Category, Marital_Status, Gender
+from django.utils.translation import gettext as _
 from users.models import Account
 
 
@@ -69,6 +69,7 @@ class Profile(models.Model):
     type_of_applicant = models.BooleanField(
         _("Type of Applicant"), choices=TYPES, default=True
     )
+    academic_year = models.ForeignKey(Academic_Year, on_delete=models.PROTECT)
     nationality = models.CharField(_("Nationality"), max_length=255, default="India")
 
     full_name = models.CharField(_("Full Name"), max_length=255)

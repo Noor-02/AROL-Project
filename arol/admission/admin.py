@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
+from examination.admin import GATE_Inline, JAM_Inline, UGC_CSIR_Inline
 
 from .file_exports import generate_xlsx, generate_zip
-from .forms import Referral_Form
 from .models import (
     Advertisement,
     Application,
@@ -10,7 +10,6 @@ from .models import (
     Employment,
     Profile,
     Project_Detail,
-    Qualifying_Examination,
     Recommendation,
     Referral,
 )
@@ -91,10 +90,11 @@ class Application_Admin(admin.ModelAdmin):
             },
         ),
     )
+    inlines = [GATE_Inline, JAM_Inline, UGC_CSIR_Inline]
 
     def export_pdf(self, obj):
         return mark_safe(
-            '<a href="/api/admission/export_pdf/{application_id}" style="cursor:pointer;">Download PDF</a>'.format(
+            '<a href="/api/admission/application/export_pdf/{application_id}" style="cursor:pointer;">Download PDF</a>'.format(
                 application_id=obj.application_id
             )
         )
@@ -163,20 +163,6 @@ class Employment_Admin(admin.ModelAdmin):
     )
 
 
-@admin.register(Qualifying_Examination)
-class Examination_Admin(admin.ModelAdmin):
-    model = Qualifying_Examination
-    ordering = ("application_id",)
-    search_fields = ("application_id__application_id", "registration_number")
-    list_display = ("application_id",)
-    fieldsets = (
-        (
-            None,
-            {"fields": ("application_id",)},
-        ),
-    )
-
-
 @admin.register(Profile)
 class Profile_Admin(admin.ModelAdmin):
     model = Profile
@@ -202,6 +188,7 @@ class Profile_Admin(admin.ModelAdmin):
                 "fields": (
                     ("applicant_id", "account"),
                     ("type_of_applicant", "nationality"),
+                    "academic_year",
                     ("full_name", "signature"),
                     ("photograph", "image_preview"),
                     "father_or_spouse_name",
@@ -282,7 +269,7 @@ class Recommendation_Admin(admin.ModelAdmin):
 
     def send_mail(self, obj):
         return mark_safe(
-            '<a href="/api/admission/send_referral/{id}" style="cursor:pointer;">Send Mail</a>'.format(
+            '<a href="/api/admission/recommendation/send_referral/{id}" style="cursor:pointer;">Send Mail</a>'.format(
                 id=obj.id
             )
         )
@@ -294,7 +281,19 @@ class Recommendation_Admin(admin.ModelAdmin):
 @admin.register(Referral)
 class Referral_Admin(admin.ModelAdmin):
     model = Referral
-    form = Referral_Form
+    radio_fields = {
+        "overall_intellectual_ability": admin.HORIZONTAL,
+        "analytical_ability": admin.HORIZONTAL,
+        "goal_clarity": admin.HORIZONTAL,
+        "overall_potential": admin.HORIZONTAL,
+        "oral_expression_english": admin.HORIZONTAL,
+        "written_expression_english": admin.HORIZONTAL,
+        "work_independently": admin.HORIZONTAL,
+        "work_with_others": admin.HORIZONTAL,
+        "research_potential": admin.HORIZONTAL,
+        "motivation": admin.HORIZONTAL,
+        "recommendation": admin.HORIZONTAL,
+    }
     ordering = ("recommendation_id",)
     search_fields = ("recommendation_id__application_id__application_id",)
     list_display = ("recommendation_id",)

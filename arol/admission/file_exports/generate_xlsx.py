@@ -2,14 +2,12 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 
 from ..models import Application
+from ..permissions import IsStaff
 
 
 def generate_xlsx(request, queryset):
-    if not (request.user.is_staff):
-        return HttpResponse(
-            "Error: 404 Not Found",
-            content_type="text/html",
-        )
+
+    IsStaff(request)
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

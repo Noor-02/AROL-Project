@@ -23,13 +23,13 @@ from rest_framework_simplejwt import views as jwt_views
 from users.views import (
     Change_Password_View,
     Generate_Verification_View,
-    Logout_View,
     Login_View,
-    Registration_View,
-    Verify_Email_View,
-    Reset_Password_View,
+    Logout_View,
     Password_Token_View,
+    Registration_View,
+    Reset_Password_View,
     Set_Password_View,
+    Verify_Email_View,
 )
 
 admin.AdminSite.site_title = _("AROL IITI")
@@ -41,6 +41,7 @@ api_patterns = [
     path("admission/", include("admission.urls")),
     path("choices/", include("choice.urls")),
     path("management/", include("management.urls")),
+    path("examinations/", include("examination.urls")),
     path("login/", Login_View.as_view(), name="token_obtain_pair"),
     path("login/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
     path("register/", Registration_View.as_view(), name="register"),

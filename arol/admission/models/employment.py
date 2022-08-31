@@ -1,7 +1,7 @@
+from choice.models import Work_Type
 from django.db import models
 from django.utils.translation import gettext as _
 
-from choice.models import Work_Type
 from .profile import Profile
 
 

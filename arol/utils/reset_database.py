@@ -14,6 +14,6 @@ for file in dirs:
                     os.remove(os.path.join(folder, mig))
 
 
-os.remove("../db.sqlite3")
+os.remove("db.sqlite3")
 with open("db.sqlite3", "w") as fp:
     pass
