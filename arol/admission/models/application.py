@@ -12,7 +12,7 @@ class Application(models.Model):
     )
     date_applied = models.DateField(_("Applied on"), auto_now_add=True, editable=False)
     applicant_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    advertisement_id = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
+    advertisement_id = models.ForeignKey(Advertisement, on_delete=models.PROTECT)
     payment_id = models.CharField(
         _("Payment ID"), unique=True, max_length=255, blank=True, null=True
     )
