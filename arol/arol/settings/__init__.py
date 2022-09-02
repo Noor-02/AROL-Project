@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from pathlib import Path
 import os
-from corsheaders.defaults import default_headers
 from datetime import timedelta
 
 
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
     "choice.apps.ChoiceConfig",
     "management.apps.ManagementConfig",
     "admission.apps.AdmissionConfig",
+    "examination.apps.ExaminationConfig",
     "users.apps.UsersConfig",
 ]
 

@@ -4,11 +4,9 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.core.mail import send_mail
-
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
-
 from emails import Activate_Account, Reset_Password, Verify_Email
 
 

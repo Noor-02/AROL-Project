@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.encoding import smart_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import get_template
 
 
 class Activate_Account:

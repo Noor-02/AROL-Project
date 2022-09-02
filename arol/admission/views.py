@@ -1,32 +1,31 @@
+from emails import Letter_of_Recommendation
 from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import (
     AllowAny,
     DjangoModelPermissionsOrAnonReadOnly,
+    IsAdminUser,
     IsAuthenticated,
 )
+from rest_framework.response import Response
 
+from .file_exports import export_pdf, generate_xlsx_by_year, generate_zip_by_year
 from .models import (
     Application,
     Education_Detail,
     Employment,
     Profile,
     Project_Detail,
-    Qualifying_Examination,
     Recommendation,
     Referral,
 )
-from .permissions import (
-    IsOwner,
-    IsOwner_Applicant,
-    IsOwner_Application,
-)
+from .permissions import IsSelf, IsSelf_Applicant, IsSelf_Application
 from .serializers import (
     Application_Serializer,
     Education_Serializer,
     Employment_Serializer,
-    Examination_Serializer,
     Profile_Serializer,
     Project_Serializer,
     Recommendation_Serializer,
@@ -35,17 +34,36 @@ from .serializers import (
 
 
 class Application_Viewset(viewsets.ModelViewSet):
-    """
-    Returns a list of all **active** accounts in the system.
-    For more details on how accounts are activated please [see here][ref].
-
-    [ref]: http://example.com/activating-accounts
-    """
 
     serializer_class = Application_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ["s_no", "name", "occupation"]
+
+    @action(detail=True, methods=["GET"], permission_classes=[IsAdminUser])
+    def generate_pdf(self, request, pk=None):
+        """
+        Generate a PDF for this application.
+        """
+        return export_pdf(request, pk)
+
+    @action(
+        detail=False,
+        methods=["GET"],
+        permission_classes=[IsAdminUser],
+        url_path="export_xlsx/(?P<year>[^/.]+)",
+    )
+    def generate_xlsx(self, request, year):
+        return generate_xlsx_by_year(request, year)
+
+    @action(
+        detail=False,
+        methods=["GET"],
+        permission_classes=[IsAdminUser],
+        url_path="export_zip/(?P<year>[^/.]+)",
+    )
+    def generate_zip(self, request, year):
+        return generate_zip_by_year(request, year)
 
     def get_queryset(self):
         user = self.request.user
@@ -57,7 +75,7 @@ class Education_Viewset(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     permission_classes = (
-        IsOwner_Applicant,
+        IsSelf_Applicant,
         IsAuthenticated,
         # DjangoModelPermissionsOrAnonReadOnly,
     )
@@ -79,25 +97,16 @@ class Employment_Viewset(viewsets.ModelViewSet):
         return Employment.objects.filter(applicant_id__account=user)
 
 
-class Examination_Viewset(viewsets.ModelViewSet):
-    serializer_class = Examination_Serializer
-    pagination_class = PageNumberPagination
-    filter_backends = (SearchFilter, OrderingFilter)
-    # search_fields = ["s_no", "name", "occupation"]
-
-    def get_queryset(self):
-        return Qualifying_Examination.objects.all()
-
-
 class Profile_Viewset(viewsets.ModelViewSet):
     serializer_class = Profile_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     permission_classes = (
-        IsOwner,
+        IsSelf,
         IsAuthenticated,
         DjangoModelPermissionsOrAnonReadOnly,
     )
+
     # search_fields = ["s_no", "name", "occupation"]
 
     def get_queryset(self):
@@ -127,11 +136,23 @@ class Recommendation_Viewset(
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     permission_classes = (
-        IsOwner_Application,
+        IsSelf_Application,
         IsAuthenticated,
         # DjangoModelPermissionsOrAnonReadOnly,
     )
     # search_fields = ["s_no", "name", "occupation"]
+
+    @action(
+        detail=True,
+        methods=["GET"],
+        permission_classes=[IsAdminUser],
+        url_path="send_referral",
+    )
+    def send_referral(self, request, pk=None):
+        instance = Recommendation.objects.get(pk=pk)
+        mail = Letter_of_Recommendation(instance)
+        mail.send()
+        return Response({"success": "Mail sent successfully"})
 
     def get_queryset(self):
         user = self.request.user

@@ -1,6 +1,5 @@
 asgiref==3.5.1
 astroid==2.11.5
-backports.zoneinfo==0.2.1;python_version<"3.9"
 black==22.3.0
 certifi==2022.5.18.1
 charset-normalizer==2.0.12
@@ -12,6 +11,7 @@ diff-match-patch==20200713
 dill==0.3.5.1
 Django==4.0.4
 django-cors-headers==3.13.0
+django-crontab==0.7.1
 django-environ==0.8.1
 django-filter==21.1
 django-import-export==2.8.0
@@ -40,12 +40,14 @@ platformdirs==2.5.2
 PyJWT==2.4.0
 pylint==2.13.9
 pyparsing==3.0.9
+python-dateutil==2.8.2
 pytz==2022.1
 PyYAML==6.0
 reportlab==3.6.9
 requests==2.27.1
 ruamel.yaml==0.17.21
 ruamel.yaml.clib==0.2.6
+six==1.16.0
 sqlparse==0.4.2
 tablib==3.2.1
 tomli==2.0.1

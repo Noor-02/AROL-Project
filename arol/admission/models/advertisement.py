@@ -1,10 +1,10 @@
 """Advertisements for the Admissions of different Programs."""
 
+from choice.models import Academic_Year
 from django.db import models
 from django.forms import ValidationError
 from django.utils.translation import gettext as _
 from management.models import Program
-from choice.models import Academic_Year
 
 
 def upload_advertisement(instance, filename):

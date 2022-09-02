@@ -1,11 +1,4 @@
 import imp
-from ..models import Advertisement
-from ..models import Education_Detail
-from ..models import Employment
-from ..models import Project_Detail
-from ..models import Qualifying_Examination
-from ..models import Application
-from ..models import Profile
 from email.mime import application
 from io import BytesIO
 
@@ -23,6 +16,15 @@ from reportlab.platypus import (
     SimpleDocTemplate,
 )
 
+from ..models import (
+    Advertisement,
+    Application,
+    Education_Detail,
+    Employment,
+    Profile,
+    Project_Detail,
+)
+from ..permissions import IsStaff
 
 sample_style_sheet = getSampleStyleSheet()
 
@@ -91,7 +93,9 @@ def fill_field(flowables, label, input):
     flowables.append(FrameBreak())
 
 
-def export_pdf_wrapper(request, application_id):
+def export_pdf(request, application_id):
+
+    IsStaff(request)
 
     response = HttpResponse(content_type="application/pdf")
     response[
@@ -107,11 +111,6 @@ def export_pdf_wrapper(request, application_id):
 
 
 def generate_pdf(request, application_id):
-    if not (request.user.is_staff):
-        return HttpResponse(
-            "Error: 404 Not Found",
-            content_type="text/html",
-        )
 
     application = Application.objects.get(application_id=application_id)
     applicant_id = application.applicant_id
@@ -247,7 +246,7 @@ def generate_pdf(request, application_id):
     frames.append([])
     i = 0
     page_number = 1
-    
+
     check = 0
     l = len(educations)
     print(l)
@@ -255,8 +254,12 @@ def generate_pdf(request, application_id):
     for education in educations:
         last_filled_page = False
         check = check + 1
-        create_frame(frames, page_number+1, pdf.leftMargin, 745-(40*i), 510, 40, 0)
-        subheading = Paragraph("Educational Details", subheading_style(sample_style_sheet))
+        create_frame(
+            frames, page_number + 1, pdf.leftMargin, 745 - (40 * i), 510, 40, 0
+        )
+        subheading = Paragraph(
+            "Educational Details", subheading_style(sample_style_sheet)
+        )
         flowables.append(subheading)
         flowables.append(FrameBreak())
         create_frame(frames, page_number + 1, pdf.leftMargin, 705 - (40 * i), 170, 40)
@@ -297,8 +300,8 @@ def generate_pdf(request, application_id):
             frames, page_number + 1, pdf.leftMargin + 170, 545 - (40 * i), 340, 40
         )
         fill_field(flowables, "Specialization", "IT")
-        i=i+6
-        if 545-(40*(i+6)) <= 0:
+        i = i + 6
+        if 545 - (40 * (i + 6)) <= 0:
             last_filled_page = True
             flowables.append(NextPageTemplate(page_number))
             flowables.append(PageBreak())
@@ -308,8 +311,8 @@ def generate_pdf(request, application_id):
             page_number = page_number + 1
             i = 0
             frames.append([])
-    
-    # if l!=0 & last_filled_page == False:        
+
+    # if l!=0 & last_filled_page == False:
     #     print(page_number)
     #     flowables.append(NextPageTemplate(page_number))
     #     flowables.append(PageBreak())
@@ -317,7 +320,7 @@ def generate_pdf(request, application_id):
     #     page_number=page_number+1
     #     i=0
     #     frames.append([])
-    
+
     for employment in employments:
         create_frame(
             frames, page_number + 1, pdf.leftMargin, 745 - (40 * i), 510, 40, 0

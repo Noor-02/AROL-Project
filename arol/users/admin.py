@@ -3,7 +3,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext as _
 from import_export.admin import ImportExportMixin
 
-
 from .forms import AccountChangeForm, AccountCreationForm
 from .models import Account
 from .resources import Account_Resource

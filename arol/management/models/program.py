@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
+
 from .department import Department
 
 
@@ -17,7 +18,7 @@ class Program(models.Model):
         unique=True,
     )
     program_name = models.CharField(_("Program Name"), max_length=255)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.department.department_id + " " + self.program_name

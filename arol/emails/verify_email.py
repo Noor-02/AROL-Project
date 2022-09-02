@@ -1,6 +1,6 @@
-from django.core.signing import Signer
 from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.signing import Signer
 from django.urls import reverse
 
 
