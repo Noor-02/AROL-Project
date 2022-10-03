@@ -64,7 +64,7 @@ class Advertisement(models.Model):
         if self.id is None:
             program_code = self.program.full_program_code
             self.advertisement_id = (
-                str(self.academic_year)[-2:]
+                str(self.academic_year.year)[-2:]
                 + program_code
                 + self.session
                 + self.advertisement_number
