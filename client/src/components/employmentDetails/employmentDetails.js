@@ -84,7 +84,13 @@ class EmploymentDetails extends Component {
   };
 
   saveDetails = () => {
-    let data = ParseBackEmploymentList(this.state.employmentList)[0];
+    let data = {
+      count: this.state.count,
+      previous: this.state.previous,
+      next: this.state.next,
+      results: ParseBackEmploymentList(this.state.employmentList)
+    }
+    // let data = ParseBackEmploymentList(this.state.employmentList)[0];
     ResourceAPIController.EmploymentDetailsSubmit(data).then(response => {
       console.log("EMPLOYMENT DETAILS FOR POST API CALL=> ", response);
     })
