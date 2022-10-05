@@ -114,7 +114,7 @@ const ParseProfileList = (list) => {
                 caste: item.caste,
                 maritalStatus: item.marital_list,
                 contactNumber: item.contact_number,
-                parentConatct: item.parent_conatct_number,
+                parentContact: item.parent_contact_number,
                 nationality: item.nationality,
                 otherNationality: "",
                 pwd: item.pwd ? "Yes" : "No",
@@ -127,6 +127,12 @@ const ParseProfileList = (list) => {
                 pState: item.p_state,
                 pCity: item.p_city,
                 pPinCode: item.p_pin,
+                signature: item.signature,
+                photograph: item.photograph,
+                percentageDisability: item.percentage_disability ? "Greater than or equal to 40%" : "Less than 40%",
+                disabilityCertificate: item.disability_certificate,
+                exServiceman: item.ex_serviceman ? "Yes" : "No",
+                exServicemanCertificate: item.serviceman_certificate,
             }
         }) : []
     return updateList;

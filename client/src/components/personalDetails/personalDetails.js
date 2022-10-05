@@ -17,7 +17,7 @@ class PersonalDetails extends Component {
     caste: "GEN",
     maritalStatus: "Married",
     contactNumber: "",
-    parentConatct: "",
+    parentContact: "",
     nationality: "",
     otherNationality: "",
     pwd: "No",
@@ -29,13 +29,20 @@ class PersonalDetails extends Component {
     casteList: ["GEN", "SC", "ST", "OBC", "Other"],
     maritalList: ["Married", "Not Married"],
     disabilityList: ["Yes", "No"],
+    percentageDisabilityList: ["Greater than or equal to 40%", "Less than 40%"],
     genderList: ["Male", "Female", "Other"],
     admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
     phoneValidity: false,
-    parentConatctValidity: false,
+    parentContactValidity: false,
     parentNameValidity: false,
     nameValidity: false,
     formValid: false,
+    photograph: null,
+    signature: null,
+    percentageDisability: false,
+    disabilityCertificate: "",
+    exServiceman: false,
+    exServicemanCertificate: "",
   };
 
   phoneValidity = (val, label) => {
@@ -49,9 +56,9 @@ class PersonalDetails extends Component {
         formValid: isValid
       })
     }
-    else if (label === "parentConatct") {
+    else if (label === "parentContact") {
       this.setState({
-        parentConatctValidity: isValid,
+        parentContactValidity: isValid,
         formValid: isValid
       })
     }
@@ -77,7 +84,7 @@ class PersonalDetails extends Component {
 
   onChange = (val, label) => {
 
-    if (label === "contactNumber" || label === "parentConatct") {
+    if (label === "contactNumber" || label === "parentContact") {
       this.phoneValidity(val, label);
     }
     else if (label === "fullName" || label === "fatherSpouseName") {
@@ -138,7 +145,7 @@ class PersonalDetails extends Component {
         caste: response.result.results[0].caste,
         maritalStatus: response.result.results[0].maritalStatus,
         contactNumber: response.result.results[0].contactNumber,
-        parentConatct: response.result.results[0].parentConatct,
+        parentContact: response.result.results[0].parentContact,
         nationality: response.result.results[0].nationality,
         otherNationality: response.result.results[0].otherNationality,
         pwd: response.result.results[0].pwd,
@@ -152,11 +159,18 @@ class PersonalDetails extends Component {
         disabilityList: ["Yes", "No"],
         genderList: ["Male", "Female", "Other"],
         admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
+        percentageDisabilityList: ["Greater than or equal to 40%", "Less than 40%"],
         phoneValidity: false,
-        parentConatctValidity: false,
+        parentContactValidity: false,
         parentNameValidity: false,
         nameValidity: false,
         formValid: false,
+        photograph: response.result.results[0].photograph,
+        signature: response.result.results[0].signature,
+        percentageDisability: response.result.results[0].percentageDisability,
+        disabilityCertificate: response.result.results[0].disabilityCertificate,
+        exServiceman: response.result.results[0].exServiceman,
+        exServicemanCertificate: response.result.results[0].exServicemanCertificate,
       })
       // console.log(this.state);
     })
@@ -175,6 +189,52 @@ class PersonalDetails extends Component {
           <div className={classes.HorizontalSections}>
             <div className={classes.Sections}>
               <div className={classes.Row}>
+              <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    Full Name
+                  </Form.Label>
+                  <span className={classes.ErrorMessage}>{!this.state.nameValidity ? "* Please enter a valid name." : null}</span>
+                  <Form.Control
+                    value={this.state.fullName}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "fullName")
+                    }
+                    type="text"
+                    required
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Date Of Birth
+                  </Form.Label>
+                  <Form.Control
+                    value={this.state.dob}
+                    onChange={(e) =>
+                      this.onChange(e.target.value, "dob")
+                    }
+                    type="date"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Gender
+                  </Form.Label>
+                  <Form.Select value={this.state.gender} onChange={(e) => this.onChange(e.target.value, "gender")}>
+                    {this.state.genderList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                </div>
+                <div className={classes.Row}>
                 <Form.Group className={classes.AdmissionInput}>
                   <Form.Label className={classes.FormLabels}>
                     Admission For The Year
@@ -286,44 +346,42 @@ class PersonalDetails extends Component {
                   />
                 </Form.Group>
               </div>
-            </div>
-            <div className={classes.Sections}>
               <div className={classes.Row}>
-                <Form.Group className={classes.NameInputWidth}>
+                <Form.Group className={classes.InputWidthSet}>
                   <Form.Label className={classes.FormLabels}>
-                    Full Name
+                    Ex-Serviceman
                   </Form.Label>
-                  <span className={classes.ErrorMessage}>{!this.state.nameValidity ? "* Please enter a valid name." : null}</span>
+                  <Form.Select value={this.state.exServiceman} onChange={(e) => this.onChange(e.target.value, "exServiceman")}>
+                    {this.state.disabilityList.map((item, index) => {
+                      return (
+                        <option
+                          key={index} >
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className={classes.DisabilityTypeInput}>
+                  <Form.Label className={classes.FormLabels}>
+                  Ex-Serviceman Certificate
+                  </Form.Label>
                   <Form.Control
-                    value={this.state.fullName}
-                    onChange={(e) =>
-                      this.onChange(e.target.value, "fullName")
-                    }
-                    type="text"
-                    required
+                    value={""}
+                    type="file"
+                    accept=".pdf"
+                    disabled={this.state.exServiceman === "Yes" ? false : true}
                   />
                 </Form.Group>
               </div>
               <div className={classes.Row}>
-                <Form.Group className={classes.InputWidthSet}>
+                <Form.Group className={classes.NameInputWidth}>
                   <Form.Label className={classes.FormLabels}>
-                    Date Of Birth
+                  Percentage Disability
                   </Form.Label>
-                  <Form.Control
-                    value={this.state.dob}
-                    onChange={(e) =>
-                      this.onChange(e.target.value, "dob")
-                    }
-                    type="date"
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className={classes.InputWidthSet}>
-                  <Form.Label className={classes.FormLabels}>
-                    Gender
-                  </Form.Label>
-                  <Form.Select value={this.state.gender} onChange={(e) => this.onChange(e.target.value, "gender")}>
-                    {this.state.genderList.map((item, index) => {
+                  <Form.Select value={this.state.percentageDisability} onChange={(e) => this.onChange(e.target.value, "percnetageDisability")}
+                    disabled={this.state.pwd === "Yes" ? false : true}>
+                    {this.state.percentageDisabilityList.map((item, index) => {
                       return (
                         <option
                           key={index}>
@@ -333,6 +391,37 @@ class PersonalDetails extends Component {
                     })}
                   </Form.Select>
                 </Form.Group>
+                </div>
+                <div className={classes.Row}>
+                <Form.Group className={classes.NameInputWidth}>
+                  <Form.Label className={classes.FormLabels}>
+                    Disablity Certificate
+                  </Form.Label>
+                  <Form.Control
+                    value={""}
+                    type="file"
+                    accept=".pdf"
+                    disabled={this.state.pwd === "Yes" ? false : true}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <div className={classes.Sections}>
+            <div className={classes.Row}>
+            <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Photograph
+                  </Form.Label>
+                  <Form.Control
+                    src={this.state.photograph}
+                    onChange={(e) =>
+                      this.onChange(e.target.src, "photograph")
+                    }
+                    type="image"
+                    required
+                  />
+                </Form.Group>
+            
               </div>
               <div className={classes.Row}>
                 <Form.Group className={classes.InputWidthSet}>
@@ -353,11 +442,11 @@ class PersonalDetails extends Component {
                   <Form.Label className={classes.FormLabels}>
                     Parent Contact Number
                   </Form.Label>
-                  <span className={classes.ErrorMessage}>{!this.state.parentConatctValidity ? "* Please enter a valid number." : null}</span>
+                  <span className={classes.ErrorMessage}>{!this.state.parentContactValidity ? "* Please enter a valid number." : null}</span>
                   <Form.Control
-                    value={this.state.parentConatct}
+                    value={this.state.parentContact}
                     onChange={(e) =>
-                      this.onChange(e.target.value, "parentConatct")
+                      this.onChange(e.target.value, "parentContact")
                     }
                     type="text"
                     required
@@ -393,7 +482,24 @@ class PersonalDetails extends Component {
                     disabled={this.state.pwd === "Yes" ? false : true}
                   />
                 </Form.Group>
+                </div>
+                <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Signature
+                  </Form.Label>
+                  <Form.Control
+                    src={this.state.signature}
+                    onChange={(e) =>
+                      this.onChange(e.target.src, "signature")
+                    }
+                    type="image"
+                    required
+                  />
+                </Form.Group>
               </div>
+             
+              
             </div>
           </div>
           <div className={classes.HorizontalSections}>

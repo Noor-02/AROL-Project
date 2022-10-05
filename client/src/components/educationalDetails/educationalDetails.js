@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { ReactDOM } from "react";
+// import { ReactDOM } from "react";
 import classes from "./EducationalDetails.module.css";
 import { withRouter } from "react-router";
-import { Table, Form, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 import EducationalDetailsCard from "./EducationalDetailsCard";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { ReactDOM } from "react";
+// import { ReactDOM } from "react";
 import { withRouter } from "react-router";
-import { Button, Form, Table } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import classes from "./EmploymentDetails.module.css";
-import { IsListEmpty } from "../../utilities/CommonMethods";
+// import { IsListEmpty } from "../../utilities/CommonMethods";
 
 class EmploymentDetails extends Component {
     state = {

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { ReactDOM } from "react";
+// import { ReactDOM } from "react";
 import { withRouter } from "react-router";
 import classes from "./QualifyingDetails.module.css";
 import { Form, Button, Table } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
-import ResourceAPIController from "../../WebServices/ResourceAPIController";
+// import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class QualifyingDetails extends Component {
   state = {

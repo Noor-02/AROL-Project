@@ -195,8 +195,8 @@ const GetPersonalDetails = async () => {
             headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
+            console.log(response)
             response.data.results = ParseProfileList(response.data.results);
-            // console.log(response)
             return response;
         })
         .catch((error) => {

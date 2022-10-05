@@ -28,6 +28,7 @@ class Login extends Component {
       this.props.history.push("/post-login");
     })
       .catch(error => {
+        alert("Incorrect Username or Password");
         console.log("Failed =>", error);
       })
   }

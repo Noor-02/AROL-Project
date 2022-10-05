@@ -27,7 +27,7 @@ class Register extends Component {
     let data = { email: this.state.email, full_name: this.state.fullName, password1: this.state.pwd, password2: this.state.confirmPwd }
     ResourceAPIController.UserRegistration(data).then(response => {
       console.log(response.data);
-      this.props.history.push("/post-login");
+      this.props.history.push("");
     })
       .catch(error => {
         console.log("Failed =>", error);

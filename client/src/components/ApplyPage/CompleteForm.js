@@ -5,7 +5,7 @@ import EmploymentDetails from "../EmploymentDetails/EmploymentDetails";
 import ProjectDetails from "../ProjectDetails/ProjectDetails";
 import ReferenceDetails from "../ReferenceDetails/ReferenceDetails";
 import QualifyingDetails from "../QualifyingDetails/QualifyingDetails";
-import Header from "../Header/Header";
+// import Header from "../Header/Header";
 
 class CompleteForm extends Component {
   render() {
