@@ -31,6 +31,16 @@
     flex-direction: column;
 }
 
+.InputImageDiv {
+    display: flex;
+}
+
+.InputImage {
+    height: 2rem;
+    margin-right: 6rem;
+    margin-top: 6rem;
+}
+
 .Row {
     display: flex;
     justify-content: space-evenly;

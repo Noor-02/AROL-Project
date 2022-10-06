@@ -26,7 +26,8 @@ class Register extends Component {
   loginInitiated = () => {
     let data = { email: this.state.email, full_name: this.state.fullName, password1: this.state.pwd, password2: this.state.confirmPwd }
     ResourceAPIController.UserRegistration(data).then(response => {
-      console.log(response.data);
+      // console.log(response.data);
+      alert("A verification email has been sent to your registered account. Verfiy account to log in.")
       this.props.history.push("");
     })
       .catch(error => {
@@ -48,6 +49,7 @@ class Register extends Component {
               <Form.Label className={classes.FormLabels}>Email Id</Form.Label>
               <Form.Control name="email" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
               <Form.Label className={classes.FormLabels}>Password</Form.Label>
+              <p style={{ fontSize: "0.7rem" }}> Password must be of minimum 8 characters and contain atleast one number and one letter</p>
               <Form.Control name="pwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
               <Form.Label className={classes.FormLabels}>
                 Confirm Password

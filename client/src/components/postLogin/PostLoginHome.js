@@ -16,9 +16,9 @@ class PostLoginHome extends Component {
         // console.log(this.projectList)
       })
     })
-    .catch(error => {
-      console.log("Failed =>", error);
-    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
   };
   render() {
     console.log(this.state.projectList);
@@ -27,9 +27,9 @@ class PostLoginHome extends Component {
         <div className={classes.welcome}>WELCOME {this.state.projectList.fullName} !!</div>
         <div className={classes.details}>
           <div className={classes.detailsElements}>Name: {this.state.projectList.fullName}</div>
-          <div className={classes.detailsElements}>User Name:  {this.state.projectList.fullName}</div>
+          {/* <div className={classes.detailsElements}>User Name:  {this.state.projectList.fullName}</div> */}
           <div className={classes.detailsElements}>Phone Number:  {this.state.projectList.contactNumber}</div>
-          <div className={classes.detailsElements}>Email ID:  {this.state.projectList.fullName}</div>
+          {/* <div className={classes.detailsElements}>Email ID:  {this.state.projectList.fullName}</div> */}
         </div>
       </div>
     );

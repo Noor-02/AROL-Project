@@ -131,7 +131,15 @@ class PersonalDetails extends Component {
 
   }
 
-  
+  readURL = (e) => {
+    let file = URL.createObjectURL(e.target.files[0]);
+    console.log(file)
+    this.setState({
+      photograph: file
+    })
+  }
+
+
   componentDidMount = () => {
     ResourceAPIController.GetPersonalDetails().then(response => {
       console.log(response);
@@ -189,7 +197,7 @@ class PersonalDetails extends Component {
           <div className={classes.HorizontalSections}>
             <div className={classes.Sections}>
               <div className={classes.Row}>
-              <Form.Group className={classes.NameInputWidth}>
+                <Form.Group className={classes.NameInputWidth}>
                   <Form.Label className={classes.FormLabels}>
                     Full Name
                   </Form.Label>
@@ -233,8 +241,8 @@ class PersonalDetails extends Component {
                     })}
                   </Form.Select>
                 </Form.Group>
-                </div>
-                <div className={classes.Row}>
+              </div>
+              <div className={classes.Row}>
                 <Form.Group className={classes.AdmissionInput}>
                   <Form.Label className={classes.FormLabels}>
                     Admission For The Year
@@ -364,7 +372,7 @@ class PersonalDetails extends Component {
                 </Form.Group>
                 <Form.Group className={classes.DisabilityTypeInput}>
                   <Form.Label className={classes.FormLabels}>
-                  Ex-Serviceman Certificate
+                    Ex-Serviceman Certificate
                   </Form.Label>
                   <Form.Control
                     value={""}
@@ -374,54 +382,19 @@ class PersonalDetails extends Component {
                   />
                 </Form.Group>
               </div>
-              <div className={classes.Row}>
-                <Form.Group className={classes.NameInputWidth}>
-                  <Form.Label className={classes.FormLabels}>
-                  Percentage Disability
-                  </Form.Label>
-                  <Form.Select value={this.state.percentageDisability} onChange={(e) => this.onChange(e.target.value, "percnetageDisability")}
-                    disabled={this.state.pwd === "Yes" ? false : true}>
-                    {this.state.percentageDisabilityList.map((item, index) => {
-                      return (
-                        <option
-                          key={index}>
-                          {item}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </Form.Group>
-                </div>
-                <div className={classes.Row}>
-                <Form.Group className={classes.NameInputWidth}>
-                  <Form.Label className={classes.FormLabels}>
-                    Disablity Certificate
-                  </Form.Label>
-                  <Form.Control
-                    value={""}
-                    type="file"
-                    accept=".pdf"
-                    disabled={this.state.pwd === "Yes" ? false : true}
-                  />
-                </Form.Group>
-              </div>
             </div>
             <div className={classes.Sections}>
-            <div className={classes.Row}>
-            <Form.Group className={classes.InputWidthSet}>
+              <div className={classes.Row}>
+                <Form.Group >
                   <Form.Label className={classes.FormLabels}>
                     Photograph
                   </Form.Label>
-                  <Form.Control
-                    src={this.state.photograph}
-                    onChange={(e) =>
-                      this.onChange(e.target.src, "photograph")
-                    }
-                    type="image"
-                    required
-                  />
+                  <div className={classes.InputImageDiv}>
+                    <Form.Control className={classes.InputImage} type="file" onChange={(e) => this.readURL(e)} />
+                    <img id="#targetImage" src={this.state.photograph} alt="Upload your picture" height="215"
+                      width="200" />
+                  </div>
                 </Form.Group>
-            
               </div>
               <div className={classes.Row}>
                 <Form.Group className={classes.InputWidthSet}>
@@ -440,7 +413,7 @@ class PersonalDetails extends Component {
                 </Form.Group>
                 <Form.Group className={classes.InputWidthSet}>
                   <Form.Label className={classes.FormLabels}>
-                    Parent Contact Number
+                    Parent Contact
                   </Form.Label>
                   <span className={classes.ErrorMessage}>{!this.state.parentContactValidity ? "* Please enter a valid number." : null}</span>
                   <Form.Control
@@ -482,8 +455,37 @@ class PersonalDetails extends Component {
                     disabled={this.state.pwd === "Yes" ? false : true}
                   />
                 </Form.Group>
-                </div>
-                <div className={classes.Row}>
+              </div>
+              <div className={classes.Row}>
+                <Form.Group className={classes.InputWidthSet}>
+                  <Form.Label className={classes.FormLabels}>
+                    Percentage Disability
+                  </Form.Label>
+                  <Form.Select value={this.state.percentageDisability} onChange={(e) => this.onChange(e.target.value, "percnetageDisability")}
+                    disabled={this.state.pwd === "Yes" ? false : true}>
+                    {this.state.percentageDisabilityList.map((item, index) => {
+                      return (
+                        <option
+                          key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className={classes.DisabilityTypeInput}>
+                  <Form.Label className={classes.FormLabels}>
+                    Disablity Certificate
+                  </Form.Label>
+                  <Form.Control
+                    value={""}
+                    type="file"
+                    accept=".pdf"
+                    disabled={this.state.pwd === "Yes" ? false : true}
+                  />
+                </Form.Group>
+              </div>
+              <div className={classes.Row}>
                 <Form.Group className={classes.InputWidthSet}>
                   <Form.Label className={classes.FormLabels}>
                     Signature
@@ -498,8 +500,8 @@ class PersonalDetails extends Component {
                   />
                 </Form.Group>
               </div>
-             
-              
+
+
             </div>
           </div>
           <div className={classes.HorizontalSections}>
