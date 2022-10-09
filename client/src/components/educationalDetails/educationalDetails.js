@@ -18,53 +18,54 @@ class EducationalDetails extends Component {
     statusList: ["Completed", "Ongoing"],
     percentList: ["Percentage Marks", "CPI/CGPA"],
     classList: ["First", "Second", "Third"],
-    details: [
-      {
-        examination: "10th",
-        nameOfExamPassed: " ",
-        board: " ",
-        duration: 0,
-        status: "",
-        yearOfPassing: 0,
-        percentOrCpi: "",
-        acquiredMarks: 0,
-        maxMarks: 0,
-        class: "",
-        specialization: "None",
-        marksheet: {},
-        certificate: {}
-      },
-      {
-        examination: "12th",
-        nameOfExamPassed: " ",
-        board: " ",
-        duration: 0,
-        status: "",
-        yearOfPassing: 0,
-        percentOrCpi: "",
-        acquiredMarks: 0,
-        maxMarks: 0,
-        class: "",
-        specialization: "None",
-        marksheet: {},
-        certificate: {}
-      },
-      {
-        examination: "Graduation",
-        nameOfExamPassed: " ",
-        board: " ",
-        duration: 0,
-        status: "",
-        yearOfPassing: 0,
-        percentOrCpi: "",
-        acquiredMarks: 0,
-        maxMarks: 0,
-        class: "",
-        specialization: "None",
-        marksheet: {},
-        certificate: {}
-      },
-    ],
+    // details: [
+    //   {
+    //     examination: "10th",
+    //     nameOfExamPassed: " ",
+    //     board: " ",
+    //     duration: 0,
+    //     status: "",
+    //     yearOfPassing: 0,
+    //     percentOrCpi: "",
+    //     acquiredMarks: 0,
+    //     maxMarks: 0,
+    //     class: "",
+    //     specialization: "None",
+    //     marksheet: {},
+    //     certificate: {}
+    //   },
+    //   {
+    //     examination: "12th",
+    //     nameOfExamPassed: " ",
+    //     board: " ",
+    //     duration: 0,
+    //     status: "",
+    //     yearOfPassing: 0,
+    //     percentOrCpi: "",
+    //     acquiredMarks: 0,
+    //     maxMarks: 0,
+    //     class: "",
+    //     specialization: "None",
+    //     marksheet: {},
+    //     certificate: {}
+    //   },
+    //   {
+    //     examination: "Graduation",
+    //     nameOfExamPassed: " ",
+    //     board: " ",
+    //     duration: 0,
+    //     status: "",
+    //     yearOfPassing: 0,
+    //     percentOrCpi: "",
+    //     acquiredMarks: 0,
+    //     maxMarks: 0,
+    //     class: "",
+    //     specialization: "None",
+    //     marksheet: {},
+    //     certificate: {}
+    //   },
+    // ],
+    details: [],
   };
 
   componentDidMount = () => {
@@ -84,7 +85,10 @@ class EducationalDetails extends Component {
 
   onChange = (val, index, label) => {
     let temp = this.state.details;
-    val = URL.createObjectURL(val)
+    if (label === "marksheet" || label === "certificate") {
+      val = URL.createObjectURL(val)
+    }
+
     temp[index][label] = val;
 
     this.setState({

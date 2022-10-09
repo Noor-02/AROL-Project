@@ -22,7 +22,7 @@ class EmploymentDetails extends Component {
         responsibility: "",
         emoluments: 0,
         current: "No",
-        regularity: "",
+        // regularity: "",
       },
     ],
   };
@@ -37,7 +37,7 @@ class EmploymentDetails extends Component {
       responsibility: "",
       emoluments: 0,
       current: "No",
-      regularity: "",
+      // regularity: "",
     };
     let tempEmploymentList = this.state.employmentList;
     tempEmploymentList.push(tempEmployment);
@@ -84,19 +84,23 @@ class EmploymentDetails extends Component {
   };
 
   saveDetails = () => {
-    let data = {
-      count: this.state.count,
-      previous: this.state.previous,
-      next: this.state.next,
-      results: ParseBackEmploymentList(this.state.employmentList)
-    }
-    // let data = ParseBackEmploymentList(this.state.employmentList)[0];
-    ResourceAPIController.EmploymentDetailsSubmit(data).then(response => {
-      console.log("EMPLOYMENT DETAILS FOR POST API CALL=> ", response);
-    })
-      .catch(error => {
-        console.log("Failed =>", error);
+    // let data = {
+    //   count: this.state.count,
+    //   previous: this.state.previous,
+    //   next: this.state.next,
+    //   results: ParseBackEmploymentList(this.state.employmentList)
+    // }
+    for (let i = 0; i < this.state.employmentList.length; i++) {
+      let data = ParseBackEmploymentList(this.state.employmentList)[i];
+      data.work_type = "2"
+      ResourceAPIController.EmploymentDetailsSubmit(data).then(response => {
+        console.log("EMPLOYMENT DETAILS FOR POST API CALL=> ", response);
       })
+        .catch(error => {
+          console.log("Failed =>", error);
+        })
+    }
+
   }
 
   render() {

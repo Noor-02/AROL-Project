@@ -93,7 +93,7 @@ const ParseEmploymentList = (list) => {
                 responsibility: item.responsibilities,
                 to: item.to_date,
                 workType: item.work_type,
-                regularity: "Regular",
+                // regularity: "Regular",
                 current: item.to === new Date() ? "Yes" : "No"
             }
         }) : []
