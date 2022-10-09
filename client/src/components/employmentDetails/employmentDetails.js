@@ -101,6 +101,8 @@ class EmploymentDetails extends Component {
         })
     }
 
+    alert("Employment Details have been saved")
+
   }
 
   render() {

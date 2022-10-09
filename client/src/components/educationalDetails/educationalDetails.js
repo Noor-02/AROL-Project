@@ -137,13 +137,6 @@ class EducationalDetails extends Component {
   };
 
   saveDetails = () => {
-    // let data = {
-    //   count: this.state.count,
-    //   previous: this.state.previous,
-    //   next: this.state.next,
-    //   results: ParseBackEducationList(this.state.details)
-
-    // }
 
     for (let i = 0; i < this.state.details.length; i++) {
       let data = ParseBackEducationList(this.state.details)[i];
@@ -157,6 +150,8 @@ class EducationalDetails extends Component {
           console.log("Failed =>", error);
         })
     }
+
+    alert("Educational Details have been saved")
 
 
 
