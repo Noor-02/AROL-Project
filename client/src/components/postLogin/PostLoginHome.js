@@ -27,9 +27,12 @@ class PostLoginHome extends Component {
         <div className={classes.welcome}>WELCOME {this.state.projectList ? this.state.projectList.fullName : null} !!</div>
         <div className={classes.details}>
           <div className={classes.detailsElements}>Name: {this.state.projectList ? this.state.projectList.fullName : null}</div>
-          {/* <div className={classes.detailsElements}>User Name:  {this.state.projectList.fullName}</div> */}
-          <div className={classes.detailsElements}>Phone Number:  {this.state.projectList ? this.state.projectList.contactNumber : null}</div>
-          {/* <div className={classes.detailsElements}>Email ID:  {this.state.projectList.fullName}</div> */}
+          {
+            this.state.projectList ?
+              <div className={classes.detailsElements}>Phone Number: {this.state.projectList.contactNumber}</div>
+              : null
+          }
+          <div className={classes.detailsElements}>Email ID:  {this.state.projectList ? this.state.projectList.fullName : null}</div>
         </div>
       </div>
     );

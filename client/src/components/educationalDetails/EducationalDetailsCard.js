@@ -220,14 +220,32 @@ class EducationalDetails extends Component {
                         </div>
                         <div className={classes.Row}>
                             <Form.Group controlId="formFile" className={classes.InputWidthSet}>
-                                <Form.Label>Latest Marksheet</Form.Label>
+                                <div className={classes.FileHeaderDiv}>
+                                    <Form.Label>Latest Marksheet *</Form.Label>
+                                    {
+                                        this.props.details.marksheet ?
+                                            <a href={this.props.details.marksheet} target="_blank">View</a> : null
+                                    }
+                                </div>
                                 <Form.Control type="file" onChange={(e) => this.onFileUpload(e, "marksheet")} required />
                             </Form.Group>
                             {this.props.details.status === "Pursuing" ? <Form.Group controlId="formFile" className={classes.InputWidthSet}>
-                                <Form.Label>Certificate</Form.Label>
+                                <div className={classes.FileHeaderDiv}>
+                                    <Form.Label>Certificate</Form.Label>
+                                    {
+                                        this.props.details.certificate ?
+                                            <a href={this.props.details.certificate} target="_blank">View</a> : null
+                                    }
+                                </div>
                                 <Form.Control type="file" onChange={(e) => this.onFileUpload(e, "certificate")} />
                             </Form.Group> : <Form.Group controlId="formFile" className={classes.InputWidthSet}>
-                                <Form.Label>Certificate</Form.Label>
+                                <div className={classes.FileHeaderDiv}>
+                                    <Form.Label>Certificate *</Form.Label>
+                                    {
+                                        this.props.details.certificate ?
+                                            <a href={this.props.details.certificate} target="_blank">View</a> : null
+                                    }
+                                </div>
                                 <Form.Control type="file" onChange={(e) => this.onFileUpload(e, "certificate")} required />
                             </Form.Group>}
 
