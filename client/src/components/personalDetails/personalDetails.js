@@ -41,7 +41,7 @@ class PersonalDetails extends Component {
     signature: null,
     percentageDisability: false,
     disabilityCertificate: "",
-    exServiceman: false,
+    exServiceman: "No",
     exServicemanCertificate: "",
   };
 
@@ -131,12 +131,29 @@ class PersonalDetails extends Component {
 
   }
 
-  readURL = (e) => {
+  readURL = (e, label) => {
     let file = URL.createObjectURL(e.target.files[0]);
-    console.log(file)
-    this.setState({
-      photograph: file
-    })
+    if (label == "picture") {
+      this.setState({
+        photograph: file
+      })
+    }
+    else if (label == "signature") {
+      this.setState({
+        signature: file
+      })
+    }
+    else if (label == "service") {
+      this.setState({
+        exServicemanCertificate: file
+      })
+    }
+    else if (label == "disability") {
+      this.setState({
+        disabilityCertificate: file
+      })
+    }
+
   }
 
 
@@ -379,7 +396,12 @@ class PersonalDetails extends Component {
                     type="file"
                     accept=".pdf"
                     disabled={this.state.exServiceman === "Yes" ? false : true}
+                    onChange={(e) => this.readURL(e, "service")}
                   />
+                  {
+                    this.state.exServicemanCertificate ?
+                      <a href={this.state.exServicemanCertificate} target="_blank">View uploaded certificate</a> : null
+                  }
                 </Form.Group>
               </div>
             </div>
@@ -390,7 +412,7 @@ class PersonalDetails extends Component {
                     Photograph
                   </Form.Label>
                   <div className={classes.InputImageDiv}>
-                    <Form.Control className={classes.InputImage} type="file" onChange={(e) => this.readURL(e)} />
+                    <Form.Control className={classes.InputImage} type="file" onChange={(e) => this.readURL(e, "picture")} />
                     <img id="#targetImage" src={this.state.photograph} alt="Upload your picture" height="215"
                       width="200" />
                   </div>
@@ -482,7 +504,12 @@ class PersonalDetails extends Component {
                     type="file"
                     accept=".pdf"
                     disabled={this.state.pwd === "Yes" ? false : true}
+                    onChange={(e) => this.readURL(e, "disability")}
                   />
+                  {
+                    this.state.disabilityCertificate ?
+                      <a href={this.state.disabilityCertificate} target="_blank">View uploaded certificate</a> : null
+                  }
                 </Form.Group>
               </div>
               <div className={classes.Row}>
@@ -492,12 +519,14 @@ class PersonalDetails extends Component {
                   </Form.Label>
                   <Form.Control
                     src={this.state.signature}
-                    onChange={(e) =>
-                      this.onChange(e.target.src, "signature")
-                    }
-                    type="image"
+                    type="file"
                     required
+                    onChange={(e) => this.readURL(e, "signature")}
                   />
+                  {
+                    this.state.signature ?
+                      <a href={this.state.signature} target="_blank">View uploaded Signature</a> : null
+                  }
                 </Form.Group>
               </div>
 

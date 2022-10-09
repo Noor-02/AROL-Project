@@ -84,6 +84,7 @@ class EducationalDetails extends Component {
 
   onChange = (val, index, label) => {
     let temp = this.state.details;
+    val = URL.createObjectURL(val)
     temp[index][label] = val;
 
     this.setState({

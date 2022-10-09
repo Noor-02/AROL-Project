@@ -38,3 +38,22 @@
     width: 30%;
     margin-left: 35%;
 }
+
+.TogglePassword {
+    display: flex;
+    flex-direction: row;
+}
+
+.Password {
+    border-right: none;
+    border-radius: 0.25rem 0rem 0rem 0.25rem;
+}
+
+.Button {
+    background-color: white;
+    border-left: none;
+    border-top: 1px solid #ced4da;
+    border-right: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0rem 0.25rem 0.25rem 0rem;
+}
