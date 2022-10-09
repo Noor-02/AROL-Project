@@ -210,6 +210,26 @@ const GetPersonalDetails = async () => {
     });
 };
 
+const PersonalDetailsSubmit = async (data) => {
+    console.log("API CALL DATA =>", data)
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.post(EndPoints.GET_PERSONAL_DETAILS, data, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
+
+    return Promise.resolve({
+        result: response.data
+    });
+}
+
 const GetProjectDetails = async () => {
     const token =
         GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
@@ -238,7 +258,8 @@ const GetProjectDetails = async () => {
 
 
 const ResourceAPIController = {
-    UserLogin, UserRegistration, EmploymentDetailsSubmit, GetPersonalDetails, UserLogout, GetEducationalDetails, GetEmploymentDetails, GetProjectDetails
+    UserLogin, UserRegistration, EmploymentDetailsSubmit, GetPersonalDetails, UserLogout, GetEducationalDetails, GetEmploymentDetails, GetProjectDetails,
+    PersonalDetailsSubmit
 }
 
 

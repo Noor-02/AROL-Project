@@ -111,8 +111,8 @@ const ParseProfileList = (list) => {
                 fatherSpouseName: item.father_or_spouse_name,
                 dob: item.date_of_birth,
                 gender: item.gender,
-                caste: item.caste,
-                maritalStatus: item.marital_list,
+                caste: item.category,
+                maritalStatus: item.marital_status,
                 contactNumber: item.contact_number,
                 parentContact: item.parent_contact_number,
                 nationality: item.nationality,
@@ -138,6 +138,43 @@ const ParseProfileList = (list) => {
     return updateList;
 }
 
+const ParseBackProfileList = (item) => {
+    // const updateList = !IsListEmpty(list)
+    //     ? list.map(item => {
+    return {
+        type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? 1 : 0,
+        nationality: item.nationality,
+        full_name: item.fullName,
+        signature: null,
+        photograph: null,
+        father_or_spouse_name: item.fatherSpouseName,
+        date_of_birth: item.dob,
+        contact_number: item.contactNumber,
+        parent_contact_number: item.parentContact,
+        pwd: item.pwd === "Yes" ? 1 : 0,
+        disability: item.typeOfDisability,
+        disability_certificate: null,
+        percentage_disability: item.percentageDisability,
+        ex_serviceman: item.exServiceman === "Yes" ? 1 : 0,
+        serviceman_certificate: null,
+        c_address: item.cAddress,
+        c_city: item.cCity,
+        c_state: item.cState,
+        c_pin: item.cPin,
+        p_address: item.pAddress,
+        p_city: item.pCity,
+        p_state: item.pCity,
+        p_pin: item.pPin,
+        academic_year: 1,
+        marital_status: 1,
+        gender: 2,
+        category: 1
+    }
+    // }) : []
+
+    // return updateList;
+}
+
 const ParseProjectList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
@@ -161,5 +198,6 @@ const ParseProjectList = (list) => {
 }
 
 export {
-    ParseEducationList, ParseEmploymentList, ParseBackEducationList, ParseBackEmploymentList, ParseProfileList, ParseProjectList
+    ParseEducationList, ParseEmploymentList, ParseBackEducationList, ParseBackEmploymentList, ParseProfileList, ParseProjectList,
+    ParseBackProfileList
 };

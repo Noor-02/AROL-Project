@@ -5,6 +5,7 @@ import { nationalitiesList } from './NationalitiesList'
 import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";
+import { ParseBackProfileList } from '../../WebServices/DataParser'
 
 class PersonalDetails extends Component {
   state = {
@@ -122,12 +123,44 @@ class PersonalDetails extends Component {
   }
 
   onSave = () => {
-    if (this.state.formValid) {
-      alert("Save clicked");
+    let obj = {
+      admissionYear: this.state.admissionYear,
+      typeOfApplicant: this.state.typeOfApplicant,
+      fullName: this.state.fullName,
+      fatherSpouseName: this.state.fatherSpouseName,
+      dob: this.state.dob,
+      gender: this.state.gender,
+      caste: this.state.caste,
+      maritalStatus: this.state.maritalStatus,
+      contactNumber: this.state.contactNumber,
+      parentContact: this.state.parentContact,
+      nationality: this.state.nationality,
+      otherNationality: this.state.otherNationality,
+      pwd: this.state.pwd,
+      typeOfDisability: this.state.typeOfDisability,
+      signature: this.state.signature,
+      photograph: this.state.photograph,
+      percentageDisability: this.state.percentageDisability,
+      disabilityCertificate: this.state.disabilityCertificate,
+      exServiceman: this.state.exServiceman,
+      exServicemanCertificate: this.state.exServicemanCertificate,
+      cAddress: this.state.correspondanceAddress.address,
+      cState: this.state.correspondanceAddress.state,
+      cCity: this.state.correspondanceAddress.city,
+      cPinCode: this.state.correspondanceAddress.pinCode,
+      pAddress: this.state.permanentAddress.address,
+      pState: this.state.permanentAddress.state,
+      pCity: this.state.permanentAddress.city,
+      pPinCode: this.state.permanentAddress.pinCode,
     }
-    else {
-      alert("Please fill all required details correctly");
-    }
+    let data = ParseBackProfileList(obj);
+    console.log(data)
+    ResourceAPIController.PersonalDetailsSubmit(data).then(response => {
+      console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
 
   }
 
@@ -160,13 +193,13 @@ class PersonalDetails extends Component {
   componentDidMount = () => {
     ResourceAPIController.GetPersonalDetails().then(response => {
       console.log(response);
-      let phoneNumber = response.result.results[0].contactNumber
+      let contactNumber = response.result.results[0].contactNumber
       let parentContact = response.result.results[0].parentContact
       let fullName = response.result.results[0].fullName
       let fatherSpouseName = response.result.results[0].fatherSpouseName
       this.nameValidity(fullName, "fullName")
       this.nameValidity(fatherSpouseName, "fatherSpouseName")
-      this.phoneValidity(phoneNumber, "contactNumber")
+      this.phoneValidity(contactNumber, "contactNumber")
       this.phoneValidity(parentContact, "parentContact")
       this.setState({
         admissionYear: response.result.results[0].admissionYear,
@@ -177,7 +210,7 @@ class PersonalDetails extends Component {
         gender: response.result.results[0].gender,
         caste: response.result.results[0].caste,
         maritalStatus: response.result.results[0].maritalStatus,
-        contactNumber: phoneNumber,
+        contactNumber: contactNumber,
         parentContact: parentContact,
         nationality: response.result.results[0].nationality,
         otherNationality: response.result.results[0].otherNationality,
