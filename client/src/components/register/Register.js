@@ -11,7 +11,8 @@ class Register extends Component {
     email: "",
     pwd: "",
     confirmPwd: "",
-    passwordType: "password"
+    passwordType: "password",
+    confirmPwdType: "password"
   };
 
   inputFieldHandler = (event) => {
@@ -24,12 +25,22 @@ class Register extends Component {
     });
   }
 
-  showHidePassword = () => {
-    if (this.state.passwordType === "password") {
-      this.setState({ passwordType: "text" })
+  showHidePassword = (event) => {
+    if (event.target.name === "pwd") {
+      if (this.state.passwordType === "password") {
+        this.setState({ passwordType: "text" })
+      }
+      else {
+        this.setState({ passwordType: "password" })
+      }
     }
-    else {
-      this.setState({ passwordType: "password" })
+    else if (event.target.name === "confirmPwd") {
+      if (this.state.confirmPwdType === "password") {
+        this.setState({ confirmPwdType: "text" })
+      }
+      else {
+        this.setState({ confirmPwdType: "password" })
+      }
     }
   }
 
@@ -65,7 +76,7 @@ class Register extends Component {
               <p style={{ fontSize: "0.7rem" }}> Password must be of minimum 8 characters and contain atleast one number and one letter</p>
               <div className={classes.TogglePassword}>
                 <Form.Control className={classes.Password} name="pwd" onChange={(e) => this.inputFieldHandler(e)} type={this.state.passwordType} required />
-                <button className={classes.Button} onClick={this.showHidePassword}>
+                <button className={classes.Button} name="pwd" onClick={(e) => this.showHidePassword(e)}>
                   {this.state.passwordType === "password" ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                     <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
@@ -78,7 +89,19 @@ class Register extends Component {
               <Form.Label className={classes.FormLabels}>
                 Confirm Password
               </Form.Label>
-              <Form.Control name="confirmPwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required />
+              <div className={classes.TogglePassword}>
+                <Form.Control className={classes.Password} name="confirmPwd" onChange={(e) => this.inputFieldHandler(e)} type={this.state.confirmPwdType} required />
+                <button className={classes.Button} name="confirmPwd" onClick={(e) => this.showHidePassword(e)}>
+                  {this.state.confirmPwdType === "password" ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                  </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                  </svg>}
+                </button>
+              </div>
+              {/* <Form.Control name="confirmPwd" onChange={(e) => this.inputFieldHandler(e)} type="text" required /> */}
             </Form.Group>
             <Button
               onClick={this.loginInitiated}

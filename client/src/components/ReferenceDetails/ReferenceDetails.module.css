@@ -64,9 +64,10 @@
 }
 
 
-.RegNumber{
+.RegNumber {
     width: 100%;
 }
+
 .InputWidthSet {
     width: 45%
 }
@@ -75,7 +76,7 @@
     width: 94%;
 }
 
-.Document{
+.Document {
     width: 50%;
 }
 
@@ -91,28 +92,28 @@
     width: 47%;
 }
 
-.Degree{
+.Degree {
     width: 100%;
 }
 
-.Year{
+.Year {
     width: 100%;
 }
 
-.RefereeEmail{
-    width:43%;
+.RefereeEmail {
+    width: 43%;
 }
 
-.RefereeName{
-    width:30%;
+.RefereeName {
+    width: 30%;
 }
 
-.Organization{
-    width:30%;
+.Organization {
+    width: 30%;
 }
 
-.Designation{
-    width:30%;
+.Designation {
+    width: 30%;
 }
 
 .Heading1 {
@@ -166,4 +167,18 @@
 .AddButton {
     width: 15%;
     margin: auto;
+}
+
+.Remark {
+    display: flex;
+    margin: 2rem;
+    margin-top: 0rem;
+    flex-direction: column;
+}
+
+.TextBox {
+    width: 60%;
+    height: 10rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
 }

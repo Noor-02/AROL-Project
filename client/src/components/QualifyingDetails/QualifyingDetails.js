@@ -117,9 +117,9 @@ class QualifyingDetails extends Component {
             <tr>
               <th>#</th>
               <th>Examination Name</th>
-              <th>Year of Apperance</th>
+              <th>Year of Appearance</th>
               <th>Registration Number</th>
-              <th>Document</th>
+              <th>Document*</th>
               <th>#</th>
             </tr>
           </thead>
