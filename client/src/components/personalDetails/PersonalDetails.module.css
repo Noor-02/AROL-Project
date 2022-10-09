@@ -23,6 +23,11 @@
     width: 100%;
 }
 
+.FileHeaderDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
 .Sections {
     margin-top: 2rem;
     display: flex;
