@@ -87,6 +87,9 @@ class Education_Viewset(viewsets.ModelViewSet):
 
 
 class Employment_Viewset(viewsets.ModelViewSet):
+    permission_classes = (
+        IsAuthenticated,
+    )
     serializer_class = Employment_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
