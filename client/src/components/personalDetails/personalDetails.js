@@ -47,7 +47,7 @@ class PersonalDetails extends Component {
 
   phoneValidity = (val, label) => {
     let isValid = true;
-    const validPhoneFormat = /^[\+][1-9]\d{1,14}$/;
+    const validPhoneFormat = /^[\+][0]?[1-9]\d{10,14}$/;
     isValid = validPhoneFormat.test(val) && isValid;
 
     if (label === "contactNumber") {
@@ -133,7 +133,7 @@ class PersonalDetails extends Component {
 
   readURL = (e, label) => {
     let file = URL.createObjectURL(e.target.files[0]);
-    if (label == "picture") {
+    if (label === "picture") {
       this.setState({
         photograph: file
       })
@@ -160,17 +160,25 @@ class PersonalDetails extends Component {
   componentDidMount = () => {
     ResourceAPIController.GetPersonalDetails().then(response => {
       console.log(response);
+      let phoneNumber = response.result.results[0].contactNumber
+      let parentContact = response.result.results[0].parentContact
+      let fullName = response.result.results[0].fullName
+      let fatherSpouseName = response.result.results[0].fatherSpouseName
+      this.nameValidity(fullName, "fullName")
+      this.nameValidity(fatherSpouseName, "fatherSpouseName")
+      this.phoneValidity(phoneNumber, "contactNumber")
+      this.phoneValidity(parentContact, "parentContact")
       this.setState({
         admissionYear: response.result.results[0].admissionYear,
         typeOfApplicant: response.result.results[0].typeOfApplicant,
-        fullName: response.result.results[0].fullName,
-        fatherSpouseName: response.result.results[0].fatherSpouseName,
+        fullName: fullName,
+        fatherSpouseName: fatherSpouseName,
         dob: response.result.results[0].dob,
         gender: response.result.results[0].gender,
         caste: response.result.results[0].caste,
         maritalStatus: response.result.results[0].maritalStatus,
-        contactNumber: response.result.results[0].contactNumber,
-        parentContact: response.result.results[0].parentContact,
+        contactNumber: phoneNumber,
+        parentContact: parentContact,
         nationality: response.result.results[0].nationality,
         otherNationality: response.result.results[0].otherNationality,
         pwd: response.result.results[0].pwd,
@@ -185,11 +193,11 @@ class PersonalDetails extends Component {
         genderList: ["Male", "Female", "Other"],
         admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
         percentageDisabilityList: ["Greater than or equal to 40%", "Less than 40%"],
-        phoneValidity: false,
-        parentContactValidity: false,
-        parentNameValidity: false,
-        nameValidity: false,
-        formValid: false,
+        // phoneValidity: false,
+        // parentContactValidity: false,
+        // parentNameValidity: false,
+        // nameValidity: false,
+        // formValid: false,
         photograph: response.result.results[0].photograph,
         signature: response.result.results[0].signature,
         percentageDisability: response.result.results[0].percentageDisability,
@@ -388,19 +396,28 @@ class PersonalDetails extends Component {
                   </Form.Select>
                 </Form.Group>
                 <Form.Group className={classes.DisabilityTypeInput}>
-                  <Form.Label className={classes.FormLabels}>
-                    Ex-Serviceman Certificate
-                  </Form.Label>
-                  <Form.Control
-                    value={""}
+                  <div className={classes.FileHeaderDiv}>
+                    <Form.Label className={classes.FormLabels}>
+                      Ex-Serviceman Certificate
+                    </Form.Label>
+                    {
+                      this.state.exServicemanCertificate ?
+                        <a href={this.state.exServicemanCertificate} target="_blank">View</a> : null
+                    }
+                  </div>
+                  {this.state.exServiceman === "Yes" && this.state.exServicemanCertificate === "" ? <Form.Control
                     type="file"
                     accept=".pdf"
                     disabled={this.state.exServiceman === "Yes" ? false : true}
                     onChange={(e) => this.readURL(e, "service")}
-                  />
-                  {
-                    this.state.exServicemanCertificate ?
-                      <a href={this.state.exServicemanCertificate} target="_blank">View uploaded certificate</a> : null
+                    required
+                  /> :
+                    <Form.Control
+                      type="file"
+                      accept=".pdf"
+                      disabled={this.state.exServiceman === "Yes" ? false : true}
+                      onChange={(e) => this.readURL(e, "service")}
+                    />
                   }
                 </Form.Group>
               </div>
@@ -412,7 +429,8 @@ class PersonalDetails extends Component {
                     Photograph
                   </Form.Label>
                   <div className={classes.InputImageDiv}>
-                    <Form.Control className={classes.InputImage} type="file" onChange={(e) => this.readURL(e, "picture")} />
+                    {this.state.photograph ? <Form.Control className={classes.InputImage} type="file" onChange={(e) => this.readURL(e, "picture")} />
+                      : <Form.Control className={classes.InputImage} type="file" onChange={(e) => this.readURL(e, "picture")} required />}
                     <img id="#targetImage" src={this.state.photograph} alt="Upload your picture" height="215"
                       width="200" />
                   </div>
@@ -430,6 +448,7 @@ class PersonalDetails extends Component {
                       this.onChange(e.target.value, "contactNumber")
                     }
                     type="text"
+                    placeholder="+91XXXXXXXXXX"
                     required
                   />
                 </Form.Group>
@@ -443,6 +462,7 @@ class PersonalDetails extends Component {
                     onChange={(e) =>
                       this.onChange(e.target.value, "parentContact")
                     }
+                    placeholder="+91XXXXXXXXXX"
                     type="text"
                     required
                   />
@@ -496,41 +516,57 @@ class PersonalDetails extends Component {
                   </Form.Select>
                 </Form.Group>
                 <Form.Group className={classes.DisabilityTypeInput}>
-                  <Form.Label className={classes.FormLabels}>
-                    Disablity Certificate
-                  </Form.Label>
-                  <Form.Control
-                    value={""}
-                    type="file"
-                    accept=".pdf"
-                    disabled={this.state.pwd === "Yes" ? false : true}
-                    onChange={(e) => this.readURL(e, "disability")}
-                  />
-                  {
-                    this.state.disabilityCertificate ?
-                      <a href={this.state.disabilityCertificate} target="_blank">View uploaded certificate</a> : null
-                  }
+                  <div className={classes.FileHeaderDiv}>
+                    <Form.Label className={classes.FormLabels}>
+                      Disablity Certificate
+                    </Form.Label>
+                    {
+                      this.state.disabilityCertificate ?
+                        <a href={this.state.disabilityCertificate} target="_blank">View</a> : null
+                    }
+                  </div>
+                  {this.state.pwd === "Yes" && !this.state.disabilityCertificate ?
+                    <Form.Control
+                      type="file"
+                      accept=".pdf"
+                      disabled={this.state.pwd === "Yes" ? false : true}
+                      onChange={(e) => this.readURL(e, "disability")}
+                      required
+                    />
+                    : <Form.Control
+                      type="file"
+                      accept=".pdf"
+                      disabled={this.state.pwd === "Yes" ? false : true}
+                      onChange={(e) => this.readURL(e, "disability")}
+                    />}
                 </Form.Group>
               </div>
               <div className={classes.Row}>
                 <Form.Group className={classes.InputWidthSet}>
-                  <Form.Label className={classes.FormLabels}>
-                    Signature
-                  </Form.Label>
-                  <Form.Control
-                    src={this.state.signature}
-                    type="file"
-                    required
-                    onChange={(e) => this.readURL(e, "signature")}
-                  />
-                  {
-                    this.state.signature ?
-                      <a href={this.state.signature} target="_blank">View uploaded Signature</a> : null
+                  <div className={classes.FileHeaderDiv}>
+                    <Form.Label className={classes.FormLabels}>
+                      Signature
+                    </Form.Label>
+                    {
+                      this.state.signature ?
+                        <a href={this.state.signature} target="_blank">View</a> : null
+                    }
+                  </div>
+                  {this.state.signature ?
+                    <Form.Control
+                      src={this.state.signature}
+                      type="file"
+                      onChange={(e) => this.readURL(e, "signature")}
+                    />
+                    : <Form.Control
+                      src={this.state.signature}
+                      type="file"
+                      required
+                      onChange={(e) => this.readURL(e, "signature")}
+                    />
                   }
                 </Form.Group>
               </div>
-
-
             </div>
           </div>
           <div className={classes.HorizontalSections}>

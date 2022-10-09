@@ -53,7 +53,7 @@ class Register extends Component {
     })
       .catch(error => {
         console.log("Failed =>", error);
-        if (error.err.request.response == "{\"error\":[\"This password is too common.\"]}") {
+        if (error.err.request.response === "{\"error\":[\"This password is too common.\"]}") {
           alert("This password is too common. Try another one.")
         }
       })
