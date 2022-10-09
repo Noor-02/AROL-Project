@@ -23,7 +23,7 @@ const ParseEducationList = (list) => {
                 marksheet: item.marksheet,
                 maxMarks: item.out_of,
                 acquiredMarks: item.percent,
-                specialization: item.specialization,
+                specialization: item.specialization === null ? "" : item.specialization,
                 status: item.status,
                 board: item.university,
                 yearOfPassing: item.year_of_passing

@@ -111,6 +111,8 @@ class EducationalDetails extends Component {
       maxMarks: 0,
       class: "",
       specialization: "None",
+      certificate: null,
+      marksheet: null
     };
     tempEducationalList.push(tempEducation);
     this.setState({
@@ -143,16 +145,20 @@ class EducationalDetails extends Component {
 
     // }
 
-    let data = ParseBackEducationList(this.state.details)[0];
-    console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
-
-
-    ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
-      console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
-    })
-      .catch(error => {
-        console.log("Failed =>", error);
+    for (let i = 0; i < this.state.details.length; i++) {
+      let data = ParseBackEducationList(this.state.details)[i];
+      data.certificate = null
+      data.marksheet = null
+      // console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
+      ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
+        console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
       })
+        .catch(error => {
+          console.log("Failed =>", error);
+        })
+    }
+
+
 
   }
 
