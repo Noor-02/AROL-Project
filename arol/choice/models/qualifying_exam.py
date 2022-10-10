@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 class Qualifying_Exam(models.Model):
     qualifying_exam = models.CharField(
-        _("Qualifying Exam"), unique=True, max_length=255
+        _("Qualifying Exam"), primary_key=True, max_length=255
     )
 
     def __str__(self):
