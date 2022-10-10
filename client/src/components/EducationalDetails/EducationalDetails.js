@@ -16,7 +16,7 @@ class EducationalDetails extends Component {
     optionList: ["10th", "12th", "Graduation", "Post Graduation", "PhD", "Other"],
     timeList: ["2023", "2024", "2025", "2026"],
     statusList: ["Completed", "Ongoing"],
-    percentList: ["Percentage Marks", "CPI/CGPA"],
+    percentList: ["Percent of Marks", "CPI/CGPA"],
     classList: ["First", "Second", "Third"],
     // details: [
     //   {
@@ -140,8 +140,10 @@ class EducationalDetails extends Component {
 
     for (let i = 0; i < this.state.details.length; i++) {
       let data = ParseBackEducationList(this.state.details)[i];
-      data.certificate = null
+      // data.certificate = null
       data.marksheet = null
+      data.applicant_id=1
+      console.log(data);
       // console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
       ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
         console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
@@ -152,9 +154,6 @@ class EducationalDetails extends Component {
     }
 
     alert("Educational Details have been saved")
-
-
-
   }
 
   render() {

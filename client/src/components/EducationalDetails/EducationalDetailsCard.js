@@ -12,7 +12,7 @@ class EducationalDetails extends Component {
         optionList: [],
         statusList: ["Completed", "Pursuing"],
         timeList: [],
-        percentList: ["Percentage Marks", "CPI/CGPA"],
+        percentList: ["Percent of Marks", "CPI/CGPA"],
         classList: ["First", "Second", "Third", "Not Applicable"],
     };
 

@@ -69,6 +69,11 @@ class Education_Detail(models.Model):
             applicant_id=self.applicant_id, qualification=self.qualification
         )
 
+    def __unicode__(self):
+        return "{applicant_id}-{qualification}".format(
+            applicant_id=self.applicant_id, qualification=self.qualification
+        )
+
     def delete(self, *args, **kwargs):
         self.marksheet.delete()
         self.certificate.delete()
