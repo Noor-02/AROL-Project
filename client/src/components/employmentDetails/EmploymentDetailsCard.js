@@ -74,7 +74,7 @@ class EmploymentDetails extends Component {
                                 <Form.Label className={classes.FormLabels}>
                                     Regularity
                                 </Form.Label>
-                                <Form.Select value={this.props.details.regularity} onChange={(e) => this.onChange(e.target.value, "regularity")}>
+                                <Form.Select value={this.props.details.workType} onChange={(e) => this.onChange(e.target.value, "workType")}>
                                     {this.state.optionList.map((item, index) => {
                                         return (
                                             <option

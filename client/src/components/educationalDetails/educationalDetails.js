@@ -18,53 +18,54 @@ class EducationalDetails extends Component {
     statusList: ["Completed", "Ongoing"],
     percentList: ["Percentage Marks", "CPI/CGPA"],
     classList: ["First", "Second", "Third"],
-    details: [
-      {
-        examination: "10th",
-        nameOfExamPassed: " ",
-        board: " ",
-        duration: 0,
-        status: "",
-        yearOfPassing: 0,
-        percentOrCpi: "",
-        acquiredMarks: 0,
-        maxMarks: 0,
-        class: "",
-        specialization: "None",
-        marksheet: {},
-        certificate: {}
-      },
-      {
-        examination: "12th",
-        nameOfExamPassed: " ",
-        board: " ",
-        duration: 0,
-        status: "",
-        yearOfPassing: 0,
-        percentOrCpi: "",
-        acquiredMarks: 0,
-        maxMarks: 0,
-        class: "",
-        specialization: "None",
-        marksheet: {},
-        certificate: {}
-      },
-      {
-        examination: "Graduation",
-        nameOfExamPassed: " ",
-        board: " ",
-        duration: 0,
-        status: "",
-        yearOfPassing: 0,
-        percentOrCpi: "",
-        acquiredMarks: 0,
-        maxMarks: 0,
-        class: "",
-        specialization: "None",
-        marksheet: {},
-        certificate: {}
-      },
-    ],
+    // details: [
+    //   {
+    //     examination: "10th",
+    //     nameOfExamPassed: " ",
+    //     board: " ",
+    //     duration: 0,
+    //     status: "",
+    //     yearOfPassing: 0,
+    //     percentOrCpi: "",
+    //     acquiredMarks: 0,
+    //     maxMarks: 0,
+    //     class: "",
+    //     specialization: "None",
+    //     marksheet: {},
+    //     certificate: {}
+    //   },
+    //   {
+    //     examination: "12th",
+    //     nameOfExamPassed: " ",
+    //     board: " ",
+    //     duration: 0,
+    //     status: "",
+    //     yearOfPassing: 0,
+    //     percentOrCpi: "",
+    //     acquiredMarks: 0,
+    //     maxMarks: 0,
+    //     class: "",
+    //     specialization: "None",
+    //     marksheet: {},
+    //     certificate: {}
+    //   },
+    //   {
+    //     examination: "Graduation",
+    //     nameOfExamPassed: " ",
+    //     board: " ",
+    //     duration: 0,
+    //     status: "",
+    //     yearOfPassing: 0,
+    //     percentOrCpi: "",
+    //     acquiredMarks: 0,
+    //     maxMarks: 0,
+    //     class: "",
+    //     specialization: "None",
+    //     marksheet: {},
+    //     certificate: {}
+    //   },
+    // ],
+    details: [],
   };
 
   componentDidMount = () => {
@@ -84,7 +85,10 @@ class EducationalDetails extends Component {
 
   onChange = (val, index, label) => {
     let temp = this.state.details;
-    val = URL.createObjectURL(val)
+    if (label === "marksheet" || label === "certificate") {
+      val = URL.createObjectURL(val)
+    }
+
     temp[index][label] = val;
 
     this.setState({
@@ -107,6 +111,8 @@ class EducationalDetails extends Component {
       maxMarks: 0,
       class: "",
       specialization: "None",
+      certificate: null,
+      marksheet: null
     };
     tempEducationalList.push(tempEducation);
     this.setState({
@@ -131,24 +137,23 @@ class EducationalDetails extends Component {
   };
 
   saveDetails = () => {
-    // let data = {
-    //   count: this.state.count,
-    //   previous: this.state.previous,
-    //   next: this.state.next,
-    //   results: ParseBackEducationList(this.state.details)
 
-    // }
-
-    let data = ParseBackEducationList(this.state.details)[0];
-    console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
-
-
-    ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
-      console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
-    })
-      .catch(error => {
-        console.log("Failed =>", error);
+    for (let i = 0; i < this.state.details.length; i++) {
+      let data = ParseBackEducationList(this.state.details)[i];
+      data.certificate = null
+      data.marksheet = null
+      // console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
+      ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
+        console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
       })
+        .catch(error => {
+          console.log("Failed =>", error);
+        })
+    }
+
+    alert("Educational Details have been saved")
+
+
 
   }
 
