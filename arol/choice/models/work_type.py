@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 
 
 class Work_Type(models.Model):
-    work_type = models.CharField(_("Work Type"), unique=True, max_length=255)
+    work_type = models.CharField(_("Work Type"), primary_key=True, max_length=255)
 
     def __str__(self):
         return self.work_type

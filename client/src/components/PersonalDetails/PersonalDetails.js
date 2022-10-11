@@ -15,7 +15,7 @@ class PersonalDetails extends Component {
     fatherSpouseName: "",
     dob: "",
     gender: "Male",
-    caste: "GEN",
+    caste: "General",
     maritalStatus: "Married",
     contactNumber: "",
     parentContact: "",
@@ -27,12 +27,12 @@ class PersonalDetails extends Component {
     permanentAddress: { address: "", state: "", city: "", pinCode: "" },
     addressSame: false,
     optionList: ["Indian Applicant", "Foreign Applicant"],
-    casteList: ["GEN", "SC", "ST", "OBC", "Other"],
-    maritalList: ["Married", "Not Married"],
+    casteList: ["General", "OBC-NC", "SC", "ST"],
+    maritalList: ["Currently Married", "Never Married", "Divorced", "Separated", "Widow / Widower"],
     disabilityList: ["Yes", "No"],
     percentageDisabilityList: ["Greater than or equal to 40%", "Less than 40%"],
     genderList: ["Male", "Female", "Other"],
-    admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
+    admissionYrList: ["AY 2021-22"],
     phoneValidity: false,
     parentContactValidity: false,
     parentNameValidity: false,
@@ -40,10 +40,16 @@ class PersonalDetails extends Component {
     formValid: false,
     photograph: null,
     signature: null,
+    photographSend: null,
+    signatureSend: null,
     percentageDisability: false,
-    disabilityCertificate: "",
+    disabilityCertificate: null,
+    disabilityCertificateSend: null,
     exServiceman: "No",
-    exServicemanCertificate: "",
+    exServicemanCertificate: null,
+    exServicemanCertificateSend: null,
+    applicantId: "",
+    id: null
   };
 
   phoneValidity = (val, label) => {
@@ -124,6 +130,8 @@ class PersonalDetails extends Component {
 
   onSave = () => {
     let obj = {
+      id: this.state.id,
+      applicantId: this.state.applicantId,
       admissionYear: this.state.admissionYear,
       typeOfApplicant: this.state.typeOfApplicant,
       fullName: this.state.fullName,
@@ -136,14 +144,14 @@ class PersonalDetails extends Component {
       parentContact: this.state.parentContact,
       nationality: this.state.nationality,
       otherNationality: this.state.otherNationality,
-      pwd: this.state.pwd,
+      pwd: this.state.pwd === "Yes" ? true : false,
       typeOfDisability: this.state.typeOfDisability,
-      signature: this.state.signature,
-      photograph: this.state.photograph,
+      ...(typeof (this.state.signatureSend) !== "string" && { signature: this.state.signatureSend }),
+      ...(typeof (this.state.photographSend) !== "string" && { photograph: this.state.photographSend }),
       percentageDisability: this.state.percentageDisability,
-      disabilityCertificate: this.state.disabilityCertificate,
-      exServiceman: this.state.exServiceman,
-      exServicemanCertificate: this.state.exServicemanCertificate,
+      ...(typeof (this.state.disabilityCertificateSend) !== "string" && { disabilityCertificate: this.state.disabilityCertificateSend }),
+      exServiceman: this.state.exServiceman === "Yes" ? true : false,
+      ...(typeof (this.state.exServicemanCertificateSend) !== "string" && { exServicemanCertificate: this.state.exServicemanCertificateSend }),
       cAddress: this.state.correspondanceAddress.address,
       cState: this.state.correspondanceAddress.state,
       cCity: this.state.correspondanceAddress.city,
@@ -153,9 +161,10 @@ class PersonalDetails extends Component {
       pCity: this.state.permanentAddress.city,
       pPinCode: this.state.permanentAddress.pinCode,
     }
+    console.log(obj)
     let data = ParseBackProfileList(obj);
-    console.log(data)
-    ResourceAPIController.PersonalDetailsSubmit(data).then(response => {
+
+    ResourceAPIController.PersonalDetailsSubmit(data, this.state.id).then(response => {
       console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
     })
       .catch(error => {
@@ -165,25 +174,30 @@ class PersonalDetails extends Component {
   }
 
   readURL = (e, label) => {
+    let fileSend = e.target.files[0];
     let file = URL.createObjectURL(e.target.files[0]);
     if (label === "picture") {
       this.setState({
-        photograph: file
+        photograph: file,
+        photographSend: fileSend
       })
     }
     else if (label == "signature") {
       this.setState({
-        signature: file
+        signature: file,
+        signatureSend: fileSend
       })
     }
     else if (label == "service") {
       this.setState({
-        exServicemanCertificate: file
+        exServicemanCertificate: file,
+        exServicemanCertificateSend: fileSend
       })
     }
     else if (label == "disability") {
       this.setState({
-        disabilityCertificate: file
+        disabilityCertificate: file,
+        disabilityCertificateSend: fileSend
       })
     }
 
@@ -217,14 +231,14 @@ class PersonalDetails extends Component {
         pwd: response.result.results[0].pwd,
         typeOfDisability: response.result.results[0].typeOfDisability,
         correspondanceAddress: { address: response.result.results[0].cAddress, state: response.result.results[0].cState, city: response.result.results[0].cCity, pinCode: response.result.results[0].cPinCode },
-        permanantAddress: { address: response.result.results[0].pAddress, state: response.result.results[0].pState, city: response.result.results[0].pCity, pinCode: response.result.results[0].pPinCode },
+        permanentAddress: { address: response.result.results[0].pAddress, state: response.result.results[0].pState, city: response.result.results[0].pCity, pinCode: response.result.results[0].pPinCode },
         addressSame: false,
         optionList: ["Indian Applicant", "Foreign Applicant"],
-        casteList: ["GEN", "SC", "ST", "OBC", "Other"],
-        maritalList: ["Married", "Not Married"],
+        casteList: ["General", "OBC-NC", "SC", "ST"],
+        maritalList: ["Currently Married", "Never Married", "Divorced", "Separated", "Widow / Widower"],
         disabilityList: ["Yes", "No"],
         genderList: ["Male", "Female", "Other"],
-        admissionYrList: ["AY 2022-23", "AY 2023-24", "AY 2024-25", "AY 2025-26"],
+        admissionYrList: ["AY 2021-22"],
         percentageDisabilityList: ["Greater than or equal to 40%", "Less than 40%"],
         // phoneValidity: false,
         // parentContactValidity: false,
@@ -232,11 +246,17 @@ class PersonalDetails extends Component {
         // nameValidity: false,
         // formValid: false,
         photograph: response.result.results[0].photograph,
+        photographSend: response.result.results[0].photograph,
         signature: response.result.results[0].signature,
+        signatureSend: response.result.results[0].signature,
         percentageDisability: response.result.results[0].percentageDisability,
         disabilityCertificate: response.result.results[0].disabilityCertificate,
+        disabilityCertificateSend: response.result.results[0].disabilityCertificate,
         exServiceman: response.result.results[0].exServiceman,
         exServicemanCertificate: response.result.results[0].exServicemanCertificate,
+        exServicemanCertificateSend: response.result.results[0].exServicemanCertificate,
+        applicantId: response.result.results[0].applicantId,
+        id: response.result.results[0].id
       })
       // console.log(this.state);
     })

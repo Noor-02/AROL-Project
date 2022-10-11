@@ -146,10 +146,11 @@ class EducationalDetails extends Component {
 
     for (let i = 0; i < this.state.details.length; i++) {
       let data = ParseBackEducationList(this.state.details)[i];
-      data.certificate = null
+      // data.certificate = null
       data.marksheet = null
-      console.log("POST API EDUCATION DATA =>", data)
-      // console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
+      data.applicant_id = 1
+      // console.log(data);
+      console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
       ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
         console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
       })

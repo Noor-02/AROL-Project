@@ -15,12 +15,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Department',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('department_code', models.CharField(help_text='2-digit Numeric Code allotted to the Department', max_length=2, unique=True, verbose_name='Department Code')),
-                ('department_name', models.CharField(max_length=255, verbose_name='Department Name')),
-                ('department_id', models.CharField(max_length=255, unique=True, verbose_name='Department ID')),
-                ('year_of_establishment', models.SmallIntegerField(verbose_name='Year of Establishment')),
-                ('year_of_termination', models.SmallIntegerField(blank=True, null=True, verbose_name='Year of Termination')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('department_code', models.CharField(help_text='2-digit Numeric Code allotted to the Department',
+                 max_length=2, unique=True, verbose_name='Department Code')),
+                ('department_name', models.CharField(
+                    max_length=255, verbose_name='Department Name')),
+                ('department_id', models.CharField(max_length=255,
+                 unique=True, verbose_name='Department ID')),
+                ('year_of_establishment', models.SmallIntegerField(
+                    verbose_name='Year of Establishment')),
+                ('year_of_termination', models.SmallIntegerField(
+                    blank=True, null=True, verbose_name='Year of Termination')),
             ],
             options={
                 'verbose_name': 'Department',
@@ -31,11 +37,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Program',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('program_code', models.CharField(help_text='2-digit Numeric Code allotted to the program', max_length=2, verbose_name='Program Code')),
-                ('full_program_code', models.CharField(editable=False, help_text='4-digit Numeric Code uniquely identifying a program', max_length=4, unique=True, verbose_name='Full Program Code')),
-                ('program_name', models.CharField(max_length=255, verbose_name='Program Name')),
-                ('department', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='management.department')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('program_code', models.CharField(
+                    help_text='2-digit Numeric Code allotted to the program', max_length=2, verbose_name='Program Code')),
+                ('full_program_code', models.CharField(editable=False, help_text='4-digit Numeric Code uniquely identifying a program',
+                 max_length=4, unique=True, verbose_name='Full Program Code')),
+                ('program_name', models.CharField(
+                    max_length=255, verbose_name='Program Name')),
+                ('department', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT, to='management.department')),
             ],
             options={
                 'verbose_name': 'Program',

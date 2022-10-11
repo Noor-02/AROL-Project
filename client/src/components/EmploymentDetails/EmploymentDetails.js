@@ -96,7 +96,7 @@ class EmploymentDetails extends Component {
     // }
     for (let i = 0; i < this.state.employmentList.length; i++) {
       let data = ParseBackEmploymentList(this.state.employmentList)[i];
-      data.work_type = "2"
+      data.applicant_id = 1
       ResourceAPIController.EmploymentDetailsSubmit(data).then(response => {
         console.log("EMPLOYMENT DETAILS FOR POST API CALL=> ", response);
       })
