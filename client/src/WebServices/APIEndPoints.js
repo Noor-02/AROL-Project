@@ -9,6 +9,8 @@ const EndPoints = {
     GET_EMPLOYMENT_DETAILS: BASE_URL + "admission/employment/",
     GET_QUALIFYING_EXAMINATION_DETAILS: BASE_URL + "admission/examination/",
     GET_PROJECT_DETAILS: BASE_URL + "admission/project/",
+    GET_REFEREE_DETAILS: BASE_URL + 'admission/recommendation/',
+    CHANGE_PASSWORD: BASE_URL + 'change_password'
 }
 
 Object.freeze(EndPoints);

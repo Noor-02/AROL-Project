@@ -4,20 +4,24 @@ import { withRouter } from "react-router";
 import classes from "./ReferenceDetails.module.css";
 import { Form, Button, Table } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
+import ResourceAPIController from "../../WebServices/ResourceAPIController";
+import { ParseBackRefereeDetails } from '../../WebServices/DataParser'
+
 
 class ReferenceDetails extends Component {
   state = {
+    applicationId: "",
     referenceDetailsList: [
       {
         refereeEmail: "",
         refereeName: "",
         designation: "",
         organization: "",
-        document: "",
         refereeEmailValidity: false,
         refereeNameValidity: false,
         formValid: false,
-        number: null
+        number: null,
+        applicationId: ""
       },
     ],
     isFormValid: false,
@@ -58,11 +62,11 @@ class ReferenceDetails extends Component {
       refereeName: "",
       designation: "",
       organization: "",
-      document: "",
       refereeNameValidity: false,
       refereeEmailValidity: false,
       formValid: false,
-      number: null
+      number: null,
+      applicationId: this.state.applicationId
     };
 
     let tempReferenceDetailsList = this.state.referenceDetailsList;
@@ -123,12 +127,40 @@ class ReferenceDetails extends Component {
   };
 
   onSave = () => {
-    if (this.state.isFormValid) {
-      alert("Save clicked");
-    } else {
-      alert("Please fill all required details correctly");
+    // if (this.state.isFormValid) {
+    //   alert("Save clicked");
+    // } else {
+    //   alert("Please fill all required details correctly");
+    // }
+    for (let i = 0; i < this.state.referenceDetailsList.length; i++) {
+      let data = ParseBackRefereeDetails(this.state.referenceDetailsList)[i];
+      console.log("API POST REFEREE DETAILS =>", data);
+      ResourceAPIController.RefereeDetailsSubmit(data).then(response => {
+        console.log("REFEREE DETAILS FOR POST API CALL=> ", response);
+      })
+        .catch(error => {
+          console.log("Failed =>", error);
+        })
     }
+    alert("Project Details have been saved")
+
   };
+
+  componentDidMount() {
+    ResourceAPIController.GetRefereeDetails().then(response => {
+      // console.log("EDUCATIONAL DETAILS=> ", response.result);
+      this.setState({
+        referenceDetailsList: response.result.results,
+        applicationId: response.result.results[0].applicationId,
+        count: response.result.count,
+        next: response.result.next,
+        previous: response.result.previous,
+      })
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+  }
 
   render() {
     return (
@@ -240,6 +272,9 @@ class ReferenceDetails extends Component {
                     </Button>
                     <Button className={classes.AddButton} onClick={(e) => this.deleteClicked(index)}>
                       DELETE
+                    </Button>
+                    <Button className={classes.AddButton} onClick={(e) => this.onSave(e)}>
+                      SAVE
                     </Button>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { EndPoints } from './APIEndPoints';
 import { GetFromLocalStorage, AddInLocalStorage } from '../utilities/CommonMethods';
 import Constants from '../utilities/Constants';
-import { ParseEducationList, ParseEmploymentList, ParseProfileList, ParseProjectList } from './DataParser';
+import { ParseEducationList, ParseEmploymentList, ParseProfileList, ParseProjectList, ParseRefereeDetails } from './DataParser';
 
 const UserLogin = async (data) => {
     // const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? 'Token ' + GetFromLocalStorage(Constants.KEY_TOKEN) : '';
@@ -261,8 +261,13 @@ const GetProjectDetails = async () => {
             headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
-            // console.log(response)
-            response.data.results = ParseProjectList(response.data.results);
+            let responseObj = {
+                count: response.data.count,
+                next: response.data.next,
+                previous: response.data.previous,
+                results: ParseProjectList(response.data.results)
+            }
+            response.data = responseObj;
             return response;
         })
         .catch((error) => {
@@ -276,10 +281,118 @@ const GetProjectDetails = async () => {
     });
 };
 
+const ProjectDetailsSubmit = async (data) => {
+    const token =
+        GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
+            GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
+            ? GetFromLocalStorage(Constants.KEY_TOKEN)
+            : "";
+    let response = await axios
+        .post(EndPoints.GET_PROJECT_DETAILS, data, {
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((response) => {
+            // console.log(""response)
+            // response.data.results = ParseProjectList(response.data.results);
+            return response;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
+
+    return Promise.resolve({
+        result: response.data,
+    });
+};
+
+const GetRefereeDetails = async () => {
+    const token =
+        GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
+            GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
+            ? GetFromLocalStorage(Constants.KEY_TOKEN)
+            : "";
+    let response = await axios
+        .get(EndPoints.GET_REFEREE_DETAILS, {
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((response) => {
+            let responseObj = {
+                count: response.data.count,
+                next: response.data.next,
+                previous: response.data.previous,
+                results: ParseRefereeDetails(response.data.results)
+            }
+            response.data = responseObj;
+            return response;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
+
+    return Promise.resolve({
+        result: response.data,
+    });
+};
+
+const RefereeDetailsSubmit = async (data) => {
+    const token =
+        GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
+            GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
+            ? GetFromLocalStorage(Constants.KEY_TOKEN)
+            : "";
+    let response = await axios
+        .post(EndPoints.GET_REFEREE_DETAILS, data, {
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((response) => {
+            // console.log(""response)
+            // response.data.results = ParseProjectList(response.data.results);
+            return response;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
+
+    return Promise.resolve({
+        result: response.data,
+    });
+}
+
+const ChangePassword = async (data) => {
+    const token =
+        GetFromLocalStorage(Constants.KEY_TOKEN) !== null &&
+            GetFromLocalStorage(Constants.KEY_TOKEN) !== ""
+            ? GetFromLocalStorage(Constants.KEY_TOKEN)
+            : "";
+    let response = await axios
+        .post(EndPoints.CHANGE_PASSWORD, data, {
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((response) => {
+            // console.log(""response)
+            // response.data.results = ParseProjectList(response.data.results);
+            return response;
+        })
+        .catch((error) => {
+            return Promise.reject({
+                err: error,
+            });
+        });
+
+    return Promise.resolve({
+        result: response.data,
+    });
+}
 
 const ResourceAPIController = {
     UserLogin, UserRegistration, EducationalDetailsSubmit, EmploymentDetailsSubmit, GetPersonalDetails, UserLogout, GetEducationalDetails, GetEmploymentDetails, GetProjectDetails,
-    PersonalDetailsSubmit
+    PersonalDetailsSubmit, ProjectDetailsSubmit, GetRefereeDetails, RefereeDetailsSubmit, ChangePassword
 }
 
 

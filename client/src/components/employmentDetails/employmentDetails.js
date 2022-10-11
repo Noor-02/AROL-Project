@@ -10,20 +10,22 @@ import { ParseBackEmploymentList } from '../../WebServices/DataParser'
 
 class EmploymentDetails extends Component {
   state = {
+    applicantId: "",
     optionList: ["Regular", "Temporary", "Permanent", "Contract"],
     employmentList: [
-      {
-        organization: "",
-        to: "",
-        from: "",
-        post: "",
-        duration: 0,
-        workType: "",
-        responsibility: "",
-        emoluments: 0,
-        current: "No",
-        // regularity: "",
-      },
+      // {
+      //   organization: "",
+      //   to: "",
+      //   from: "",
+      //   post: "",
+      //   duration: 0,
+      //   workType: "",
+      //   responsibility: "",
+      //   emoluments: 0,
+      //   current: "No",
+      //   applicantId: "",
+      //   // regularity: "",
+      // },
     ],
   };
   addEmployement = () => {
@@ -37,6 +39,7 @@ class EmploymentDetails extends Component {
       responsibility: "",
       emoluments: 0,
       current: "No",
+      applicantId: this.state.applicantId
       // regularity: "",
     };
     let tempEmploymentList = this.state.employmentList;
@@ -73,6 +76,7 @@ class EmploymentDetails extends Component {
       console.log("EMPLOYMENT DETAILS=> ", response.result);
       this.setState({
         employmentList: response.result.results,
+        applicantId: response.result.results[0].applicantId,
         count: response.result.count,
         next: response.result.next,
         previous: response.result.previous,
@@ -266,7 +270,7 @@ class EmploymentDetails extends Component {
         </Table> */}
         <>
           {!IsListEmpty(this.state.employmentList) ? this.state.employmentList.map((item, index) => {
-            return (<EmploymentDetailsCard details={this.state.employmentList[index]} optionList={this.state.optionList} index={index} onChange={this.onChange} onDelete={this.deleteClicked} />)
+            return (<EmploymentDetailsCard details={this.state.employmentList[index]} optionList={this.state.optionList} key={index} onChange={this.onChange} onDelete={this.deleteClicked} />)
           }) : null}
         </>
         <div className={classes.ButtonsDiv}>

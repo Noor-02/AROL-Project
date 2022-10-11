@@ -179,14 +179,13 @@ const ParseProjectList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
             return {
+                applicantId: item.applicant_id,
                 title: item.title,
                 university: item.university,
                 supervisorName: item.supervisor,
                 degree: item.degree,
                 completionYear: item.year_of_submission,
                 degreeList: ["Under Graduation", "Post Graduation"],
-                parentNameValidity: false,
-                nameValidity: false,
                 formValid: false,
                 titleValidity: false,
                 supervisorNameValidity: false,
@@ -197,7 +196,65 @@ const ParseProjectList = (list) => {
     return updateList;
 }
 
+const ParseBackprojectList = (list) => {
+    const updateList = !IsListEmpty(list)
+        ? list.map(item => {
+            return {
+                title: item.title,
+                university: item.university,
+                degree: item.degree,
+                year_of_submission: item.completionYear,
+                supervisor: item.supervisorName,
+                applicant_id: item.applicantId
+            }
+        }) : []
+
+    return updateList;
+}
+
+const ParseRefereeDetails = (list) => {
+    const updateList = !IsListEmpty(list)
+        ? list.map(item => {
+            return {
+                refereeName: item.referee_name,
+                refereeEmail: item.referee_email,
+                designation: item.referee_designation,
+                organization: item.referee_organization,
+                number: item.referee_number,
+                applicationId: item.application_id
+            }
+        }) : []
+
+    return updateList;
+}
+
+const ParseBackRefereeDetails = (list) => {
+    const updateList = !IsListEmpty(list)
+        ? list.map(item => {
+            return {
+                referee_name: item.refereeName,
+                referee_email: item.refereeEmail,
+                referee_designation: item.designation,
+                referee_organization: item.organization,
+                referee_number: item.number,
+                application_id: item.applicationId
+            }
+        }) : []
+
+    return updateList;
+}
+
+const ChangePasswordParser = (obj) => {
+    const tempObj = {
+        old_password: obj.oldPassword,
+        new_password: obj.newPassword,
+        new_password2: obj.newPassword2
+    }
+
+    return tempObj;
+}
+
 export {
     ParseEducationList, ParseEmploymentList, ParseBackEducationList, ParseBackEmploymentList, ParseProfileList, ParseProjectList,
-    ParseBackProfileList
+    ParseBackProfileList, ParseBackprojectList, ParseRefereeDetails, ParseBackRefereeDetails, ChangePasswordParser
 };

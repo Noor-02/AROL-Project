@@ -16,8 +16,9 @@ class EducationalDetails extends Component {
     optionList: ["10th", "12th", "Graduation", "Post Graduation", "PhD", "Other"],
     timeList: ["2023", "2024", "2025", "2026"],
     statusList: ["Completed", "Ongoing"],
-    percentList: ["Percentage Marks", "CPI/CGPA"],
+    percentList: ["Percent of Marks", "CPI/CGPA"],
     classList: ["First", "Second", "Third"],
+    applicantId: "",
     // details: [
     //   {
     //     examination: "10th",
@@ -32,7 +33,8 @@ class EducationalDetails extends Component {
     //     class: "",
     //     specialization: "None",
     //     marksheet: {},
-    //     certificate: {}
+    //     certificate: {},
+    //     applicantId: ""
     //   },
     //   {
     //     examination: "12th",
@@ -47,7 +49,8 @@ class EducationalDetails extends Component {
     //     class: "",
     //     specialization: "None",
     //     marksheet: {},
-    //     certificate: {}
+    //     certificate: {},
+    //     applicantId: ""
     //   },
     //   {
     //     examination: "Graduation",
@@ -62,7 +65,8 @@ class EducationalDetails extends Component {
     //     class: "",
     //     specialization: "None",
     //     marksheet: {},
-    //     certificate: {}
+    //     certificate: {},
+    //     applicantId: ""
     //   },
     // ],
     details: [],
@@ -73,6 +77,7 @@ class EducationalDetails extends Component {
       // console.log("EDUCATIONAL DETAILS=> ", response.result);
       this.setState({
         details: response.result.results,
+        applicantId: response.result.results[0].applicantId,
         count: response.result.count,
         next: response.result.next,
         previous: response.result.previous,
@@ -100,19 +105,20 @@ class EducationalDetails extends Component {
     let tempCount = this.state.count;
     let tempEducationalList = this.state.details;
     let tempEducation = {
-      examination: "",
+      examination: "10th",
       nameOfExamPassed: " ",
       board: " ",
       duration: 0,
-      status: "",
-      yearOfPassing: 0,
-      percentOrCpi: "",
+      status: "Completed",
+      yearOfPassing: 2023,
+      percentOrCpi: "Percent of Marks",
       acquiredMarks: 0,
       maxMarks: 0,
-      class: "",
+      class: "First",
       specialization: "None",
       certificate: null,
-      marksheet: null
+      marksheet: null,
+      applicantId: this.state.applicantId
     };
     tempEducationalList.push(tempEducation);
     this.setState({
@@ -142,6 +148,7 @@ class EducationalDetails extends Component {
       let data = ParseBackEducationList(this.state.details)[i];
       data.certificate = null
       data.marksheet = null
+      console.log("POST API EDUCATION DATA =>", data)
       // console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
       ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
         console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
@@ -152,9 +159,6 @@ class EducationalDetails extends Component {
     }
 
     alert("Educational Details have been saved")
-
-
-
   }
 
   render() {
