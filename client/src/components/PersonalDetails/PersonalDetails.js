@@ -161,8 +161,8 @@ class PersonalDetails extends Component {
       pCity: this.state.permanentAddress.city,
       pPinCode: this.state.permanentAddress.pinCode,
     }
-    console.log(obj)
     let data = ParseBackProfileList(obj);
+    console.log(data)
 
     ResourceAPIController.PersonalDetailsSubmit(data, this.state.id).then(response => {
       console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
