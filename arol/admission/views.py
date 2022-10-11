@@ -1,8 +1,10 @@
+import re
 from emails import Letter_of_Recommendation
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
+from django.shortcuts import redirect
 from rest_framework.permissions import (
     AllowAny,
     DjangoModelPermissionsOrAnonReadOnly,
@@ -10,8 +12,9 @@ from rest_framework.permissions import (
     IsAuthenticated,
 )
 from rest_framework.response import Response
+from .forms import xlxsForm
 
-from .file_exports import export_pdf, generate_xlsx_by_year, generate_zip_by_year
+from .file_exports import export_pdf, generate_xlsx_by_year, generate_zip_by_year, generate_xlsx
 from .models import (
     Application,
     Education_Detail,
@@ -47,6 +50,15 @@ class Application_Viewset(viewsets.ModelViewSet):
         Generate a PDF for this application.
         """
         return export_pdf(request, pk)
+
+    @action(
+        detail=False,
+        methods=["GET"],
+        permission_classes=[IsAdminUser],
+        url_path="export_xlsx/(?P<year>[^/.]+)",
+    )
+    def generate_xlsx(self, request, year):
+        return generate_xlsx_by_year(request, year)
 
     @action(
         detail=False,
@@ -274,3 +286,12 @@ class Referral_Viewset(
 
     def get_queryset(self):
         return Referral.objects.all()
+
+
+def exp(request):
+
+    form = xlxsForm(request.POST)
+    print(form)
+    return generate_xlsx(request,request.POST['data'],form)
+
+    #return redirect("/admin/admission/application/")

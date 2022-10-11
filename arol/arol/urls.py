@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.utils.translation import gettext as _
 from rest_framework_simplejwt import views as jwt_views
+from admission import views as admission_views
 from users.views import (
     Change_Password_View,
     Generate_Verification_View,
@@ -83,6 +84,7 @@ urlpatterns = [
     ),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include(api_patterns)),
+    path("excel/",admission_views.exp)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
