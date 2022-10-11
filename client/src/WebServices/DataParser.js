@@ -105,7 +105,7 @@ const ParseProfileList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
             return {
-                admissionYear: "AY 2022-23",
+                admissionYear: item.academic_year,
                 typeOfApplicant: item.type_of_applicant ? "Indian Applicant" : "Foriegn Applicant",
                 fullName: item.full_name,
                 fatherSpouseName: item.father_or_spouse_name,
@@ -142,33 +142,33 @@ const ParseBackProfileList = (item) => {
     // const updateList = !IsListEmpty(list)
     //     ? list.map(item => {
     return {
-        type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? 1 : 0,
+        type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? true : false,
         nationality: item.nationality,
         full_name: item.fullName,
-        signature: null,
-        photograph: null,
+        signature: item.signature,
+        photograph: item.photograph,
         father_or_spouse_name: item.fatherSpouseName,
         date_of_birth: item.dob,
         contact_number: item.contactNumber,
         parent_contact_number: item.parentContact,
-        pwd: item.pwd === "Yes" ? 1 : 0,
+        pwd: item.pwd === "Yes" ? true : false,
         disability: item.typeOfDisability,
         disability_certificate: null,
-        percentage_disability: item.percentageDisability,
-        ex_serviceman: item.exServiceman === "Yes" ? 1 : 0,
-        serviceman_certificate: null,
+        percentage_disability: item.percentageDisability === "Greater than or equal to 40%" ? true : false,
+        ex_serviceman: item.exServiceman === "Yes" ? true : false,
+        serviceman_certificate: item.exServicemanCertificate,
         c_address: item.cAddress,
         c_city: item.cCity,
         c_state: item.cState,
-        c_pin: item.cPin,
+        c_pin: item.cPinCode,
         p_address: item.pAddress,
         p_city: item.pCity,
-        p_state: item.pCity,
-        p_pin: item.pPin,
-        academic_year: 1,
-        marital_status: 1,
-        gender: 2,
-        category: 1
+        p_state: item.pState,
+        p_pin: item.pPinCode,
+        academic_year: item.admissionYear,
+        marital_status: item.maritalStatus,
+        gender: item.gender,
+        category: item.caste
     }
     // }) : []
 

@@ -234,7 +234,10 @@ const PersonalDetailsSubmit = async (data) => {
     console.log("API CALL DATA =>", data)
     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
     let response = await axios.post(EndPoints.GET_PERSONAL_DETAILS, data, {
-        headers: { 'Authorization': 'Bearer ' + token }
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'content-type': 'multipart/form-data'
+        }
     }).then((response) => {
         console.log(response.data);
         return response.data;
