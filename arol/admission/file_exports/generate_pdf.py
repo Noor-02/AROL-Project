@@ -16,6 +16,7 @@ from reportlab.platypus import (
     SimpleDocTemplate,
 )
 
+
 from ..models import (
     Advertisement,
     Application,

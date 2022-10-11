@@ -1,6 +1,10 @@
+import imp
 from django.contrib import admin
 from django.utils.html import mark_safe
 from examination.admin import GATE_Inline, JAM_Inline, UGC_CSIR_Inline
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from .forms import xlxsForm
 
 from .file_exports import generate_xlsx, generate_zip
 from .models import (
@@ -106,10 +110,16 @@ class Application_Admin(admin.ModelAdmin):
     def export_zip(modeladmin, request, queryset):
         return generate_zip(request, queryset)
 
-    @admin.action(description="Download Selected Applications as a spreadsheet")
-    def export_xlxs(modeladmin, request, queryset):
-        return generate_xlsx(request, queryset)
+    @admin.action(description="Download selected Applications in Excel Format")
+    def export_xlxs(self, request, queryset):
 
+        items=[]
+        form=xlxsForm()
+
+        for query in queryset:
+            items.append(query.application_id)
+
+        return render(request, "admi/temp.html", {'items': items, "form":form})
 
 @admin.register(Education_Detail)
 class Education_Admin(admin.ModelAdmin):
