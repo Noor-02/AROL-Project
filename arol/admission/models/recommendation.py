@@ -19,6 +19,7 @@ class Recommendation(models.Model):
     referree_email = models.EmailField(_("Referree Email"))
     referree_designation = models.CharField(_("Referree Designation"), max_length=255)
     referree_organization = models.CharField(_("Referree Organization"), max_length=255)
+    referree_number = models.BigIntegerField(_("Referree Contact Number"))
 
     def __str__(self):
         return "{application_id}".format(application_id=self.application_id)
