@@ -10,6 +10,7 @@ import Register from "./components/Register/Register";
 // import ReferenceDetails from "./components/ReferenceDetails/ReferenceDetails";
 import Header from "./components/Header/Header";
 import PostLogin from "./components/PostLogin/PostLogin";
+import Advertisement from "./components/Advertisements/Advertisements"
 // import ApplyPage from "./components/ApplyPage/ApplyPage";
 
 import { Switch, Route } from "react-router-dom";
@@ -35,7 +36,7 @@ class App extends Component {
           {/* <Route path="/referenceDetails" component={ReferenceDetails} /> */}
           {/* <Route path="/educationalDetails" component={EducationalDetails} /> */}
           <Route path="/post-login" component={PostLogin} />
-
+          <Route path="/advertisement-home" component={Advertisement} />
           {/* <Route path="/post-login/apply" exact component={ApplyPage} />
           <Route path="/post-login/completeForm" component={CompleteForm} /> */}
           {/* <Route path="/projectDetails" component={ProjectDetails} /> */}

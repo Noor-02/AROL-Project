@@ -1,0 +1,94 @@
+.Heading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    text-align: -webkit-center;
+    margin-top: 3rem;
+}
+
+.SubHeading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    margin-top: 3rem;
+    letter-spacing: 0.5px;
+}
+
+.Paragraph {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    text-align: -webkit-left;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+}
+
+.TableParagraph {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    text-align: -webkit-left;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+    margin: 0px 1rem;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+    border: 1.5px solid #dddddd;
+    margin-bottom: 3rem;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width: 50%;
+}
+
+.TableHeading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    margin-top: 3rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.Link {
+    color: #0980B6;
+    text-decoration: none;
+}
+
+.Highlight {
+    background-color: yellow;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    margin-top: 3rem;
+    letter-spacing: 0.5px;
+}
+
+.Or {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    /* margin-top: 3rem; */
+    letter-spacing: 0.5px;
+    margin-bottom: 0px;
+}

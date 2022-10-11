@@ -105,6 +105,8 @@ const ParseProfileList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
             return {
+                id: item.id,
+                applicantId: item.applicant_id,
                 admissionYear: item.academic_year,
                 typeOfApplicant: item.type_of_applicant ? "Indian Applicant" : "Foriegn Applicant",
                 fullName: item.full_name,
@@ -142,21 +144,25 @@ const ParseBackProfileList = (item) => {
     // const updateList = !IsListEmpty(list)
     //     ? list.map(item => {
     return {
+        id: item.id,
+        applicant_id: item.applicantId,
         type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? true : false,
         nationality: item.nationality,
         full_name: item.fullName,
-        signature: item.signature,
-        photograph: item.photograph,
+        ...(item.hasOwnProperty("photograph") && { photograph: item.photograph }),
+        ...(item.hasOwnProperty("signature") && { signature: item.signature }),
+        ...(item.hasOwnProperty("disabilityCertificate") && { disability_certificate: item.disabilityCertificate }),
+        ...(item.hasOwnProperty("exServicemanCertificate") && { serviceman_certificate: item.exServicemanCertificate }),
         father_or_spouse_name: item.fatherSpouseName,
         date_of_birth: item.dob,
         contact_number: item.contactNumber,
         parent_contact_number: item.parentContact,
         pwd: item.pwd === "Yes" ? true : false,
         disability: item.typeOfDisability,
-        disability_certificate: null,
+        // disability_certificate: null,
         percentage_disability: item.percentageDisability === "Greater than or equal to 40%" ? true : false,
         ex_serviceman: item.exServiceman === "Yes" ? true : false,
-        serviceman_certificate: item.exServicemanCertificate,
+        // serviceman_certificate: item.exServicemanCertificate,
         c_address: item.cAddress,
         c_city: item.cCity,
         c_state: item.cState,

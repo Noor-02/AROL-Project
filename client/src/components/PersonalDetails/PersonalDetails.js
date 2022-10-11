@@ -48,6 +48,8 @@ class PersonalDetails extends Component {
     exServiceman: "No",
     exServicemanCertificate: null,
     exServicemanCertificateSend: null,
+    applicantId: "",
+    id: null
   };
 
   phoneValidity = (val, label) => {
@@ -128,6 +130,8 @@ class PersonalDetails extends Component {
 
   onSave = () => {
     let obj = {
+      id: this.state.id,
+      applicantId: this.state.applicantId,
       admissionYear: this.state.admissionYear,
       typeOfApplicant: this.state.typeOfApplicant,
       fullName: this.state.fullName,
@@ -142,12 +146,12 @@ class PersonalDetails extends Component {
       otherNationality: this.state.otherNationality,
       pwd: this.state.pwd === "Yes" ? true : false,
       typeOfDisability: this.state.typeOfDisability,
-      signature: this.state.signatureSend,
-      photograph: this.state.photographSend,
+      ...(typeof (this.state.signatureSend) !== "string" && { signature: this.state.signatureSend }),
+      ...(typeof (this.state.photographSend) !== "string" && { photograph: this.state.photographSend }),
       percentageDisability: this.state.percentageDisability,
-      disabilityCertificate: this.state.disabilityCertificateSend,
+      ...(typeof (this.state.disabilityCertificateSend) !== "string" && { disabilityCertificate: this.state.disabilityCertificateSend }),
       exServiceman: this.state.exServiceman === "Yes" ? true : false,
-      exServicemanCertificate: this.state.exServicemanCertificateSend,
+      ...(typeof (this.state.exServicemanCertificateSend) !== "string" && { exServicemanCertificate: this.state.exServicemanCertificateSend }),
       cAddress: this.state.correspondanceAddress.address,
       cState: this.state.correspondanceAddress.state,
       cCity: this.state.correspondanceAddress.city,
@@ -157,9 +161,10 @@ class PersonalDetails extends Component {
       pCity: this.state.permanentAddress.city,
       pPinCode: this.state.permanentAddress.pinCode,
     }
+    console.log(obj)
     let data = ParseBackProfileList(obj);
-    console.log(data)
-    ResourceAPIController.PersonalDetailsSubmit(data).then(response => {
+
+    ResourceAPIController.PersonalDetailsSubmit(data, this.state.id).then(response => {
       console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
     })
       .catch(error => {
@@ -250,6 +255,8 @@ class PersonalDetails extends Component {
         exServiceman: response.result.results[0].exServiceman,
         exServicemanCertificate: response.result.results[0].exServicemanCertificate,
         exServicemanCertificateSend: response.result.results[0].exServicemanCertificate,
+        applicantId: response.result.results[0].applicantId,
+        id: response.result.results[0].id
       })
       // console.log(this.state);
     })
