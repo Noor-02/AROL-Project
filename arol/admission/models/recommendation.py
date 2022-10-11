@@ -15,11 +15,11 @@ class Recommendation(models.Model):
     )
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
 
-    referree_name = models.CharField(_("Referree Name"), max_length=255)
-    referree_email = models.EmailField(_("Referree Email"))
-    referree_designation = models.CharField(_("Referree Designation"), max_length=255)
-    referree_organization = models.CharField(_("Referree Organization"), max_length=255)
-    referree_number = models.BigIntegerField(_("Referree Contact Number"))
+    referee_name = models.CharField(_("Referee Name"), max_length=255)
+    referee_email = models.EmailField(_("Referee Email"))
+    referee_designation = models.CharField(_("Referee Designation"), max_length=255)
+    referee_organization = models.CharField(_("Referee Organization"), max_length=255)
+    referee_number = models.BigIntegerField(_("Referee Contact Number"))
 
     def __str__(self):
         return "{application_id}".format(application_id=self.application_id)

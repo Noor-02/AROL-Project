@@ -248,20 +248,21 @@ class Recommendation_Admin(admin.ModelAdmin):
     ordering = ("application_id",)
     search_fields = (
         "application_id__application_id",
-        "referree_email",
-        "referree_name",
+        "referee_email",
+        "referee_name",
     )
-    list_display = ("application_id", "referree_name", "referree_email", "send_mail")
+    list_display = ("application_id", "referee_name", "referee_email", "send_mail")
     fieldsets = (
         (
             None,
             {
                 "fields": (
                     "application_id",
-                    "referree_name",
-                    "referree_email",
-                    "referree_designation",
-                    "referree_organization",
+                    "referee_name",
+                    "referee_email",
+                    "referee_designation",
+                    "referee_organization",
+                    "referee_number",
                 )
             },
         ),

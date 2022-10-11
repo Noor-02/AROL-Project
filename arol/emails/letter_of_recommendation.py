@@ -7,7 +7,7 @@ class Letter_of_Recommendation:
     def __init__(self, instance):
         self.instance = instance
         self.uuid = instance.referral_id
-        self.recipient = instance.referree_email
+        self.recipient = instance.referee_email
         self.subject = "Request for Letter of Recommendation"
         self.domain = settings.FRONTEND_URL
         self.relative_link = reverse("recommendation-detail", args=[self.uuid])
