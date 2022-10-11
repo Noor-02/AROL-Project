@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404
 from emails import Letter_of_Recommendation
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
@@ -13,6 +14,7 @@ from rest_framework.response import Response
 
 from .file_exports import export_pdf, generate_xlsx_by_year, generate_zip_by_year
 from .models import (
+    Advertisement,
     Application,
     Education_Detail,
     Employment,
@@ -23,6 +25,7 @@ from .models import (
 )
 from .permissions import IsSelf, IsSelf_Applicant, IsSelf_Application
 from .serializers import (
+    Advertisement_Serializer,
     Application_Serializer,
     Education_Serializer,
     Employment_Serializer,
@@ -31,6 +34,16 @@ from .serializers import (
     Recommendation_Serializer,
     Referral_Serializer,
 )
+
+
+class Advertisement_Viewset(viewsets.ModelViewSet):
+    serializer_class = Advertisement_Serializer
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
+
+    def get_queryset(self):
+        return Advertisement.objects.all()
 
 
 class Application_Viewset(viewsets.ModelViewSet):
@@ -85,11 +98,33 @@ class Education_Viewset(viewsets.ModelViewSet):
         user = self.request.user
         return Education_Detail.objects.filter(applicant_id__account=user)
 
+    def create(self, request):
+        data = []
+        partial = True
+        queryset = self.get_queryset()
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data.append(serializer.data)
+
+        return Response(data, status=status.HTTP_201_CREATED)
+
 
 class Employment_Viewset(viewsets.ModelViewSet):
-    permission_classes = (
-        IsAuthenticated,
-    )
+    permission_classes = (IsAuthenticated,)
     serializer_class = Employment_Serializer
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
@@ -98,6 +133,30 @@ class Employment_Viewset(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Employment.objects.filter(applicant_id__account=user)
+
+    def create(self, request):
+        data = []
+        partial = True
+        queryset = self.get_queryset()
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data.append(serializer.data)
+
+        return Response(data, status=status.HTTP_201_CREATED)
 
 
 class Profile_Viewset(viewsets.ModelViewSet):
@@ -126,6 +185,30 @@ class Project_Viewset(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Project_Detail.objects.filter(applicant_id__account=user)
+
+    def create(self, request):
+        data = []
+        partial = True
+        queryset = self.get_queryset()
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data.append(serializer.data)
+
+        return Response(data, status=status.HTTP_201_CREATED)
 
 
 class Recommendation_Viewset(
@@ -160,6 +243,30 @@ class Recommendation_Viewset(
     def get_queryset(self):
         user = self.request.user
         return Recommendation.objects.filter(application_id__applicant_id__account=user)
+
+    def create(self, request):
+        data = []
+        partial = True
+        queryset = self.get_queryset()
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+
+        for i in request.data:
+            if "id" in i:
+                instance = get_object_or_404(queryset, pk=i["id"])
+                serializer = self.get_serializer(instance, data=i, partial=partial)
+            else:
+                serializer = self.get_serializer(data=i)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data.append(serializer.data)
+
+        return Response(data, status=status.HTTP_201_CREATED)
 
 
 class Referral_Viewset(

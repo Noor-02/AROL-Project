@@ -1,8 +1,23 @@
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from .models import (Application, Education_Detail, Employment, Profile,
-                     Project_Detail, Recommendation, Referral)
+from .models import (
+    Advertisement,
+    Application,
+    Education_Detail,
+    Employment,
+    Profile,
+    Project_Detail,
+    Recommendation,
+    Referral,
+)
+
+
+class Advertisement_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertisement
+        fields = "__all__"
+
 
 
 class Application_Serializer(serializers.ModelSerializer):
@@ -34,9 +49,7 @@ class Employment_Serializer(serializers.ModelSerializer):
 
 
 class Profile_Serializer(serializers.ModelSerializer):
-    account = serializers.PrimaryKeyRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault()
-    )
+    account = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Profile
