@@ -50,7 +50,8 @@ const ParseBackEducationList = (list) => {
                 specialization: item.specialization,
                 marksheet: item.marksheet,
                 certificate: item.certificate,
-                applicant_id: item.applicantId
+                applicant_id: item.applicantId,
+                id: item.id
             }
         }) : []
 

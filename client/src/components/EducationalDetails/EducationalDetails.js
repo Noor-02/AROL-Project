@@ -104,6 +104,7 @@ class EducationalDetails extends Component {
   onAddEducation = () => {
     let tempCount = this.state.count;
     let tempEducationalList = this.state.details;
+    let n = tempEducationalList.length;
     let tempEducation = {
       examination: "10th",
       nameOfExamPassed: " ",
@@ -118,7 +119,8 @@ class EducationalDetails extends Component {
       specialization: "None",
       certificate: null,
       marksheet: null,
-      applicantId: this.state.applicantId
+      applicantId: this.state.applicantId,
+      id: n + 1
     };
     tempEducationalList.push(tempEducation);
     this.setState({
@@ -144,20 +146,24 @@ class EducationalDetails extends Component {
 
   saveDetails = () => {
 
+    let data = ParseBackEducationList(this.state.details);
     for (let i = 0; i < this.state.details.length; i++) {
-      let data = ParseBackEducationList(this.state.details)[i];
-      // data.certificate = null
-      data.marksheet = null
-      data.applicant_id = 1
-      // console.log(data);
-      console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
-      ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
-        console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
-      })
-        .catch(error => {
-          console.log("Failed =>", error);
-        })
+      data[i].certificate = null
+      data[i].marksheet = null
     }
+    // let data = ParseBackEducationList(this.state.details)[i];
+    // data.certificate = null
+    // data.marksheet = null
+    // data.applicant_id = 1
+    // console.log(data);
+    console.log("DATA FROM EDUCATIONAL DETAILS=>", data)
+    ResourceAPIController.EducationalDetailsSubmit(data).then(response => {
+      console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+    // }
 
     alert("Educational Details have been saved")
   }
