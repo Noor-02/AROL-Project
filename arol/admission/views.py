@@ -164,9 +164,9 @@ class Profile_Viewset(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (SearchFilter, OrderingFilter)
     permission_classes = (
-        IsSelf,
+        # IsSelf,
         IsAuthenticated,
-        DjangoModelPermissionsOrAnonReadOnly,
+        # DjangoModelPermissionsOrAnonReadOnly,
     )
 
     # search_fields = ["s_no", "name", "occupation"]
