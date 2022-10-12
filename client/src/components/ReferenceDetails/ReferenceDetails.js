@@ -121,6 +121,16 @@ class ReferenceDetails extends Component {
       }
     );
 
+    let data = ParseBackRefereeDetails(this.state.referenceDetailsList)[i];
+    console.log("POST API CALL FOR REFEREE DETAILS PAGE=>", data)
+    ResourceAPIController.DeleteReferee(data.id).then(response => {
+      console.log("EMPLOYMENT DETAILS FOR POST API CALL=> ", response);
+      alert("deleted referee")
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+
     this.setState({
       referenceDetailsList: tempReferenceDetailsList,
     });
@@ -132,16 +142,17 @@ class ReferenceDetails extends Component {
     // } else {
     //   alert("Please fill all required details correctly");
     // }
-    for (let i = 0; i < this.state.referenceDetailsList.length; i++) {
-      let data = ParseBackRefereeDetails(this.state.referenceDetailsList)[i];
-      console.log("API POST REFEREE DETAILS =>", data);
-      ResourceAPIController.RefereeDetailsSubmit(data).then(response => {
-        console.log("REFEREE DETAILS FOR POST API CALL=> ", response);
+    // for (let i = 0; i < this.state.referenceDetailsList.length; i++) {
+    // let data = ParseBackRefereeDetails(this.state.referenceDetailsList)[i];
+    let data = ParseBackRefereeDetails(this.state.referenceDetailsList);
+    console.log("API POST REFEREE DETAILS =>", data);
+    ResourceAPIController.RefereeDetailsSubmit(data).then(response => {
+      console.log("REFEREE DETAILS FOR POST API CALL=> ", response);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
       })
-        .catch(error => {
-          console.log("Failed =>", error);
-        })
-    }
+    // }
     alert("Project Details have been saved")
 
   };

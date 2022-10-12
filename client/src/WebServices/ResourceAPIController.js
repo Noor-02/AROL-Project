@@ -123,30 +123,30 @@ const GetEmploymentDetails = async () => {
     });
 };
 
-// const EmploymentDetailsSubmit = async (data) => {
-//     // console.log("API CALL DATA =>", data)
-//     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-//     let response = await axios.post(EndPoints.GET_EMPLOYMENT_DETAILS, data, {
-//         headers: { 'Authorization': 'Bearer ' + token }
-//     }).then((response) => {
-//         console.log(response.data);
-//         return response.data;
-//     })
-//         .catch(error => {
-//             return Promise.reject({
-//                 err: error
-//             });
-//         })
-
-//     return Promise.resolve({
-//         result: response.data
-//     });
-// }
-
 const EmploymentDetailsSubmit = async (data) => {
     // console.log("API CALL DATA =>", data)
     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
     let response = await axios.post(EndPoints.GET_EMPLOYMENT_DETAILS, data, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
+
+    return Promise.resolve({
+        result: response.data
+    });
+}
+
+const DeleteEmployment = async (id) => {
+    // console.log("API CALL DATA =>", data)
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.delete(EndPoints.POST_EMPLOYMENT_DETAILS(id), {
         headers: { 'Authorization': 'Bearer ' + token }
     }).then((response) => {
         console.log(response.data);
@@ -183,26 +183,25 @@ const EducationalDetailsSubmit = async (data) => {
     });
 }
 
+const DeleteEducation = async (id) => {
+    // console.log("API CALL DATA =>", data)
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.delete(EndPoints.POST_EDUCATION_DETAILS(id), {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
 
-
-// const GetQualifyingDetails = async () => {
-//     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
-//     let response = await axios.get(EndPoints.GET_QUALIFYING_EXAMINATION_DETAILS, {
-//         headers: { 'Authorization': 'Bearer ' + token }
-//     }).then((response) => {
-//         console.log(response.data);
-//         return response.data;
-//     })
-//         .catch(error => {
-//             return Promise.reject({
-//                 err: error
-//             });
-//         })
-
-//     return Promise.resolve({
-//         result: response.data
-//     });
-// }
+    return Promise.resolve({
+        result: response.data
+    });
+}
 
 const GetPersonalDetails = async () => {
     const token =
@@ -295,8 +294,6 @@ const ProjectDetailsSubmit = async (data) => {
             headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
-            // console.log(""response)
-            // response.data.results = ParseProjectList(response.data.results);
             return response;
         })
         .catch((error) => {
@@ -309,6 +306,25 @@ const ProjectDetailsSubmit = async (data) => {
         result: response.data,
     });
 };
+
+const DeleteProject = async (id) => {
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.delete(EndPoints.POST_PROJECT_DETAILS(id), {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
+
+    return Promise.resolve({
+        result: response.data
+    });
+}
 
 const GetRefereeDetails = async () => {
     const token =
@@ -352,8 +368,6 @@ const RefereeDetailsSubmit = async (data) => {
             headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
-            // console.log(""response)
-            // response.data.results = ParseProjectList(response.data.results);
             return response;
         })
         .catch((error) => {
@@ -364,6 +378,26 @@ const RefereeDetailsSubmit = async (data) => {
 
     return Promise.resolve({
         result: response.data,
+    });
+}
+
+const DeleteReferee = async (id) => {
+    // console.log("API CALL DATA =>", data)
+    const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
+    let response = await axios.delete(EndPoints.POST_REFEREE_DETAILS(id), {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }).then((response) => {
+        console.log(response.data);
+        return response.data;
+    })
+        .catch(error => {
+            return Promise.reject({
+                err: error
+            });
+        })
+
+    return Promise.resolve({
+        result: response.data
     });
 }
 
@@ -378,8 +412,6 @@ const ChangePassword = async (data) => {
             headers: { Authorization: "Bearer " + token },
         })
         .then((response) => {
-            // console.log(""response)
-            // response.data.results = ParseProjectList(response.data.results);
             return response;
         })
         .catch((error) => {
@@ -395,7 +427,7 @@ const ChangePassword = async (data) => {
 
 const ResourceAPIController = {
     UserLogin, UserRegistration, EducationalDetailsSubmit, EmploymentDetailsSubmit, GetPersonalDetails, UserLogout, GetEducationalDetails, GetEmploymentDetails, GetProjectDetails,
-    PersonalDetailsSubmit, ProjectDetailsSubmit, GetRefereeDetails, RefereeDetailsSubmit, ChangePassword
+    PersonalDetailsSubmit, DeleteReferee, DeleteProject, ProjectDetailsSubmit, GetRefereeDetails, RefereeDetailsSubmit, ChangePassword, DeleteEmployment, DeleteEducation
 }
 
 

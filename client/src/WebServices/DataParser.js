@@ -1,13 +1,5 @@
 import { IsListEmpty } from "../utilities/CommonMethods"
 
-// const parseDateForInput = (date) => {
-//     console.log("DATE PUT IN PARSER =>", date)
-//     const [year, month, day] = date.split('-');
-//     const result = [month, day, year].join('-');
-//     console.log("DATE AFTER PARSING =>", result);
-//     return result
-// }
-
 const ParseEducationList = (list) => {
     const updateList = !IsListEmpty(list)
         ? list.map(item => {
@@ -198,6 +190,7 @@ const ParseProjectList = (list) => {
                 titleValidity: false,
                 supervisorNameValidity: false,
                 universityValidity: false,
+                id: item.id
             }
         }) : []
 
@@ -213,7 +206,8 @@ const ParseBackprojectList = (list) => {
                 degree: item.degree,
                 year_of_submission: item.completionYear,
                 supervisor: item.supervisorName,
-                applicant_id: item.applicantId
+                applicant_id: item.applicantId,
+                id: item.id
             }
         }) : []
 
@@ -229,7 +223,8 @@ const ParseRefereeDetails = (list) => {
                 designation: item.referee_designation,
                 organization: item.referee_organization,
                 number: item.referee_number,
-                applicationId: item.application_id
+                applicationId: item.application_id,
+                id: item.id
             }
         }) : []
 
@@ -245,7 +240,8 @@ const ParseBackRefereeDetails = (list) => {
                 referee_designation: item.designation,
                 referee_organization: item.organization,
                 referee_number: item.number,
-                application_id: item.applicationId
+                application_id: item.applicationId,
+                id: item.id
             }
         }) : []
 

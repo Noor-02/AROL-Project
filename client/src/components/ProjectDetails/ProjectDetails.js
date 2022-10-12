@@ -126,28 +126,31 @@ class ProjectDetails extends Component {
       }
     });
 
+    let data = ParseBackprojectList(this.state.projectList)[i];
+    console.log("POST API CALL FOR PROJECT DETAILS PAGE=>", data)
+    ResourceAPIController.DeleteProject(data.id).then(response => {
+      console.log("PROJECT DETAILS FOR POST API CALL=> ", response);
+      alert("deleted project")
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
+      })
+
     this.setState({
       projectList: tempProjectList,
     });
   };
 
   onSave = () => {
-    // if (this.state.formValid) {
-    //   alert("Save clicked");
-    // } else {
-    //   alert("Please fill all required details correctly");
-    // }
-
-    for (let i = 0; i < this.state.projectList.length; i++) {
-      let data = ParseBackprojectList(this.state.projectList)[i];
-      console.log("API POST PROJECT DETAILS =>", data);
-      ResourceAPIController.ProjectDetailsSubmit(data).then(response => {
-        console.log("PROJECT DETAILS FOR POST API CALL=> ", response);
+    let data = ParseBackprojectList(this.state.projectList);
+    console.log("API POST PROJECT DETAILS =>", data);
+    ResourceAPIController.ProjectDetailsSubmit(data).then(response => {
+      console.log("PROJECT DETAILS FOR POST API CALL=> ", response);
+    })
+      .catch(error => {
+        console.log("Failed =>", error);
       })
-        .catch(error => {
-          console.log("Failed =>", error);
-        })
-    }
+    // }
     alert("Project Details have been saved")
   };
 
