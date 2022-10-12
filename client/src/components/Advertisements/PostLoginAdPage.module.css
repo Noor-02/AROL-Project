@@ -1,0 +1,20 @@
+.Heading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    text-align: -webkit-center;
+    margin-top: 3rem;
+}
+
+.SubHeading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6em;
+    color: #666;
+    font-weight: bold;
+    margin-top: 3rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 2em;
+}

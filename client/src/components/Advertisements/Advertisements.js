@@ -149,7 +149,7 @@ class Advertisements extends Component {
                 </table>
                 <p className={classes.Paragraph}>Applicants are strongly encouraged to visit the Department web pages and the advertisement provided below by each Department.</p>
                 <h3 className={classes.SubHeading}>Schedule for Last date of online applications</h3>
-                <AdvertisementTable />
+                <AdvertisementTable adHome={true} />
                 <h3 className={classes.SubHeading}>(B) Department of Sciences</h3>
                 <table>
                     <th className={classes.TableHeading} style={{ width: "25%" }}>Name</th>
@@ -200,7 +200,7 @@ class Advertisements extends Component {
                 </table>
                 <p className={classes.Paragraph}>Applicants are strongly encouraged to visit the Department web pages and the advertisement provided below by each Department.</p>
                 <h3 className={classes.SubHeading}>Schedule for Last date of online applications</h3>
-                <AdvertisementTable />
+                <AdvertisementTable adHome={true} />
                 <h3 className={classes.SubHeading}>(C) Humanities and Social Sciences</h3>
                 <table>
                     <th className={classes.TableHeading} style={{ width: "25%" }}>Name</th>
@@ -258,7 +258,7 @@ class Advertisements extends Component {
                 </table>
                 <p className={classes.Paragraph}>Applicants are strongly encouraged to visit web page of HSS and the advertisement provided below.</p>
                 <h3 className={classes.SubHeading}>Schedule for Last date of online applications</h3>
-                <AdvertisementTable />
+                <AdvertisementTable adHome={true} />
                 <h3 className={classes.SubHeading}>(D) Centre for Advanced Electronics (CAE)</h3>
                 <table>
                     <th className={classes.TableHeading} style={{ width: "25%" }}>Name</th>
@@ -313,7 +313,7 @@ class Advertisements extends Component {
                 </table>
                 <p className={classes.Paragraph}>Applicants are strongly encouraged to visit web page of HSS and the advertisement provided below.</p>
                 <h3 className={classes.SubHeading}>Schedule for Last date of online applications</h3>
-                <AdvertisementTable />
+                <AdvertisementTable adHome={true} />
                 <h3 className={classes.SubHeading}>(E) Visvesvaraya PhD Scheme for Electronics and IT (applicable to Departments of Electrical Engineering and Computer Science and Engineering)</h3>
                 <table>
                     <th className={classes.TableHeading} style={{ width: "25%" }}>Name</th>
@@ -339,7 +339,7 @@ class Advertisements extends Component {
                 </table>
                 <p className={classes.Paragraph}>Applicants are strongly encouraged to visit the Department web pages and the advertisement provided below by each Department.</p>
                 <h3 className={classes.SubHeading}>Schedule for Last date of online applications</h3>
-                <AdvertisementTable />
+                <AdvertisementTable adHome={true} />
 
                 <h3 className={classes.SubHeading}>Application Fee: </h3>
                 <p className={classes.Paragraph}>For Indian applicants: 100/- Indian Rupees (non-refundable) to be paid through Online.
