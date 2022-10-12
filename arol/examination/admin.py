@@ -3,7 +3,61 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from django.contrib import admin
 
-from .models import GATE, JAM, UGC_CSIR
+from .models import CAT, GATE, GRE, JAM, UGC_CSIR
+
+
+class CAT_Inline(admin.StackedInline):
+    model = CAT
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    ("registration_number", "date_of_appearance"),
+                    "varc_percentile",
+                    "dilr_percentile",
+                    "qa_percentile",
+                    "overall_percentile",
+                    "validity",
+                )
+            },
+        ),
+    )
+
+
+@admin.register(CAT)
+class CAT_Admin(admin.ModelAdmin):
+    model = CAT
+    ordering = ("application_id",)
+    search_fields = (
+        "application_id__application_id",
+        "registration_number",
+    )
+    list_display = ("application_id", "overall_percentile", "is_valid")
+
+    def is_valid(self, obj):
+        return date.today() >= obj.validity
+
+    is_valid.boolean = True
+    is_valid.short_description = "Validity"
+    is_valid.allow_tags = True
+
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "application_id",
+                    ("registration_number", "date_of_appearance"),
+                    "varc_percentile",
+                    "dilr_percentile",
+                    "qa_percentile",
+                    "overall_percentile",
+                    "validity",
+                )
+            },
+        ),
+    )
 
 
 class GATE_Inline(admin.StackedInline):
@@ -13,7 +67,8 @@ class GATE_Inline(admin.StackedInline):
             None,
             {
                 "fields": (
-                    ("registration_number", "year_of_appearance"),
+                    "registration_number",
+                    ("month_of_appearance", "year_of_appearance"),
                     "examination_code",
                     ("marks", "gate_score"),
                     ("candidates_appeared", "air"),
@@ -48,7 +103,8 @@ class GATE_Admin(admin.ModelAdmin):
             {
                 "fields": (
                     "application_id",
-                    ("registration_number", "year_of_appearance"),
+                    "registration_number",
+                    ("month_of_appearance", "year_of_appearance"),
                     "examination_code",
                     ("marks", "gate_score"),
                     ("candidates_appeared", "air"),
@@ -59,6 +115,58 @@ class GATE_Admin(admin.ModelAdmin):
     )
 
 
+
+class GRE_Inline(admin.StackedInline):
+    model = GRE
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    ("registration_number", "date_of_exam"),
+                    "vr_percentile",
+                    "aw_percentile",
+                    "qr_percentile",
+                    "validity",
+                )
+            },
+        ),
+    )
+
+
+@admin.register(GRE)
+class GRE_Admin(admin.ModelAdmin):
+    model = GRE
+    ordering = ("application_id",)
+    search_fields = (
+        "application_id__application_id",
+        "registration_number",
+    )
+    list_display = ("application_id", "is_valid")
+
+    def is_valid(self, obj):
+        return date.today() >= obj.validity
+
+    is_valid.boolean = True
+    is_valid.short_description = "Validity"
+    is_valid.allow_tags = True
+
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "application_id",
+                    ("registration_number", "date_of_exam"),
+                    "vr_percentile",
+                    "aw_percentile",
+                    "qr_percentile",
+                    "validity",
+                )
+            },
+        ),
+    )
+
 class JAM_Inline(admin.StackedInline):
     model = JAM
     fieldsets = (
@@ -66,11 +174,12 @@ class JAM_Inline(admin.StackedInline):
             None,
             {
                 "fields": (
-                    ("registration_number", "year_of_appearance"),
+                    "registration_number",
+                    ("month_of_appearance", "year_of_appearance"),
                     "examination_code",
                     "marks",
                     ("candidates_appeared", "air"),
-                    "validity",
+                    ("qualified","validity"),
                 )
             },
         ),
@@ -101,11 +210,12 @@ class JAM_Admin(admin.ModelAdmin):
             {
                 "fields": (
                     "application_id",
-                    ("registration_number", "year_of_appearance"),
+                    "registration_number",
+                    ("month_of_appearance", "year_of_appearance"),
                     "examination_code",
                     "marks",
                     ("candidates_appeared", "air"),
-                    "validity",
+                    ("qualified","validity"),
                 )
             },
         ),
@@ -120,6 +230,7 @@ class UGC_CSIR_Inline(admin.StackedInline):
             {
                 "fields": (
                     "application_id",
+                    "subject",
                     ("roll_number", "date_issued"),
                     ("qualified_ap", "ap_validity"),
                     ("qualified_jrf", "jrf_validity"),
@@ -135,9 +246,9 @@ class UGC_CSIR_Admin(admin.ModelAdmin):
     ordering = ("application_id",)
     search_fields = (
         "application_id__application_id",
-        "roll_number",
+        "ref_number",
     )
-    list_display = ("application_id", "roll_number", "jrf_is_valid", "ap_is_valid")
+    list_display = ("application_id", "ref_number", "jrf_is_valid", "ap_is_valid")
 
     def jrf_is_valid(self, obj):
         if obj.qualified_jrf:
@@ -169,7 +280,8 @@ class UGC_CSIR_Admin(admin.ModelAdmin):
             {
                 "fields": (
                     "application_id",
-                    ("roll_number", "date_issued"),
+                    "subject",
+                    ("ref_number", "date_issued"),
                     ("qualified_ap", "ap_validity"),
                     ("qualified_jrf", "jrf_validity"),
                 )

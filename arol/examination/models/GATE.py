@@ -7,7 +7,8 @@ class GATE(models.Model):
 
     application_id = models.OneToOneField(Application, on_delete=models.CASCADE)
     registration_number = models.CharField(_("Registration Number"), max_length=25)
-    year_of_appearance = models.IntegerField()
+    month_of_appearance = models.IntegerField(_("Month of Appearance"))
+    year_of_appearance = models.IntegerField(_("Year of Appearance"))
     examination_code = models.CharField(_("Examination Paper Code"), max_length=255)
     gate_score = models.IntegerField(_("Gate Score"))
     marks = models.IntegerField(_("Marks Out of 100"))

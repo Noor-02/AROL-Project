@@ -6,15 +6,14 @@ from django.utils.translation import gettext as _
 class UGC_CSIR(models.Model):
 
     application_id = models.OneToOneField(Application, on_delete=models.CASCADE)
-    roll_number = models.CharField(_("Registration Number"), max_length=25)
+    ref_number = models.CharField(_("Reference Number"), max_length=25)
     date_issued = models.DateField(_("With Effective From"))
+    subject = models.CharField(_("Subject"), max_length=25)
     qualified_jrf = models.BooleanField(_("Eligible for Junior Research Fellowship"))
-    jrf_validity = models.IntegerField(
-        _("JRF Validity in Years"), null=True, blank=True
-    )
+    jrf_validity = models.DateField(_("JRF Valid Up to"))
     qualified_ap = models.BooleanField(_("Eligible for Assistant Professor"))
-    ap_validity = models.IntegerField(
-        _("Assistant Professor Validity in Years"), null=True, blank=True
+    ap_validity = models.CharField(
+        _("Assistant Professor Validity in Years"), null=True, blank=True, max_length=25
     )
 
     def __str__(self):

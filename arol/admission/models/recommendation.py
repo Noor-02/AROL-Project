@@ -1,4 +1,3 @@
-from statistics import mode
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError

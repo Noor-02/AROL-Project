@@ -7,11 +7,13 @@ class JAM(models.Model):
 
     application_id = models.OneToOneField(Application, on_delete=models.CASCADE)
     registration_number = models.CharField(_("Registration Number"), max_length=25)
-    year_of_appearance = models.IntegerField()
+    month_of_appearance = models.IntegerField(_("Month of Appearance"))
+    year_of_appearance = models.IntegerField(_("Year of Appearance"))
     examination_code = models.CharField(_("Examination Paper Code"), max_length=255)
     marks = models.IntegerField(_("Marks"))
     candidates_appeared = models.IntegerField(_("Number of Candidates Appeared"))
     air = models.IntegerField(_("All India Rank"))
+    qualified = models.BooleanField(_("Qualified Exam"))
     validity = models.DateField(_("Valid Up to"))
 
     def __str__(self):

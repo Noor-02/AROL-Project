@@ -1,6 +1,12 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
-from examination.admin import GATE_Inline, JAM_Inline, UGC_CSIR_Inline
+from examination.admin import (
+    CAT_Inline,
+    GATE_Inline,
+    GRE_Inline,
+    JAM_Inline,
+    UGC_CSIR_Inline,
+)
 
 from .file_exports import generate_xlsx, generate_zip
 from .models import (
@@ -90,7 +96,7 @@ class Application_Admin(admin.ModelAdmin):
             },
         ),
     )
-    inlines = [GATE_Inline, JAM_Inline, UGC_CSIR_Inline]
+    inlines = [CAT_Inline, GATE_Inline, GRE_Inline, JAM_Inline, UGC_CSIR_Inline]
 
     def export_pdf(self, obj):
         return mark_safe(
@@ -222,16 +228,16 @@ class Profile_Admin(admin.ModelAdmin):
 @admin.register(Project_Detail)
 class Project_Admin(admin.ModelAdmin):
     model = Project_Detail
-    ordering = ("applicant_id",)
-    search_fields = ("applicant_id__applicant_id", "title")
-    list_display = ("applicant_id", "title")
+    ordering = ("application_id",)
+    search_fields = ("application_id__application_id", "title")
+    list_display = ("application_id", "title")
     list_filter = ("degree",)
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "applicant_id",
+                    "application_id",
                     ("degree", "university"),
                     "year_of_submission",
                     "supervisor",
