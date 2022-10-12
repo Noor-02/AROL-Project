@@ -18,7 +18,7 @@ class ApplyPage extends Component {
         </Card>
         <div className={classes.Admissions}>
           <Button
-            href="/post-login/complete-form"
+            href="/program-advertisement"
             style={{ width: "18rem" }}
             className={classes.Heading}
             variant="dark"
@@ -26,7 +26,7 @@ class ApplyPage extends Component {
             MSc Program
           </Button>
           <Button
-            href="/post-login/complete-form"
+            href="/program-advertisement"
             style={{ width: "18rem" }}
             className={classes.Heading}
             variant="dark"
@@ -34,7 +34,7 @@ class ApplyPage extends Component {
             MTech Program
           </Button>
           <Button
-            href="/post-login/complete-form"
+            href="/program-advertisement"
             style={{ width: "18rem" }}
             className={classes.Heading}
             variant="dark"
@@ -42,7 +42,7 @@ class ApplyPage extends Component {
             MS Research Program
           </Button>
           <Button
-            href="/post-login/complete-form"
+            href="/program-advertisement"
             style={{ width: "18rem" }}
             className={classes.Heading}
             variant="dark"

@@ -2,6 +2,7 @@ from django.forms import ValidationError
 from rest_framework import serializers
 
 from .models import (
+    Advertisement,
     Application,
     Education_Detail,
     Employment,
@@ -10,6 +11,13 @@ from .models import (
     Recommendation,
     Referral,
 )
+
+
+class Advertisement_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertisement
+        fields = "__all__"
+
 
 
 class Application_Serializer(serializers.ModelSerializer):

@@ -1,6 +1,7 @@
 import re
+from django.shortcuts import get_object_or_404
 from emails import Letter_of_Recommendation
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.pagination import PageNumberPagination
@@ -16,6 +17,7 @@ from .forms import xlxsForm
 
 from .file_exports import export_pdf, generate_xlsx_by_year, generate_zip_by_year, generate_xlsx
 from .models import (
+    Advertisement,
     Application,
     Education_Detail,
     Employment,
@@ -26,6 +28,7 @@ from .models import (
 )
 from .permissions import IsSelf, IsSelf_Applicant, IsSelf_Application
 from .serializers import (
+    Advertisement_Serializer,
     Application_Serializer,
     Education_Serializer,
     Employment_Serializer,
@@ -34,7 +37,16 @@ from .serializers import (
     Recommendation_Serializer,
     Referral_Serializer,
 )
-from rest_framework import status
+
+
+class Advertisement_Viewset(viewsets.ModelViewSet):
+    serializer_class = Advertisement_Serializer
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
+
+    def get_queryset(self):
+        return Advertisement.objects.all()
 
 
 class Application_Viewset(viewsets.ModelViewSet):
@@ -105,7 +117,8 @@ class Education_Viewset(viewsets.ModelViewSet):
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -113,7 +126,8 @@ class Education_Viewset(viewsets.ModelViewSet):
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -121,9 +135,6 @@ class Education_Viewset(viewsets.ModelViewSet):
             data.append(serializer.data)
 
         return Response(data, status=status.HTTP_201_CREATED)
-
-
-from django.shortcuts import get_object_or_404
 
 
 class Employment_Viewset(viewsets.ModelViewSet):
@@ -144,7 +155,8 @@ class Employment_Viewset(viewsets.ModelViewSet):
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -152,7 +164,8 @@ class Employment_Viewset(viewsets.ModelViewSet):
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -196,7 +209,8 @@ class Project_Viewset(viewsets.ModelViewSet):
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -204,7 +218,8 @@ class Project_Viewset(viewsets.ModelViewSet):
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -254,7 +269,8 @@ class Recommendation_Viewset(
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -262,7 +278,8 @@ class Recommendation_Viewset(
         for i in request.data:
             if "id" in i:
                 instance = get_object_or_404(queryset, pk=i["id"])
-                serializer = self.get_serializer(instance, data=i, partial=partial)
+                serializer = self.get_serializer(
+                    instance, data=i, partial=partial)
             else:
                 serializer = self.get_serializer(data=i)
             serializer.is_valid(raise_exception=True)
@@ -292,6 +309,6 @@ def exp(request):
 
     form = xlxsForm(request.POST)
     print(form)
-    return generate_xlsx(request,request.POST['data'],form)
+    return generate_xlsx(request, request.POST['data'], form)
 
-    #return redirect("/admin/admission/application/")
+    # return redirect("/admin/admission/application/")
