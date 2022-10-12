@@ -146,7 +146,7 @@ const ParseBackProfileList = (item) => {
     return {
         id: item.id,
         applicant_id: item.applicantId,
-        type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? true : false,
+        // type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? true : false,
         // type_of_applicant: true,
         nationality: item.nationality,
         full_name: item.fullName,

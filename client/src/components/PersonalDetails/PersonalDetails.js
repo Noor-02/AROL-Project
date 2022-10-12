@@ -133,7 +133,7 @@ class PersonalDetails extends Component {
       id: this.state.id,
       applicantId: this.state.applicantId,
       admissionYear: this.state.admissionYear,
-      typeOfApplicant: this.state.typeOfApplicant,
+      // typeOfApplicant: this.state.typeOfApplicant,
       fullName: this.state.fullName,
       fatherSpouseName: this.state.fatherSpouseName,
       dob: this.state.dob,
