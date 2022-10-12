@@ -70,7 +70,7 @@ class Application_Admin(admin.ModelAdmin):
         "advertisement_id",
         "applicant_id",
         "is_approved",
-        "export_pdf",
+        # "export_pdf",
     )
     list_editable = ("is_approved",)
     date_hierarchy = "date_applied"
@@ -96,15 +96,15 @@ class Application_Admin(admin.ModelAdmin):
     )
     inlines = [GATE_Inline, JAM_Inline, UGC_CSIR_Inline]
 
-    def export_pdf(self, obj):
-        return mark_safe(
-            '<a href="/api/admission/application/export_pdf/{application_id}" style="cursor:pointer;">Download PDF</a>'.format(
-                application_id=obj.application_id
-            )
-        )
+    # def export_pdf(self, obj):
+    #     return mark_safe(
+    #         '<a href="/api/admission/application/export_pdf/{application_id}" style="cursor:pointer;">Download PDF</a>'.format(
+    #             application_id=obj.application_id
+    #         )
+    #     )
 
-    export_pdf.short_description = "Download PDF"
-    export_pdf.allow_tags = True
+    # export_pdf.short_description = "Download PDF"
+    # export_pdf.allow_tags = True
 
     @admin.action(description="Download selected Applications")
     def export_zip(modeladmin, request, queryset):
