@@ -6,6 +6,7 @@ import { Form, Button, Table } from "react-bootstrap";
 import { IsListEmpty } from "../../utilities/CommonMethods";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";
 import { ParseBackRefereeDetails } from '../../WebServices/DataParser'
+import { countryCodes } from "../PersonalDetails/ExcessDetailsList"
 
 
 class ReferenceDetails extends Component {
@@ -20,6 +21,7 @@ class ReferenceDetails extends Component {
         refereeEmailValidity: false,
         refereeNameValidity: false,
         formValid: false,
+        countryCode: "India +91",
         number: null,
         applicationId: ""
       },
@@ -146,6 +148,8 @@ class ReferenceDetails extends Component {
     // let data = ParseBackRefereeDetails(this.state.referenceDetailsList)[i];
     let data = ParseBackRefereeDetails(this.state.referenceDetailsList);
     console.log("API POST REFEREE DETAILS =>", data);
+    let countryCode = this.state.countryCode.split("+")[1];
+    data.number = countryCode + data.number;
     ResourceAPIController.RefereeDetailsSubmit(data).then(response => {
       console.log("REFEREE DETAILS FOR POST API CALL=> ", response);
     })
@@ -260,18 +264,32 @@ class ReferenceDetails extends Component {
                     <Form.Label className={classes.FormLabels}>
                       Referee Phone Number
                     </Form.Label>
-                    <Form.Control
-                      value={item.number}
-                      onChange={(e) =>
-                        this.onChange(
-                          e.target.value,
-                          index,
-                          "number"
-                        )
-                      }
-                      type="number"
-                      required
-                    />
+                    <div className={classes.PhoneNumberInputDiv}>
+                      <Form.Select className={classes.SelectCountryCode} value={this.state.countryCode1} onChange={(e) => this.onChange(e.target.value, "countryCode1")}>
+                        {countryCodes.map((item, index) => {
+                          return (
+                            <option
+                              key={index} >
+                              {item.name} {item.dial_code}
+                            </option>
+                          );
+                        })}
+                      </Form.Select>
+                      <Form.Control
+                        value={item.number}
+                        onChange={(e) =>
+                          this.onChange(
+                            e.target.value,
+                            index,
+                            "number"
+                          )
+                        }
+                        type="number"
+                        placeholder="XXXXXXXXXX"
+                        required
+                      />
+                    </div>
+
                   </Form.Group>
 
                 </div>

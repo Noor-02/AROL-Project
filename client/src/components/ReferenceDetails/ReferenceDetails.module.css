@@ -20,6 +20,16 @@
     padding-left: 1.8rem;
 } */
 
+.PhoneNumberInputDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SelectCountryCode {
+    width: 16rem;
+    margin-right: 0.5rem;
+}
+
 .MainHeading {
     /* color: white; */
     font-size: 2rem;
