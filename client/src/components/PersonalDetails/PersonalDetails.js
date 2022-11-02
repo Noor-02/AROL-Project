@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import classes from './PersonalDetails.module.css'
 import { ReactDOM } from "react";
-import { nationalitiesList } from './NationalitiesList'
+import { nationalitiesList, countryCodes } from './ExcessDetailsList.js'
 import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 import ResourceAPIController from "../../WebServices/ResourceAPIController";
@@ -18,6 +18,8 @@ class PersonalDetails extends Component {
     caste: "General",
     maritalStatus: "Married",
     contactNumber: "",
+    countryCode1: "India +91",
+    countryCode2: "India +91",
     parentContact: "",
     nationality: "",
     otherNationality: "",
@@ -54,7 +56,7 @@ class PersonalDetails extends Component {
 
   phoneValidity = (val, label) => {
     let isValid = true;
-    const validPhoneFormat = /^[\+][0]?[1-9]\d{10,14}$/;
+    const validPhoneFormat = /[1-9]\d{9,13}$/;
     isValid = validPhoneFormat.test(val) && isValid;
 
     if (label === "contactNumber") {
@@ -129,6 +131,10 @@ class PersonalDetails extends Component {
   }
 
   onSave = () => {
+    let countryCode1 = this.state.countryCode1.split("+")[1];
+    let countryCode2 = this.state.countryCode2.split("+")[1];
+    let contactNumber = countryCode1 + this.state.contactNumber;
+    let parentContact = countryCode2 + this.state.parentContact;
     let obj = {
       id: this.state.id,
       applicantId: this.state.applicantId,
@@ -140,8 +146,8 @@ class PersonalDetails extends Component {
       gender: this.state.gender,
       caste: this.state.caste,
       maritalStatus: this.state.maritalStatus,
-      contactNumber: this.state.contactNumber,
-      parentContact: this.state.parentContact,
+      contactNumber: contactNumber,
+      parentContact: parentContact,
       nationality: this.state.nationality,
       otherNationality: this.state.otherNationality,
       pwd: this.state.pwd === "Yes" ? true : false,
@@ -161,9 +167,8 @@ class PersonalDetails extends Component {
       pCity: this.state.permanentAddress.city,
       pPinCode: this.state.permanentAddress.pinCode,
     }
-    let data = ParseBackProfileList(obj);
-    console.log(data)
 
+    let data = ParseBackProfileList(obj);
     ResourceAPIController.PersonalDetailsSubmit(data, this.state.id).then(response => {
       console.log("EDUCATIONAL DETAILS SUBMIT=> ", response);
     })
@@ -206,7 +211,9 @@ class PersonalDetails extends Component {
 
   componentDidMount = () => {
     ResourceAPIController.GetPersonalDetails().then(response => {
-      console.log(response);
+      // console.log("FULL PERSONAL DETAILS =>", response);
+      // console.log("USER TYPE APPLICANT =>", response.result.results[0].typeOfApplicant);
+
       let contactNumber = response.result.results[0].contactNumber
       let parentContact = response.result.results[0].parentContact
       let fullName = response.result.results[0].fullName
@@ -495,30 +502,55 @@ class PersonalDetails extends Component {
                     Contact Number
                   </Form.Label>
                   <span className={classes.ErrorMessage}>{!this.state.phoneValidity ? "* Please enter a valid number." : null}</span>
-                  <Form.Control
-                    value={this.state.contactNumber}
-                    onChange={(e) =>
-                      this.onChange(e.target.value, "contactNumber")
-                    }
-                    type="text"
-                    placeholder="+91XXXXXXXXXX"
-                    required
-                  />
+                  <div className={classes.PhoneNumberInputDiv}>
+                    <Form.Select className={classes.SelectCountryCode} value={this.state.countryCode1} onChange={(e) => this.onChange(e.target.value, "countryCode1")}>
+                      {countryCodes.map((item, index) => {
+                        return (
+                          <option
+                            key={index} >
+                            {item.name} {item.dial_code}
+                          </option>
+                        );
+                      })}
+                    </Form.Select>
+                    <Form.Control
+                      value={this.state.contactNumber}
+                      onChange={(e) =>
+                        this.onChange(e.target.value, "contactNumber")
+                      }
+                      type="text"
+                      placeholder="XXXXXXXXXX"
+                      required
+                    />
+                  </div>
                 </Form.Group>
                 <Form.Group className={classes.InputWidthSet}>
                   <Form.Label className={classes.FormLabels}>
                     Parent Contact
                   </Form.Label>
                   <span className={classes.ErrorMessage}>{!this.state.parentContactValidity ? "* Please enter a valid number." : null}</span>
-                  <Form.Control
-                    value={this.state.parentContact}
-                    onChange={(e) =>
-                      this.onChange(e.target.value, "parentContact")
-                    }
-                    placeholder="+91XXXXXXXXXX"
-                    type="text"
-                    required
-                  />
+                  <div className={classes.PhoneNumberInputDiv}>
+                    <Form.Select className={classes.SelectCountryCode} value={this.state.countryCode2} onChange={(e) => this.onChange(e.target.value, "countryCode2")}>
+                      {countryCodes.map((item, index) => {
+                        return (
+                          <option
+                            key={index} >
+                            {item.name} {item.dial_code}
+                          </option>
+                        );
+                      })}
+                    </Form.Select>
+                    <Form.Control
+                      value={this.state.parentContact}
+                      onChange={(e) =>
+                        this.onChange(e.target.value, "parentContact")
+                      }
+                      placeholder="XXXXXXXXXX"
+                      type="text"
+                      required
+                    />
+                  </div>
+
                 </Form.Group>
               </div>
               <div className={classes.Row}>
@@ -595,29 +627,33 @@ class PersonalDetails extends Component {
                 </Form.Group>
               </div>
               <div className={classes.Row}>
-                <Form.Group className={classes.InputWidthSet}>
+                <Form.Group >
                   <div className={classes.FileHeaderDiv}>
                     <Form.Label className={classes.FormLabels}>
                       Signature
                     </Form.Label>
-                    {
-                      this.state.signature ?
-                        <a href={this.state.signature} target="_blank">View</a> : null
-                    }
                   </div>
-                  {this.state.signature ?
-                    <Form.Control
-                      src={this.state.signature}
-                      type="file"
-                      onChange={(e) => this.readURL(e, "signature")}
-                    />
-                    : <Form.Control
-                      src={this.state.signature}
-                      type="file"
-                      required
-                      onChange={(e) => this.readURL(e, "signature")}
-                    />
-                  }
+                  <div className={classes.SignInputDiv}>
+                    {this.state.signature ?
+                      <Form.Control
+                        className={classes.InputSign}
+                        src={this.state.signature}
+                        type="file"
+                        onChange={(e) => this.readURL(e, "signature")}
+                      />
+                      : <Form.Control
+                        className={classes.InputSign}
+                        src={this.state.signature}
+                        type="file"
+                        required
+                        onChange={(e) => this.readURL(e, "signature")}
+                      />
+                    }
+                    <img id="#targetSign" src={this.state.signature} alt="Upload your signature" height="100"
+                      width="300" />
+
+                  </div>
+
                 </Form.Group>
               </div>
             </div>

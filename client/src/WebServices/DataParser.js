@@ -101,7 +101,7 @@ const ParseProfileList = (list) => {
                 id: item.id,
                 applicantId: item.applicant_id,
                 admissionYear: item.academic_year,
-                typeOfApplicant: item.type_of_applicant ? "Indian Applicant" : "Foriegn Applicant",
+                typeOfApplicant: item.type_of_applicant ? "Indian Applicant" : "Foreign Applicant",
                 fullName: item.full_name,
                 fatherSpouseName: item.father_or_spouse_name,
                 dob: item.date_of_birth,
@@ -136,7 +136,8 @@ const ParseProfileList = (list) => {
 const ParseBackProfileList = (item) => {
     // const updateList = !IsListEmpty(list)
     //     ? list.map(item => {
-    return {
+    console.log("DATA PARSER TYPE OF APPLICANT=>", item.typeOfApplicant)
+    let result = {
         id: item.id,
         applicant_id: item.applicantId,
         type_of_applicant: item.typeOfApplicant === "Indian Applicant" ? true : false,
@@ -170,6 +171,7 @@ const ParseBackProfileList = (item) => {
         gender: item.gender,
         category: item.caste
     }
+    return result;
     // }) : []
 
     // return updateList;

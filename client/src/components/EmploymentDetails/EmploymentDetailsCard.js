@@ -102,7 +102,7 @@ class EmploymentDetails extends Component {
                         <div className={classes.Row}>
                             <Form.Group className={classes.InputWidthSet}>
                                 <Form.Label className={classes.FormLabels}>
-                                    Duration
+                                    Duration (in Months)
                                 </Form.Label>
                                 <Form.Control
                                     value={this.props.details.duration}
@@ -115,7 +115,7 @@ class EmploymentDetails extends Component {
                             </Form.Group>
                             <Form.Group className={classes.InputWidthSet}>
                                 <Form.Label className={classes.FormLabels}>
-                                    Gross Emoluments
+                                    Gross Emoluments (in INR)
                                 </Form.Label>
                                 <Form.Control
                                     value={this.props.details.emoluments}

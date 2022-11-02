@@ -40,10 +40,23 @@
     display: flex;
 }
 
+.SignInputDiv {
+    /* width: 100%; */
+    display: flex;
+    /* justify-content: space-evenly; */
+}
+
 .InputImage {
     height: 2rem;
     margin-right: 6rem;
     margin-top: 6rem;
+}
+
+.InputSign {
+    height: 2rem;
+    width: 16rem;
+    margin-right: 4rem;
+    /* margin-top: 6rem; */
 }
 
 .Row {
@@ -56,6 +69,16 @@
     margin-bottom: 1rem;
     margin-left: 1.6rem;
 } */
+
+.PhoneNumberInputDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SelectCountryCode {
+    width: 8rem;
+    margin-right: 0.2rem;
+}
 
 .FormLabels {
     font-weight: 500;

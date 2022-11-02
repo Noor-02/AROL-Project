@@ -231,6 +231,7 @@ const GetPersonalDetails = async () => {
 
 const PersonalDetailsSubmit = async (data, id) => {
     console.log("API CALL DATA =>", data)
+    data.type_of_applicant = data.type_of_applicant ? true : false;
     const token = (GetFromLocalStorage(Constants.KEY_TOKEN) !== null && GetFromLocalStorage(Constants.KEY_TOKEN) !== '') ? GetFromLocalStorage(Constants.KEY_TOKEN) : '';
     let response = await axios.patch(EndPoints.POST_PERSONAL_DETAILS(id), data, {
         headers: {
