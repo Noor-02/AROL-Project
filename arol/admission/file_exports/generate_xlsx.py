@@ -7,10 +7,12 @@ from ..permissions import IsStaff
 def generate_xlsx(request, querystring,form):
 
     IsStaff(request)
-    personalProfileRequired=form.cleaned_data['personal_profile']
-    educationalDetailsRequired=form.cleaned_data['educational_information']
-    employmentDetailsRequired=form.cleaned_data['employment_details']
-    projectDetailsRequired=form.cleaned_data['project_details']
+    personalProfileRequired=False
+    educationalDetailsRequired=False
+    employmentDetailsRequired=False
+    projectDetailsRequired=False     
+    #print(form.cleaned_data['my_field'])
+
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -38,7 +40,6 @@ def generate_xlsx(request, querystring,form):
 
     row_num = 1
     applicantID=[]
-    print(queryset)
 
     for col_num, column_title in enumerate(columns, start=1):
         cell = worksheet.cell(row=row_num, column=col_num)
@@ -64,7 +65,8 @@ def generate_xlsx(request, querystring,form):
 
     col=len(columns)+1
 
-    if personalProfileRequired:
+    if 'personal_profile' in form:
+        required_columns=form.getlist('personal_profile')
         personalProfileColumns=[
             "Full Name",
             "Father's/Spouse Name",
@@ -80,16 +82,20 @@ def generate_xlsx(request, querystring,form):
             "Correspondence City",
             "Correspondence State",
             "Correspondence Pin/Zip",
-            "Permanent Address"
+            "Permanent Address",
             "Permanent City",
             "Permanent State",
             "Permanent Pin/Zip",
             "Person With Disability"
         ]
+        if int(required_columns[0])==0:
+            required_columns=[]
+            for i in range(1,len(personalProfileColumns)+1):
+                required_columns.append(i)
         row_num = 1
-        for col_num, column_title in enumerate(personalProfileColumns, start=col):
-            cell = worksheet.cell(row=row_num, column=col_num)
-            cell.value = column_title
+        for i in range(0,len(required_columns)):
+            cell=worksheet.cell(row=row_num,column=col+i)
+            cell.value=personalProfileColumns[int(required_columns[i])-1]
         row_num=3
         for query in applicantID:
             profile=Profile.objects.get(applicant_id=query)
@@ -114,13 +120,14 @@ def generate_xlsx(request, querystring,form):
                 profile.p_pin,
                 profile.pwd,
             ]
-            for col_num, cell_value in enumerate(row, col):
-                cell = worksheet.cell(row=row_num, column=col_num)
-                cell.value = str(cell_value)
+            for i in range(0,len(required_columns)):
+                cell=worksheet.cell(row=row_num,column=col+i)
+                cell.value=str(row[int(required_columns[i])-1])
             row_num=row_num+1
         col=col+len(personalProfileColumns)
 
-    if educationalDetailsRequired:
+    if 'educational_details' in form:
+        required_columns=form.getlist('educational_details')
         educationalDetailsColumns=[
             "Examination",
             "Name of Examination Passed",
@@ -134,10 +141,15 @@ def generate_xlsx(request, querystring,form):
             "Class/Division",
             "Specialization (if any)"
         ]
+        if int(required_columns[0])==0:
+            required_columns=[]
+            for i in range(1,len(educationalDetailsColumns)+1):
+                required_columns.append(i)
         row_num=3
         maximum=0
         for query in applicantID:
             education=Education_Detail.objects.get_queryset()
+            print(education)
             education.filter(applicant_id=query)
             maximum=max(maximum,len(education))
             tcol=col
@@ -149,26 +161,27 @@ def generate_xlsx(request, querystring,form):
                     edu.duration,
                     edu.status,
                     edu.year_of_passing,
-                    edu.marksheet,
+                    edu.marks_type,
                     edu.percent,
                     edu.out_of,
                     edu.division,
                     edu.specialization
                 ]
-                for col_num, cell_value in enumerate(row, tcol):
-                    cell = worksheet.cell(row=row_num, column=col_num)
-                    cell.value = str(cell_value)
-                tcol=tcol+len(row)
+                for i in range(0,len(required_columns)):
+                    cell=worksheet.cell(row=row_num,column=tcol+i)
+                    cell.value=str(row[int(required_columns[i])-1])
+                tcol=tcol+len(required_columns)
             row_num=row_num+1
         row_num=1
-        for i in range(1,maximum+1):
-            print(i)
-            for col_num, column_title in enumerate(educationalDetailsColumns, start=col):
-                cell = worksheet.cell(row=row_num, column=col_num)
-                cell.value = column_title+"-"+str(i)
-            col=col+len(educationalDetailsColumns)
+        for j in range(1,maximum+1):
+            for i in range(0,len(required_columns)):
+                    cell=worksheet.cell(row=row_num,column=col)
+                    cell.value=str(row[int(required_columns[i])-1])
+                    cell.value=str(educationalDetailsColumns[int(required_columns[i])-1])+" - "+str(j)
+                    col=col+1
 
-    if employmentDetailsRequired:
+    if 'employment_details' in form:
+        required_columns=form.getlist('employment_details')
         employmentDetailsColumns=[
             "Employment-Name of Organization ",
             "Post Held",
@@ -179,6 +192,10 @@ def generate_xlsx(request, querystring,form):
             "Nature of Responsibilities",
             "Gross Emoluments"
         ]
+        if int(required_columns[0])==0:
+            required_columns=[]
+            for i in range(1,len(employmentDetailsColumns)+1):
+                required_columns.append(i)
         row_num=3
         maximum=0
         for query in applicantID:
@@ -197,19 +214,21 @@ def generate_xlsx(request, querystring,form):
                     emp.responsibilities,
                     emp.emoluments
                 ]
-                for col_num, cell_value in enumerate(row, tcol):
-                    cell = worksheet.cell(row=row_num, column=col_num)
-                    cell.value = str(cell_value)
-                tcol=tcol+len(row)
+                for i in range(0,len(required_columns)):
+                    cell=worksheet.cell(row=row_num,column=tcol+i)
+                    cell.value=str(row[int(required_columns[i])-1])
+                tcol=tcol+len(required_columns)
             row_num=row_num+1
         row_num=1
-        for i in range(1,maximum+1):
-            for col_num, column_title in enumerate(employmentDetailsColumns, start=col):
-                cell = worksheet.cell(row=row_num, column=col_num)
-                cell.value = column_title+"-"+str(i)
-            col=col+len(employmentDetailsColumns)
+        for j in range(1,maximum+1):
+            for i in range(0,len(required_columns)):
+                    cell=worksheet.cell(row=row_num,column=col)
+                    cell.value=str(row[int(required_columns[i])-1])
+                    cell.value=str(employmentDetailsColumns[int(required_columns[i])-1])+" - "+str(j)
+                    col=col+1
 
-    if projectDetailsRequired:
+    if 'project_details' in form:
+        required_columns=form.getlist('project_details')
         projectDetailsColumns=[
             "Project Name",
             "Degree",
@@ -217,6 +236,10 @@ def generate_xlsx(request, querystring,form):
             "Year of Submission",
             "Name of Supervisor"
         ]
+        if int(required_columns[0])==0:
+            required_columns=[]
+            for i in range(1,len(projectDetailsColumns)+1):
+                required_columns.append(i)
         row_num=3
         maximum=0
         for query in applicantID:
@@ -232,17 +255,18 @@ def generate_xlsx(request, querystring,form):
                     pro.year_of_submission,
                     pro.supervisor
                 ]
-                for col_num, cell_value in enumerate(row, tcol):
-                    cell = worksheet.cell(row=row_num, column=col_num)
-                    cell.value = str(cell_value)
-                tcol=tcol+len(row)
+                for i in range(0,len(required_columns)):
+                    cell=worksheet.cell(row=row_num,column=tcol+i)
+                    cell.value=str(row[int(required_columns[i])-1])
+                tcol=tcol+len(required_columns)
             row_num=row_num+1
         row_num=1
-        for i in range(1,maximum+1):
-            for col_num, column_title in enumerate(projectDetailsColumns, start=col):
-                cell = worksheet.cell(row=row_num, column=col_num)
-                cell.value = column_title+"-"+str(i)
-            col=col+len(projectDetailsColumns)
+        for j in range(1,maximum+1):
+            for i in range(0,len(required_columns)):
+                    cell=worksheet.cell(row=row_num,column=col)
+                    cell.value=str(row[int(required_columns[i])-1])
+                    cell.value=str(projectDetailsColumns[int(required_columns[i])-1])+" - "+str(j)
+                    col=col+1
 
     workbook.save(response)
     return response

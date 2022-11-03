@@ -193,7 +193,6 @@ class Referral_Viewset(
 def exp(request):
 
     form = xlxsForm(request.POST)
-    print(form)
-    return generate_xlsx(request,request.POST['data'],form)
+    return generate_xlsx(request,request.POST['data'],request.POST)
 
     #return redirect("/admin/admission/application/")
