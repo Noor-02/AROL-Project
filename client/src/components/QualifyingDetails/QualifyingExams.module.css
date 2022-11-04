@@ -104,3 +104,14 @@
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.ButtonsDiv {
+    display: flex;
+    margin: auto;
+    width: 100%;
+}
+
+.AddButton {
+    width: 15%;
+    margin: auto;
+}

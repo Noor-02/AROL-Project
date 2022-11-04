@@ -9,6 +9,7 @@ import GRE from "./GRE.js"
 import CAT from "./CAT.js"
 import JAM from "./JAM.js"
 import UGC_CSIR from "./UGC_CSIR.js"
+import OtherExams from "./OtherExams";
 // import ResourceAPIController from "../../WebServices/ResourceAPIController";
 
 class QualifyingDetails extends Component {
@@ -17,7 +18,8 @@ class QualifyingDetails extends Component {
     GATE: false,
     CAT: false,
     JAM: false,
-    UGC_CSIR: false
+    UGC_CSIR: false,
+    otherExams: [],
   };
 
   clicked = (event) => {
@@ -29,6 +31,29 @@ class QualifyingDetails extends Component {
       }
     }
     )
+  }
+
+  addExam = () => {
+    let tempList = this.state.otherExams;
+    let n = tempList.length;
+    tempList.push({
+      index: n + 1,
+      nameOfExam: "",
+      registrationNo: "",
+      paperCode: "",
+      noOfCandidates: null,
+      marks: null,
+      air: null,
+      yearOfAppearance: "",
+      monthOfAppearance: "",
+      validUpto: "",
+      qualified: "",
+      document: null
+    })
+
+    this.setState({
+      otherExams: tempList
+    })
   }
 
 
@@ -50,7 +75,13 @@ class QualifyingDetails extends Component {
         {this.state.CAT ? <CAT /> : null}
         {this.state.JAM ? <JAM /> : null}
         {this.state.UGC_CSIR ? <UGC_CSIR /> : null}
+        {!IsListEmpty(this.state.otherExams) ? this.state.otherExams.map((item, i) => {
+          return (<OtherExams details={this.state.otherExams[i]} key={i} index={i} delete={this.deleteExam} />)
+        }) : null}
         <div className={classes.ButtonsDiv}>
+          <Button className={classes.AddButton} onClick={this.addExam}>
+            ADD OTHER EXAM
+          </Button>
           <Button className={classes.AddButton} onClick={this.saveDetails}>
             SAVE
           </Button>
